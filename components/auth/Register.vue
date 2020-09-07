@@ -4,11 +4,13 @@
       <div class="container">
         <div class="col-12">
           <div class="text-danger text-center" v-if="errors.abc">{{ errors.abc[0] }}</div>
-            <!-- <label for="uname"><b>Username</b></label> -->
-            <input type="text" placeholder="Enter Email" id="uname" :class="{'is-invalid' : errors.email }" v-model="email" required>
+            <input type="text" placeholder="Enter Username" id="uname" :class="{'is-invalid' : errors.name }" v-model="form.name" required>
+              <div class="invalid-feedback" v-if="errors.name">{{ errors.name[0] }}</div>
+            <input type="text" placeholder="Enter Email" id="email" :class="{'is-invalid' : errors.email }" v-model="form.email" required>
               <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
             <!-- <label for="psw"><b>Password</b></label> -->
-            <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : errors.password }" v-model="password" required>
+            <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : errors.password }" v-model="form.password" required>
+            <input type="password" placeholder="Enter Password again" id="pswc" :class="{'is-invalid' : errors.password }" v-model="form.password_confirmation" required>
               <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }}</div>
             <button type="button" v-on:click="submit()">Login</button>
           </div>
@@ -22,15 +24,19 @@ export default {
   data(){
 
       return {
-          email: '',
-          password: ''
+          form : {
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: ''
+          }
       }
 
   },
   methods:{
       submit(){
         let that = this
-        this.$axios.$post('/auth/login', {email:that.email, password:that.password})
+        this.$axios.$post('/auth/register', that.form)
         .then(function (response) {
             console.log(response);
         })
