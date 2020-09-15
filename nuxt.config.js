@@ -39,6 +39,7 @@ export default {
   */
   plugins: [
     './plugins/mixins/validation',
+    './plugins/mixins/user',
     './plugins/axios',
   ],
   /*
@@ -57,7 +58,8 @@ export default {
   modules: [
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    'nuxt-sweetalert2'
   ],
 
   axios: {
@@ -92,6 +94,7 @@ export default {
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
+  ** auth modify see : https://dev.to/stefant123/secure-authentication-in-nuxt-spa-with-laravel-as-back-end-19a9
   */
   build: {
   }

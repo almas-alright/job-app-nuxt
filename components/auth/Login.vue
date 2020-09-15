@@ -5,12 +5,12 @@
         <div class="col-12">
           <div class="text-danger text-center" v-if="errors.abc">{{ errors.abc[0] }}</div>
             <!-- <label for="uname"><b>Username</b></label> -->
-            <input type="text" placeholder="Enter Email" id="uname" :class="{'is-invalid' : errors.email }" v-model="email" required>
+            <input type="text" placeholder="Enter Email" id="uname" :class="{'is-invalid' : errors.email }" v-model="form.email" required>
               <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
             <!-- <label for="psw"><b>Password</b></label> -->
-            <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : errors.password }" v-model="password" required>
+            <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : errors.password }" v-model="form.password" required>
               <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }}</div>
-            <button type="button" v-on:click="submit()">Login</button>
+            <button type="submit" v-on:click="login()">Login</button>
           </div>
       </div>
     </div>
@@ -19,24 +19,39 @@
 
 <script>
 export default {
+  middleware : 'guest',
   data(){
 
       return {
+        form:{
           email: '',
           password: ''
+          }
       }
 
   },
   methods:{
       submit(){
         let that = this
-        this.$axios.$post('/auth/login', {email:that.email, password:that.password})
+        this.$axios.$post('/auth/login', that.form)
         .then(function (response) {
-            console.log(response);
+            if(response.data.success){
+              this.$router.push('user-profile')
+            }
         })
         .catch(function (error) {
             console.log(error);
         });
+      },
+
+      login(){
+        let that = this
+        this.$auth.login({ data: this.form })
+        .then(function (response) {
+            if(response.data.success){
+              that.$router.push({ name : 'index'})
+            }
+        })
       }
   }
 }

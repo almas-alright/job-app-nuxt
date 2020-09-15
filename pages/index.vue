@@ -1,6 +1,7 @@
 <template>
   <div class="">
-      <p>boilerplate nuxt</p>
+      <p>{{ authenticated }}</p>
+      <p>{{ user }}</p>
       <!-- <router-link to="/user/234">user/234</router-link> -->
   </div>
 </template>
