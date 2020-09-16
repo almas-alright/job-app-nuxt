@@ -15,7 +15,6 @@
         </div>
       </div>
     </section>
-    
     <general-info/>
     <social-media/>
     <bank-details/>
@@ -31,6 +30,7 @@ import BankDetails from '~/components/user/profile/BankDetails';
 import TaxDetails from '~/components/user/profile/TaxDetails';
 export default {
   layout: 'main',
+  middleware: 'guest',
   components:{GeneralInfo, SocialMedia, BankDetails},
 }
 </script>

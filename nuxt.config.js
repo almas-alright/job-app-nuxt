@@ -69,7 +69,7 @@ export default {
   // baseURL: 'http://bc.nagadbazaar.com/api/v1', // Live
 
    // proxyHeaders: false,
-   // credentials: false
+  //  credentials: true
  },
 
   auth: {
@@ -78,13 +78,13 @@ export default {
         endpoints:{
           login: { url: '/auth/login', method: 'post', propertyName: 'access_token' },
           logout: { url: '/auth/logout', method: 'get' },
-          user: { url: '/auth/my-profile', method: 'get', propertyName: 'data' },
+          user: { url: '/auth/my-profile', method: 'get', propertyName: 'user' },
         }
       }
     },
     redirect:{
-      login: '/auth/login',
-      home: '/'
+      home: '/',
+      login: '/login'
     }
  },
 
@@ -95,6 +95,7 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   ** auth modify see : https://dev.to/stefant123/secure-authentication-in-nuxt-spa-with-laravel-as-back-end-19a9
+  ** https://www.digitalocean.com/community/tutorials/implementing-authentication-in-nuxtjs-app
   */
   build: {
   }
