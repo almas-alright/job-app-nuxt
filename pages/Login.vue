@@ -5,7 +5,8 @@
         <div class="row align-items-center justify-content-center">
           <div class="col-md-12">
             <div class="mb-5 text-center">
-              <h1 class="text-white font-weight-bold">Login</h1>
+              <h1 v-if="!authenticated" class="text-white font-weight-bold">Login</h1>
+              <h1 v-if="authenticated" class="text-white font-weight-bold">!</h1>
               <!-- <p>Find your dream jobs in our powerful career website template.</p> -->
             </div>
             <div class="search-jobs-form">
@@ -14,7 +15,7 @@
 
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                  <Login />
+                  <Login v-if="!authenticated" />
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
                 </div>
@@ -32,6 +33,7 @@
 import Login from '~/components/auth/Login'
 export default {
   layout: 'main',
+  // middleware: 'auth',
   components:{Login},
   // data() {
   //   return {

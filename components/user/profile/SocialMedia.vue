@@ -55,7 +55,7 @@
               <button type="button" @click="addLink()" class="btn btn-primary btn-sm">add</button>
             </div>
             <div class="offset-sm-8 col-sm-3">
-              <button type="button" v-if="mySocialLinks.length" v-on:click="editForm()" class="btn btn-success btn-sm">save changes</button>
+              <button type="button" v-if="mySocialLinks.length" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
             </div>
           </div>
 
@@ -123,6 +123,10 @@ export default {
           that.socialLinks[socialIndex].disabled = true
         }
       })
+    },
+    saveForm(){
+      this.$emit('saveData')
+      this.showEditForm = !this.showEditForm
     }
   },
   created:function(){

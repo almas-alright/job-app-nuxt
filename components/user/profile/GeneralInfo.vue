@@ -10,16 +10,16 @@ t<template>
         <div v-if="showEditForm" class="row align-items-center">
           <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="form-group">
-                <b-form-input size="sm" placeholder="Enter First Name" v-model="form.firstName"></b-form-input>
+                <b-form-input size="sm" placeholder="Enter First Name" v-model="genInfo.firstName"></b-form-input>
             </div>
             <div class="form-group">
-              <b-form-input size="sm" placeholder="Enter Last Name" v-model="form.lastName"></b-form-input>
+              <b-form-input size="sm" placeholder="Enter Last Name" v-model="genInfo.lastName"></b-form-input>
             </div>
             <div class="form-group">
-                <input type="date" v-model="form.dateOfBirth" class="form-control form-control-sm" aria-describedby="emailHelp" placeholder="Date Of Birth" min="1980-01-01" >
+                <input type="date" v-model="genInfo.dateOfBirth" class="form-control form-control-sm" aria-describedby="emailHelp" placeholder="Date Of Birth" min="1980-01-01" >
             </div>
             <div class="form-group">
-                <select v-model="form.maritalStatus" class="form-control form-control-sm">
+                <select v-model="genInfo.maritalStatus" class="form-control form-control-sm">
                     <option value="?">select marital status</option>
                     <option value="single">single</option>
                     <option value="married">married</option>
@@ -30,7 +30,7 @@ t<template>
                 <b-form-select
                     id="nationality"
                     name="nationality"
-                    v-model="form.nationality"
+                    v-model="genInfo.nationality"
                     :options="nationalities"
                     value-field="name"
                     text-field="name"
@@ -43,22 +43,22 @@ t<template>
             </div>
           </div>
 
-          <div class="col-lg-5 ml-auto">
+          <div class="col-lg-6 ml-auto">
             <div class="form-group">
-              <b-form-input size="sm" :type="'email'" placeholder="mail@example.com" v-model="form._email"></b-form-input>
+              <b-form-input size="sm" :type="'email'" placeholder="mail@example.com" v-model="genInfo._email"></b-form-input>
             </div>
             <div class="form-group">
-                <b-form-input size="sm" placeholder="Enter Contact number" v-model="form.contactNumber"></b-form-input>
+                <b-form-input size="sm" placeholder="Enter Contact number" v-model="genInfo.contactNumber"></b-form-input>
             </div>
             <div class="form-group">
-                <b-form-input size="sm" placeholder="emergency contact" v-model="form.emergencyContactNumber"></b-form-input>
+                <b-form-input size="sm" placeholder="emergency contact" v-model="genInfo.emergencyContactNumber"></b-form-input>
             </div>
             <div class="form-group">
-                <b-form-input size="sm" placeholder="Street Address" v-model="form.streetAddress"></b-form-input>
+                <b-form-input size="sm" placeholder="Street Address" v-model="genInfo.streetAddress"></b-form-input>
             </div>
           </div>
           <div class="col-lg-12">
-            <button type="button" v-on:click="editForm()" class="btn btn-success btn-sm">save changes</button>
+            <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
           </div>
           
         </div>
@@ -67,32 +67,32 @@ t<template>
           <div class="col-lg-6 mb-5 mb-lg-0">
               <dl class="row">
                 <dt class="col-sm-6">Full Name : </dt>
-                <dd class="col-sm-6">{{ form.firstName | isEmpty('first name') }} {{ form.lastName | isEmpty('last name') }}</dd>
+                <dd class="col-sm-6">{{ genInfo.firstName | isEmpty('first name') }} {{ genInfo.lastName | isEmpty('last name') }}</dd>
 
                 <dt class="col-sm-6">Date Of Birth : </dt>
-                <dd class="col-sm-6">{{ form.dateOfBirth | isEmpty('date of birth') }}</dd>
+                <dd class="col-sm-6">{{ genInfo.dateOfBirth | isEmpty('date of birth') }}</dd>
 
                 <dt class="col-sm-6">Marital Status : </dt>
-                <dd class="col-sm-6"> {{ form.maritalStatus | isEmpty('set Marital Status') }} </dd>
+                <dd class="col-sm-6"> {{ genInfo.maritalStatus | isEmpty('set Marital Status') }} </dd>
 
                 <dt class="col-sm-6">Nationality : </dt>
-                <dd class="col-sm-6"> {{ form.nationality | isEmpty('set Nationality') }} </dd>
+                <dd class="col-sm-6"> {{ genInfo.nationality | isEmpty('set Nationality') }} </dd>
               </dl>
           </div>
 
           <div class="col-lg-5 ml-auto">
             <dl class="row">
                 <dt class="col-sm-6">Email : </dt>
-                <dd class="col-sm-6"> {{ form._email | isEmpty('set email') }} </dd>
+                <dd class="col-sm-6"> {{ genInfo._email | isEmpty('set email') }} </dd>
 
                 <dt class="col-sm-6">Contact Number : </dt>
-                <dd class="col-sm-6"> {{ form.contactNumber | isEmpty('set contact number') }} </dd>
+                <dd class="col-sm-6"> {{ genInfo.contactNumber | isEmpty('set contact number') }} </dd>
 
                 <dt class="col-sm-6">Emergency Contact : </dt>
-                <dd class="col-sm-6"> {{ form.emergencyContactNumber | isEmpty('set emergency number') }} </dd>
+                <dd class="col-sm-6"> {{ genInfo.emergencyContactNumber | isEmpty('set emergency number') }} </dd>
 
                 <dt class="col-sm-6">Street Address : </dt>
-                <dd class="col-sm-6"> {{ form.streetAddress | isEmpty('set address') }} </dd>
+                <dd class="col-sm-6"> {{ genInfo.streetAddress | isEmpty('set address') }} </dd>
               </dl>
           </div>
         </div>
@@ -109,7 +109,7 @@ export default {
 
       return {
           showEditForm : false,
-          form:{
+          genInfo:{
             firstName: '',
             lastName: '',
             dateOfBirth: '',
@@ -126,7 +126,11 @@ export default {
   },
   methods:{
       editForm(){
-          this.showEditForm = !this.showEditForm
+        this.showEditForm = !this.showEditForm
+      },
+      saveForm(){
+        this.$emit('saveData')
+        this.showEditForm = !this.showEditForm
       }
   },
   filters: {

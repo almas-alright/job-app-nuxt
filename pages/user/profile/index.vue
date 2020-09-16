@@ -15,10 +15,11 @@
         </div>
       </div>
     </section>
-    <general-info/>
-    <social-media/>
-    <bank-details/>
-    <tax-details/>
+
+    <general-info ref="gInfo" @saveData="saveData($event)" />
+    <social-media ref="socialMedia" @saveData="saveData($event)" />
+    <bank-details ref="bankDetails" @saveData="saveData($event)"/>
+    <tax-details ref="taxDetails" @saveData="saveData($event)" />
 
   </div>
 </template>
@@ -32,6 +33,19 @@ export default {
   layout: 'main',
   middleware: 'guest',
   components:{GeneralInfo, SocialMedia, BankDetails},
+  data(){
+    return {
+      candidate:{}
+    }
+  },
+  methods:{
+    saveData(sd){
+      this.candidate.general_info = this.$refs.gInfo.genInfo
+      this.candidate.social_media = this.$refs.socialMedia.mySocialLinks
+      this.candidate.bank_details = this.$refs.bankDetails.bankData
+      console.log(this.candidate)
+    }
+  }
 }
 </script>
 

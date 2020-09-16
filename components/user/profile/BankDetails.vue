@@ -13,11 +13,11 @@ t<template>
         <div class="col-lg-6 mb-5 mb-lg-0">
           <dl class="row">
             <dt class="col-sm-6">Bank Name : </dt>
-            <dd class="col-sm-6"> {{ bank_name }}</dd>
+            <dd class="col-sm-6"> {{ bankData.bank_name }}</dd>
             <dt class="col-sm-6">BBS number : </dt>
-            <dd class="col-sm-6"> {{ bbs_number }}</dd>
+            <dd class="col-sm-6"> {{ bankData.bbs_number }}</dd>
             <dt class="col-sm-6">Account number : </dt>
-            <dd class="col-sm-6"> {{ account_number }}</dd>
+            <dd class="col-sm-6"> {{ bankData.account_number }}</dd>
           </dl>
         </div>
       </div>
@@ -25,16 +25,16 @@ t<template>
       <div v-if="showEditForm" class="row">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="form-group">
-                    <b-form-input size="sm" placeholder="BANK NAME" v-model="bank_name"></b-form-input>
+                    <b-form-input size="sm" placeholder="BANK NAME" v-model="bankData.bank_name"></b-form-input>
                 </div>
                 <div class="form-group">
-                    <b-form-input size="sm" placeholder="BBS NUMBER" v-model="bbs_number"></b-form-input>
+                    <b-form-input size="sm" placeholder="BBS NUMBER" v-model="bankData.bbs_number"></b-form-input>
                 </div>
                 <div class="form-group">
-                    <b-form-input size="sm" placeholder="ACCOUNT NUMBER" v-model="account_number"></b-form-input>
+                    <b-form-input size="sm" placeholder="ACCOUNT NUMBER" v-model="bankData.account_number"></b-form-input>
                 </div>
                 <div class="form-group">
-                    <button type="button" v-on:click="editForm()" class="btn btn-success btn-sm">save changes</button>
+                    <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
                 </div>  
             </div>
       </div>
@@ -50,16 +50,21 @@ export default {
   data(){
     return {
       showEditForm : false,
-      bbs_number: '',
-      bank_name: '',
-      account_number: ''
+      bankData:{
+        bbs_number: '',
+        bank_name: '',
+        account_number: ''
+      }
     }
   },
   methods:{
     editForm(){
       this.showEditForm = !this.showEditForm
     },
-
+    saveForm(){
+      this.$emit('saveData')
+      this.showEditForm = !this.showEditForm
+    }
   }
 }
 </script>
