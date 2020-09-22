@@ -59,11 +59,17 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    'nuxt-sweetalert2'
+    'nuxt-sweetalert2',
+    '@nuxtjs/fontawesome',
   ],
-
+  fontawesome:{
+      component: 'fa',
+      icons:{
+        solid:true
+      }
+  },
   axios: {
- 
+
     // baseURL: 'http://127.0.0.1:8000/api/v1'
     baseURL: 'http://127.0.0.1:8000/api/v1', // Live
   // baseURL: 'http://bc.nagadbazaar.com/api/v1', // Live
@@ -74,7 +80,7 @@ export default {
 
   auth: {
     strategies: {
-      local: { 
+      local: {
         endpoints:{
           login: { url: '/auth/login', method: 'post', propertyName: 'access_token' },
           logout: { url: '/auth/logout', method: 'get' },

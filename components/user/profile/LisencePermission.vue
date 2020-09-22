@@ -5,31 +5,29 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-            <h4>Social Media Profile  <button type="button" v-if="!showEditForm" @click="editForm()" class="btn btn-primary btn-sm">edit</button></h4>
+            <h4>Lisence Information  <button type="button" v-if="!showEditForm" @click="editForm()" class="btn btn-primary btn-sm">edit</button></h4>
         </div>
       </div>
 
       <div v-if="!showEditForm" class="row">
         <div class="col-lg-6 mb-5 mb-lg-0">
-          <dl v-for="(mySocialLink, indexV) in mySocialLinks" :key="indexV" class="row">
-            <dt class="col-sm-6">{{ mySocialLink.name }} : </dt>
-            <dd class="col-sm-6">{{ mySocialLink.url }}</dd>
+          <dl v-for="(mylisence, indexV) in mylisences" :key="indexV" class="row">
+            <dt class="col-sm-6">{{ mylisence.name }} : </dt>
+            <dd class="col-sm-6">{{ mylisence.url }}</dd>
           </dl>
         </div>
       </div>
 
       <div v-if="showEditForm" class="row">
-        
         <div class="col-lg-6 mb-5 mb-lg-0">
-
-          <div v-for="(mySocialLink, index) in mySocialLinks" :key="index" class="form-group">
+          <div v-for="(mylisence, index) in mylisences" :key="index" class="form-group">
             <div class="row">
               <div class="col-sm-3">
                 <b-form-select
                     id="nationality"
                     name="nationality"
-                    v-model="mySocialLink.name"
-                    :options="socialLinks"
+                    v-model="mylisence.name"
+                    :options="lisences"
                     value-field="name"
                     text-field="name"
                     class="capitalize"
@@ -42,20 +40,20 @@
                   </b-form-select>
               </div>
               <div class="col-sm-8">
-                <b-form-input size="sm" placeholder="Enter url" v-model="mySocialLink.url"></b-form-input>
+                <b-form-input size="sm" placeholder="Enter url" v-model="mylisence.url"></b-form-input>
               </div>
               <div class="col-sm-1">
-                <button type="button" @click="removeLink(index)" class="btn btn-danger btn-sm">x</button>
+                <button type="button" @click="removeLisence(index)" class="btn btn-danger btn-sm">x</button>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-sm-1">
-              <button type="button" @click="addLink()" class="btn btn-primary btn-sm">add</button>
+              <button type="button" @click="addLisence()" class="btn btn-primary btn-sm">add</button>
             </div>
             <div class="offset-sm-8 col-sm-3">
-              <button type="button" v-if="mySocialLinks.length" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
+              <button type="button" v-if="mylisences.length" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
             </div>
           </div>
 
@@ -74,53 +72,51 @@ export default {
   data(){
     return {
       showEditForm : false,
-      socialLinks:[
-        {name: 'linkedin', url: null, disabled: false},
-        {name: 'facebook', url: null, disabled: false},
-        {name: 'twitter', url: null, disabled: false},
-        {name: 'instagram', url: null, disabled: false},
-        {name: 'youtube', url: null, disabled: false},
+      lisences:[
+        {name: 'C (car)', image: null, disabled: false},
+        {name: 'MR (medium rigid)', image: null, disabled: false},
+        {name: 'HR (heavy rigid)', image: null, disabled: false},
       ],
-      mySocialLinks: []
+      mylisences: []
     }
   },
   methods:{
     editForm(){
       this.showEditForm = !this.showEditForm
     },
-    addLink(){
-      if(this.mySocialLinks.length < 5){
-        this.mySocialLinks.push({name: null, url:'', disabled:null})
+    addLisence(){
+      if(this.mylisences.length < 5){
+        this.mylisences.push({name: null, image:'', disabled:null})
       } else {
         this.$swal.fire('You Can not add more links')
       }
     },
-    removeLink(index){
-      let removeQue = this.mySocialLinks[index].name
+    removeLisence(index){
+      let removeQue = this.mylisences[index].name
       if(removeQue){
-        let socialIndex = _.findIndex(this.socialLinks, function(o) { return o.name == removeQue });
-        this.socialLinks[socialIndex].disabled = false
+        let lisenceIndex = _.findIndex(this.lisences, function(o) { return o.name == removeQue });
+        this.lisences[lisenceIndex].disabled = false
       }
-      this.mySocialLinks.splice(index, 1)
+      this.mylisences.splice(index, 1)
     },
     checkIfReplicated(index){
-      let selectedVal = this.mySocialLinks[index].name
+      let selectedVal = this.mylisences[index].name
       console.log(selectedVal)
       if(selectedVal){
-        let socialSize = _.filter(this.mySocialLinks, social => social.name === selectedVal);
+        let socialSize = _.filter(this.mylisences, social => social.name === selectedVal);
         this.disableUsed()
         if(socialSize.length > 1){
           this.$swal.fire('You already added '+selectedVal)
-          this.mySocialLinks[index].name = null
+          this.mylisences[index].name = null
         }
       }
     },
     disableUsed(){
       let that = this;
-      _.forEach(this.mySocialLinks, function(x){
+      _.forEach(this.mylisences, function(x){
         if(x.name){
-          let socialIndex = _.findIndex(that.socialLinks, function(o) { return o.name == x.name });
-          that.socialLinks[socialIndex].disabled = true
+          let lisenceIndex = _.findIndex(that.lisences, function(o) { return o.name == x.name });
+          that.lisences[lisenceIndex].disabled = true
         }
       })
     },

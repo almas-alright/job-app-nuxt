@@ -21,19 +21,19 @@ t<template>
       <div v-if="showEditForm" class="row">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="form-group">
-                    <b-form-input size="sm" placeholder="TFN NUMBER" v-model="tfn_number"></b-form-input>
+                    <b-form-input size="sm" placeholder="TFN NUMBER" v-model="taxData.tfn_number"></b-form-input>
                 </div>
 
                 <div class="form-group">
-                    <b-form-select v-model="has_abn.status" :options="abn_options" size="sm" class="mt-3"></b-form-select>
+                    <b-form-select v-model="taxData.has_abn.status" :options="abn_options" size="sm" class="mt-3"></b-form-select>
                 </div>
-                <div v-if="has_abn.status" class="form-group">
-                    <b-form-input size="sm" v-model="has_abn.abn_number" placeholder="ABN NUMBER"></b-form-input>
+                <div v-if="taxData.has_abn.status" class="form-group">
+                    <b-form-input size="sm" v-model="taxData.has_abn.abn_number" placeholder="ABN NUMBER"></b-form-input>
                 </div>
-                <div v-if="!has_abn.status" class="form-group">
+                <div v-if="!taxData.has_abn.status" class="form-group">
                     <b-form-checkbox
                         id="checkbox-1"
-                        v-model="has_abn.abn_accept"
+                        v-model="taxData.has_abn.abn_accept"
                         name="checkbox-1"
                         value="accepted"
                         unchecked-value="not_accepted"
@@ -46,15 +46,15 @@ t<template>
                 </div>
 
                 <div class="form-group">
-                    <b-form-select v-model="has_super_number.status" :options="super_number_options" size="sm" class="mt-3"></b-form-select>
+                    <b-form-select v-model="taxData.has_super_number.status" :options="super_number_options" size="sm" class="mt-3"></b-form-select>
                 </div>
-                <div v-if="has_super_number.status" class="form-group">
-                    <b-form-input size="sm" v-model="has_super_number.super_number" placeholder="ABN NUMBER"></b-form-input>
+                <div v-if="taxData.has_super_number.status" class="form-group">
+                    <b-form-input size="sm" v-model="taxData.has_super_number.super_number" placeholder="ABN NUMBER"></b-form-input>
                 </div>
-                <div v-if="!has_super_number.status" class="form-group">
+                <div v-if="!taxData.has_super_number.status" class="form-group">
                     <b-form-checkbox
                         id="checkbox-1"
-                        v-model="has_super_number.super_number_accept"
+                        v-model="taxData.has_super_number.super_number_accept"
                         name="checkbox-sn"
                         value="accepted"
                         unchecked-value="not_accepted"
@@ -64,7 +64,7 @@ t<template>
                 </div>
                 
                 <div class="form-group">
-                    <button type="button" v-on:click="editForm()" class="btn btn-success btn-sm">save changes</button>
+                    <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
                 </div>  
             </div>
       </div>
@@ -80,22 +80,24 @@ export default {
   data(){
     return {
       showEditForm : false,
-      tfn_number: '',
-      has_abn: {
-          status: null,
-          abn_number: '',
-          abn_accept: 'not_accepted'
+      taxData:{
+        tfn_number: '',
+        has_abn: {
+            status: null,
+            abn_number: '',
+            abn_accept: 'not_accepted'
+        },
+        has_super_number: {
+            status: null,
+            super_number: '',
+            super_number_accept: 'accepted'
+        }
       },
       abn_options :[
         { value: null, text: 'Please select ABN status' },
         { value: true, text: 'have an ABN' },
         { value: false, text: 'dont have an ABN' }
       ],
-      has_super_number: {
-          status: null,
-          super_number: '',
-          super_number_accept: 'accepted'
-      },
       super_number_options :[
         { value: null, text: 'Please select Super Number status' },
         { value: true, text: 'have Super Number' },
@@ -107,6 +109,11 @@ export default {
     editForm(){
       this.showEditForm = !this.showEditForm
     },
+
+    saveForm(){
+      this.$emit('saveData')
+      this.showEditForm = !this.showEditForm
+    }
 
   }
 }
