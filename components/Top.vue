@@ -18,12 +18,15 @@
                 <nuxt-link to="/register">register</nuxt-link>
               </li>
               <li v-if="authenticated">
-                <nuxt-link to="/user/profile">my profile</nuxt-link>
+                <nuxt-link to="/my/profile">my profile</nuxt-link>
+              </li>
+              <li v-if="authenticated">
+                <nuxt-link to="/my/preferences">my preferences</nuxt-link>
               </li>
               <li v-if="authenticated">
                 <a href="javascript:" @click.prevent="logout()">logout</a>
               </li>
-              
+
             </ul>
           </nav>
           <!-- class="d-lg-none" -->
@@ -52,10 +55,10 @@ export default {
 </script>
 
 <style scoped>
-  
+
   .site-navbar .site-navigation .site-menu .nuxt-link-exact-active {
     color: #fff;
-    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.79); 
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.79);
     display: inline-block;
     padding: 5px 20px;
   }

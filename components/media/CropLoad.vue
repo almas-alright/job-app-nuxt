@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <input
       ref="input"
       type="file"
@@ -21,6 +21,7 @@
         </div>
         <div class="actions">
           <a
+            v-if="imgSrc"
             href="#"
             role="button"
             @click.prevent="cropImage"
@@ -34,7 +35,7 @@
           >
             Reset
           </a>
-          
+
           <a
             href="#"
             role="button"
@@ -43,11 +44,12 @@
             Upload Image
           </a>
           <a
+            v-if="imgSrc"
             href="#"
             role="button"
             @click.prevent="uploadFile"
           >
-            Save Image
+            Save Image to Library
           </a>
         </div>
 
@@ -92,14 +94,14 @@ export default {
       // get image data for post processing, e.g. upload or setting image src
       this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
     },
-    
+
     reset() {
       this.$refs.cropper.reset();
     },
-    
+
     setImage(e) {
       const file = e.target.files[0];
-      this.filename = file.name 
+      this.filename = file.name
       this.fileUploaded = true
       if (file.type.indexOf('image/') === -1) {
         alert('Please select an image file');
@@ -110,14 +112,14 @@ export default {
         reader.onload = (event) => {
           this.imgSrc = event.target.result;
           // rebuild cropperjs with the updated source
-          this.$refs.cropper.replace(event.target.result);
+          // this.$refs.cropper.replace(event.target.result);
           this.cropImg = this.imgSrc
         };
         reader.readAsDataURL(file);
       } else {
         alert('Sorry, FileReader API not supported');
       }
-    
+
     },
     showFileChooser() {
       this.$refs.input.click();
@@ -138,7 +140,9 @@ export default {
         return new File([u8arr], filename, { type: mime })
     },
     uploadFile(){
-       const base64 = this.cropImg
+      console.log(this.cropImg)
+       let base64 = this.cropImg
+        let that = this
         fetch(base64)
         .then(res => res.blob())
         .then(blob => {
@@ -149,7 +153,9 @@ export default {
                 headers: { 'Content-Type': 'multipart/form-data' }
             }
             this.$axios.$post('/media/up-media', fd, config).then(response => {
-            console.log(response)
+              console.log(response.data)
+              this.$store.dispatch('images/setMedia', response.data)
+              that.$emit('imageUploaded')
             })
         })
     },
@@ -159,7 +165,6 @@ export default {
         onlyName = onlyName.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
         .map(x => x.toLowerCase())
         .join('_');
-
         return onlyName+"."+extension
     }
   },
@@ -234,7 +239,5 @@ textarea {
 .cropped-image img {
   max-width: 100%;
 }
-.img-cropper{
-  min-height: 250px;
-}
+
 </style>

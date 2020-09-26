@@ -11,10 +11,11 @@
 
       <div v-if="!showEditForm" class="row">
         <div class="col-lg-6 mb-5 mb-lg-0">
-          <dl v-for="(mylisence, indexV) in mylisences" :key="indexV" class="row">
-            <dt class="col-sm-6">{{ mylisence.name }} : </dt>
-            <dd class="col-sm-6">{{ mylisence.url }}</dd>
-          </dl>
+          <b-table striped hover :items="mylisences">
+            <template v-slot:cell(image)="items">
+              <b-img class="img-border img-table" :src="getImage(items.value, 'thumb')" fluid alt="Fluid image"></b-img>
+            </template>
+          </b-table>
         </div>
       </div>
 
@@ -39,8 +40,11 @@
                   </template>
                   </b-form-select>
               </div>
-              <div class="col-sm-8">
-                <b-form-input size="sm" placeholder="Enter url" v-model="mylisence.url"></b-form-input>
+              <div class="col-sm-2">
+                <media-browser :size="index" v-model="mylisence.image"></media-browser>
+              </div>
+              <div class="col-sm-4">
+                <b-form-input size="sm" type="date" placeholder="Expiry Date" v-model="mylisence.expiry_date"></b-form-input>
               </div>
               <div class="col-sm-1">
                 <button type="button" @click="removeLisence(index)" class="btn btn-danger btn-sm">x</button>
@@ -68,16 +72,20 @@
 
 <script>
 import _ from 'lodash'
+import MediaBrowser from '~/components/media/MediaBrowser';
+import Commons from '~/mixins/common'
 export default {
+  mixins:[Commons],
+  components:{ MediaBrowser },
   data(){
     return {
       showEditForm : false,
       lisences:[
-        {name: 'C (car)', image: null, disabled: false},
-        {name: 'MR (medium rigid)', image: null, disabled: false},
-        {name: 'HR (heavy rigid)', image: null, disabled: false},
+        {name: 'C (car)', image: require('@/assets/images/placeholder.png'), disabled: false},
+        {name: 'MR (medium rigid)', image: require('@/assets/images/placeholder.png'), disabled: false},
+        {name: 'HR (heavy rigid)', image: require('@/assets/images/placeholder.png'), disabled: false},
       ],
-      mylisences: []
+      mylisences: [{name: null, image:require('@/assets/images/placeholder.png'), expiry_date: null}]
     }
   },
   methods:{
@@ -86,7 +94,7 @@ export default {
     },
     addLisence(){
       if(this.mylisences.length < 5){
-        this.mylisences.push({name: null, image:'', disabled:null})
+        this.mylisences.push({ name: null, image:require('@/assets/images/placeholder.png'),  expiry_date: null })
       } else {
         this.$swal.fire('You Can not add more links')
       }
@@ -94,7 +102,7 @@ export default {
     removeLisence(index){
       let removeQue = this.mylisences[index].name
       if(removeQue){
-        let lisenceIndex = _.findIndex(this.lisences, function(o) { return o.name == removeQue });
+        let lisenceIndex = _.findIndex(this.lisences, function(o) { return o.name === removeQue });
         this.lisences[lisenceIndex].disabled = false
       }
       this.mylisences.splice(index, 1)

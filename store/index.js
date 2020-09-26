@@ -9,23 +9,32 @@ export const getters = {
       return state.auth.user
     },
 
-    
+
   }
-  
+
   export const state = () => ({
     token: null,
+    medias: []
   });
-  
+
   export const mutations = {
     SET_TOKEN(state, token) {
       state.token = token;
     },
-  
+
     REMOVE_TOKEN(state) {
       state.token = null;
-    }
+    },
+
+    // addMedia(state, item) {
+    //   state.medias.push(item)
+    // },
+    // removeMedias(state) {
+    //   state.medias = []
+    //   // state.medias.splice(state.medias.indexOf(item), 1)
+    // }
   };
-  
+
   export const actions = {
     setToken({commit}, {token, expiresIn}) {
       this.$axios.setToken(token, 'Bearer');
@@ -33,12 +42,12 @@ export const getters = {
       cookies.set('x-access-token', token, {expires: expiryTime});
       commit('SET_TOKEN', token);
     },
-  
+
     async refreshToken({dispatch}) {
       const {token, expiresIn} = await this.$axios.$post('refresh-token');
       dispatch('setToken', {token, expiresIn});
     },
-  
+
     logout({commit}) {
       this.$axios.setToken(false);
       cookies.remove('x-access-token');

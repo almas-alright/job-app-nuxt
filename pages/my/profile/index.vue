@@ -36,8 +36,9 @@ import WorkExperience from '~/components/user/profile/WorkExperience';
 import EducationQualification from '~/components/user/profile/EducationQualification';
 import ProfessionalCertificate from '~/components/user/profile/ProfessionalCertificate';
 import LisencePermission from '~/components/user/profile/LisencePermission';
-
+import Commons from '~/mixins/common'
 export default {
+  mixins:[Commons],
   layout: 'main',
   middleware: 'guest',
   components:{
@@ -66,7 +67,18 @@ export default {
       this.candidate.professional_certificate = this.$refs.proCertificate.professional_certificate
       this.candidate.lisence = this.$refs.lisence.mylisences
       console.log(this.candidate)
-    }
+    },
+    loadAllImages(){
+      let that = this
+      this.removeImages()
+      this.$axios.get('/media/get-media/0').then(response => {
+        // that.addImage(response.data.data)
+        that.$store.dispatch('images/setMedias', response.data.data)
+      })
+    },
+  },
+  mounted() {
+     this.loadAllImages()
   }
 }
 </script>

@@ -11,12 +11,16 @@
 
       <div v-if="!showEditForm" class="row">
         <div class="col-lg-12 mb-5 mb-lg-0">
-          <b-table striped hover :items="mycertificates"></b-table>
+          <b-table striped hover :items="mycertificates">
+            <template v-slot:cell(certificate_image)="items">
+              <b-img class="img-border img-table" :src="getImage(items.value, 'thumb')" fluid alt="Fluid image"></b-img>
+            </template>
+          </b-table>
         </div>
       </div>
 
       <div v-if="showEditForm" class="row">
-        
+
         <div class="col-lg-12 mb-5 mb-lg-0">
 
           <div v-for="(certificate, index) in mycertificates" :key="index" class="form-group">
@@ -25,10 +29,10 @@
                 <b-form-select
                     id="nationality"
                     name="nationality"
-                    v-model="certificate.name_of_exam"
+                    v-model="certificate.course"
                     :options="certificates"
-                    value-field="name_of_exam"
-                    text-field="name_of_exam"
+                    value-field="course"
+                    text-field="course"
                     class="capitalize"
                     size="sm"
                     @change="checkIfReplicated(index)"
@@ -39,16 +43,16 @@
                   </b-form-select>
               </div>
               <div class="col-sm-3">
-                <b-form-input size="sm" placeholder="Institute" v-model="certificate.name_of_institute"></b-form-input>
+                <b-form-input size="sm" placeholder="Institute" v-model="certificate.institute"></b-form-input>
               </div>
               <div class="col-sm-3">
-                <b-form-input size="sm" placeholder="Enter url" v-model="certificate.name_of_subject"></b-form-input>
+                <b-form-input size="sm" placeholder="Subject Name" v-model="certificate.subject"></b-form-input>
               </div>
                <div class="col-sm-2">
-                <b-form-input size="sm" placeholder="Passing Year" :type="'date'" v-model="certificate.passing_year"></b-form-input>
+                <b-form-input size="sm" placeholder="Passing Year" v-model="certificate.passing_year"></b-form-input>
               </div>
               <div class="col-sm-1">
-                <b-form-input size="sm" placeholder="result" v-model="certificate.result"></b-form-input>
+                <media-browser :size="index" v-model="certificate.certificate_image"></media-browser>
               </div>
               <div class="col-sm-1">
                 <button type="button" @click="removeCert(index)" class="btn btn-danger btn-sm">x</button>
@@ -76,19 +80,23 @@
 
 <script>
 import _ from 'lodash'
+import MediaBrowser from '~/components/media/MediaBrowser';
+import commons from '~/mixins/common'
 export default {
+  mixins:[commons],
+  components:{ MediaBrowser },
   data(){
     return {
       showEditForm : false,
       certificates:[
-        {name_of_exam: 'masters', disabled: false},
-        {name_of_exam: 'masters (dependent)', disabled: false},
-        {name_of_exam: 'bachelors', disabled: false},
-        {name_of_exam: 'bachelors (dependent)', disabled: false},
-        {name_of_exam: 'diploma', disabled: false},
-        {name_of_exam: 'others', disabled: false},
+        {course: 'masters', disabled: false},
+        {course: 'masters (dependent)', disabled: false},
+        {course: 'bachelors', disabled: false},
+        {course: 'bachelors (dependent)', disabled: false},
+        {course: 'diploma', disabled: false},
+        {course: 'others', disabled: false},
       ],
-      mycertificates: [{name_of_exam: null, name_of_institute: null, name_of_subject: '', result: '', passing_year: ''}]
+      mycertificates: [{course: null, institute: null, subject: '', certificate_image: require('@/assets/images/placeholder.png'), passing_year: ''}]
     }
   },
   methods:{
@@ -97,36 +105,36 @@ export default {
     },
     addCert(){
       if(this.mycertificates.length < 6){
-        this.mycertificates.push({name_of_exam: null, name_of_institute: null, name_of_subject: '', result: '', passing_year: ''})
+        this.mycertificates.push({course: null, institute: null, subject: '', certificate_image: require('@/assets/images/placeholder.png'), passing_year: ''})
       } else {
         this.$swal.fire('You Can not add more links')
       }
     },
     removeCert(index){
-      let removeQue = this.mycertificates[index].name_of_exam
+      let removeQue = this.mycertificates[index].course
       if(removeQue){
-        let certIndex = _.findIndex(this.certificates, function(o) { return o.name_of_exam == removeQue });
+        let certIndex = _.findIndex(this.certificates, function(o) { return o.course == removeQue });
         this.certificates[certIndex].disabled = false
       }
       this.mycertificates.splice(index, 1)
     },
     checkIfReplicated(index){
-      let selectedVal = this.mycertificates[index].name_of_exam
+      let selectedVal = this.mycertificates[index].course
       console.log(selectedVal)
       if(selectedVal){
-        let certSize = _.filter(this.mycertificates, certf => certf.name_of_exam === selectedVal);
+        let certSize = _.filter(this.mycertificates, certf => certf.course === selectedVal);
         this.disableUsed()
         if(certSize.length > 1){
           this.$swal.fire('You already added '+selectedVal)
-          this.mycertificates[index].name_of_exam = null
+          this.mycertificates[index].course = null
         }
       }
     },
     disableUsed(){
       let that = this;
       _.forEach(this.mycertificates, function(x){
-        if(x.name_of_exam){
-          let certIndex = _.findIndex(that.certificates, function(o) { return o.name_of_exam == x.name_of_exam });
+        if(x.course){
+          let certIndex = _.findIndex(that.certificates, function(o) { return o.course === x.course });
           that.certificates[certIndex].disabled = true
         }
       })
@@ -142,3 +150,8 @@ export default {
   }
 }
 </script>
+<style>
+  .img-table{
+    max-width: 50px;
+  }
+</style>

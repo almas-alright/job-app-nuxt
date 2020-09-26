@@ -40,6 +40,7 @@ export default {
   plugins: [
     './plugins/mixins/validation',
     './plugins/mixins/user',
+    './plugins/mixins/images',
     './plugins/axios',
   ],
   /*

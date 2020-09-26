@@ -20,14 +20,25 @@
                     <div class="col-lg-3 mb-5 mb-lg-0">
                         <b-form-input v-model="experience.company_name" placeholder="Company Name" ></b-form-input>
                     </div>
-                    <div class="col-lg-3 mb-5 mb-lg-0">
+                    <div class="col-lg-2 mb-5 mb-lg-0">
                         <b-form-input v-model="experience.reference_number" placeholder="Referance Number" ></b-form-input>
                     </div>
-                    <div class="col-lg-3 mb-5 mb-lg-0">
+                    <div class="col-lg-2 mb-5 mb-lg-0">
                         <b-form-input v-model="experience.job_title" placeholder="Job Title" ></b-form-input>
                     </div>
                     <div class="col-lg-2 mb-5 mb-lg-0">
-                        <b-form-input v-model="experience.duration" placeholder="Duration (year/s)" :type="'number'" ></b-form-input>
+                        <b-form-input v-model="experience.duration" placeholder="End At" type="date" ></b-form-input>
+                    </div>
+                    <div class="col-lg-2 mb-5 mb-lg-0">
+                      <b-form-checkbox
+                        id="checkbox-1"
+                        v-model="experience.is_current"
+                        name="checkbox-1"
+                        value="continuing"
+                        unchecked-value="resigned"
+                      >
+                        continuing
+                      </b-form-checkbox>
                     </div>
                     <div class="col-lg-1 mb-5 mb-lg-0">
                         <button type="button" @click="removeJob(index)" class="btn btn-danger btn-sm">x</button>
@@ -57,7 +68,7 @@ export default {
     data(){
         return {
             showEditForm : false,
-            experiences : [{company_name: '', reference_number: '', job_title: '', duration: ''}]
+            experiences : [{company_name: '', reference_number: '', job_title: '', end_at: '', is_current: 'resigned'}]
         }
     },
     methods:{
@@ -69,7 +80,7 @@ export default {
             this.showEditForm = !this.showEditForm
         },
         addJob(){
-            this.experiences.push({name: null, value:null})
+            this.experiences.push({company_name: '', reference_number: '', job_title: '', end_at: '', is_current: 'resigned'})
         },
         removeJob(index){
             this.experiences.splice(index, 1)

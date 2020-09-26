@@ -46,21 +46,18 @@ export default {
       });
     },
 
-    login(){
+    async login(){
       let that = this
       this.$auth.login({ data: that.form })
       // that.$router.push({ name : 'user-profile'})
       .then(function (response) {
           if(response.data.success){
-            // console.log(response.data.access_token)
-            // let token  = response.data.access_token
-            // let expiery = response.data.expires_in
-            // that.$store.dispatch('setToken', { token, expiery});
-            // console.log({ token, expiery})
-            that.$router.push({ name : 'user-profile'})
+            that.$router.push({ name : 'my-profile'})
+
           }
       })
-    }
+    },
+
   }
 }
 </script>
