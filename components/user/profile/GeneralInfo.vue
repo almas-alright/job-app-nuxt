@@ -3,7 +3,7 @@ t<template>
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-12">
-              <h4>Personal Details  <button type="button" v-if="!showEditForm" v-on:click="editForm()" class="btn btn-primary btn-sm">edit</button></h4>
+              <h4>Personal Details  <b-button pill size="sm" variant="info" v-if="!showEditForm" v-on:click="editForm()">edit</b-button></h4>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ t<template>
           <div class="col-lg-12">
             <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
           </div>
-          
+
         </div>
 
         <div v-if="!showEditForm" class="row align-items-center">

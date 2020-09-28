@@ -23,7 +23,11 @@
     <work-experience ref="workExperience" @saveData="saveData($event)" />
     <education-qualification ref="eduQualification" @saveData="saveData($event)" />
     <professional-certificate ref="proCertificate" @saveData="saveData($event)" />
-    <lisence-permission ref="lisence" @saveData="saveData($event)" />
+    <license-permission ref="lisence" @saveData="saveData($event)" />
+    <availability></availability>
+    <job-preference></job-preference>
+    <transportation></transportation>
+    <terms-conditions></terms-conditions>
   </div>
 </template>
 
@@ -35,7 +39,11 @@ import TaxDetails from '~/components/user/profile/TaxDetails';
 import WorkExperience from '~/components/user/profile/WorkExperience';
 import EducationQualification from '~/components/user/profile/EducationQualification';
 import ProfessionalCertificate from '~/components/user/profile/ProfessionalCertificate';
-import LisencePermission from '~/components/user/profile/LisencePermission';
+import LicensePermission from '~/components/user/profile/LicensePermission';
+import Availability from '@/components/user/preference/Availability';
+import JobPreference from '@/components/user/preference/JobPreference';
+import Transportation from "@/components/user/preference/Transportation";
+import TermsConditions from "@/components/auth/TermsConditions";
 import Commons from '~/mixins/common'
 export default {
   mixins:[Commons],
@@ -49,7 +57,11 @@ export default {
     WorkExperience,
     EducationQualification,
     ProfessionalCertificate,
-    LisencePermission
+    LicensePermission,
+    Availability,
+    JobPreference,
+    Transportation,
+    TermsConditions
   },
   data(){
     return {

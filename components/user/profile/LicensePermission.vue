@@ -5,13 +5,16 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-            <h4>Lisence Information  <button type="button" v-if="!showEditForm" @click="editForm()" class="btn btn-primary btn-sm">edit</button></h4>
+            <h4>Licence Information  <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button></h4>
         </div>
       </div>
 
       <div v-if="!showEditForm" class="row">
         <div class="col-lg-6 mb-5 mb-lg-0">
-          <b-table striped hover :items="mylisences">
+          <b-table striped hover :items="mylisences" :fields="fields">
+            <template v-slot:cell(value)="items">
+              {{ getLicenseName(items.value) }}
+            </template>
             <template v-slot:cell(image)="items">
               <b-img class="img-border img-table" :src="getImage(items.value, 'thumb')" fluid alt="Fluid image"></b-img>
             </template>
@@ -20,25 +23,34 @@
       </div>
 
       <div v-if="showEditForm" class="row">
-        <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="col-lg-8 mb-5 mb-lg-0">
           <div v-for="(mylisence, index) in mylisences" :key="index" class="form-group">
             <div class="row">
+              <div class="col-sm-2">
+                <b-form-select
+                  v-model="mylisence.license_type"
+                  :options="lisence_types"
+                  @change="resetSelected(index)"
+                  class="capitalize"
+                  value-field="value"
+                  size="sm"
+                >
+                </b-form-select>
+              </div>
               <div class="col-sm-3">
                 <b-form-select
-                    id="nationality"
-                    name="nationality"
-                    v-model="mylisence.name"
-                    :options="lisences"
-                    value-field="name"
+                    v-model="mylisence.value"
+                    :options="licenseNameOfGroup(mylisence.license_type)"
+                    value-field="value"
                     text-field="name"
                     class="capitalize"
                     size="sm"
                     @change="checkIfReplicated(index)"
                   >
                   <template v-slot:first>
-                    <b-form-select-option :value="'null'" disabled>select</b-form-select-option>
+                    <b-form-select-option :value="'null'" disabled>select licence</b-form-select-option>
                   </template>
-                  </b-form-select>
+                </b-form-select>
               </div>
               <div class="col-sm-2">
                 <media-browser :size="index" v-model="mylisence.image"></media-browser>
@@ -72,6 +84,7 @@
 
 <script>
 import _ from 'lodash'
+import license_list from '~/static/license_list'
 import MediaBrowser from '~/components/media/MediaBrowser';
 import Commons from '~/mixins/common'
 export default {
@@ -80,12 +93,19 @@ export default {
   data(){
     return {
       showEditForm : false,
-      lisences:[
-        {name: 'C (car)', image: require('@/assets/images/placeholder.png'), disabled: false},
-        {name: 'MR (medium rigid)', image: require('@/assets/images/placeholder.png'), disabled: false},
-        {name: 'HR (heavy rigid)', image: require('@/assets/images/placeholder.png'), disabled: false},
-      ],
-      mylisences: [{name: null, image:require('@/assets/images/placeholder.png'), expiry_date: null}]
+      fields:[
+        { key: 'value', label:'Licence Name' },
+        { key: 'expiry_date', label:'Expiry Date' },
+        { key: 'image', label:'Licence Image' },
+        ],
+      lisence_types: [
+        {text: 'Select type', value: null},
+        {text:'Driving', value: 'driving_license'},
+        {text:'Crane Operation', value: 'cranes'},
+        {text:'High Risk Work', value: 'high_risk_work'}
+        ],
+      lisences: license_list,
+      mylisences: [{ value: null, image:require('@/assets/images/placeholder.png'), expiry_date: null, license_type: null }]
     }
   },
   methods:{
@@ -94,36 +114,55 @@ export default {
     },
     addLisence(){
       if(this.mylisences.length < 5){
-        this.mylisences.push({ name: null, image:require('@/assets/images/placeholder.png'),  expiry_date: null })
+        this.mylisences.push({ value: null, image:require('@/assets/images/placeholder.png'),  expiry_date: null, license_type: null })
       } else {
         this.$swal.fire('You Can not add more links')
       }
     },
     removeLisence(index){
-      let removeQue = this.mylisences[index].name
+      let removeQue = this.mylisences[index].value
       if(removeQue){
-        let lisenceIndex = _.findIndex(this.lisences, function(o) { return o.name === removeQue });
+        let lisenceIndex = _.findIndex(this.lisences, function(o) { return o.value === removeQue });
         this.lisences[lisenceIndex].disabled = false
       }
       this.mylisences.splice(index, 1)
     },
+    licenseNameOfGroup(type){
+      let ln = _.filter(this.lisences, function(n) {
+        return n.type === type;
+      })
+      if(type){
+        return ln
+      } else {
+        return []
+      }
+    },
+    getLicenseName(lisence_code){
+      let name = ''
+      if(lisence_code){
+        name =_.result(_.find(this.lisences, function(ls) {
+          return ls.value === lisence_code;
+        }), 'name');
+      }
+      return name
+    },
     checkIfReplicated(index){
-      let selectedVal = this.mylisences[index].name
-      console.log(selectedVal)
+      let selectedVal = this.mylisences[index].value
+      // console.log(selectedVal)
       if(selectedVal){
-        let socialSize = _.filter(this.mylisences, social => social.name === selectedVal);
+        let socialSize = _.filter(this.mylisences, social => social.value === selectedVal);
         this.disableUsed()
         if(socialSize.length > 1){
           this.$swal.fire('You already added '+selectedVal)
-          this.mylisences[index].name = null
+          this.mylisences[index].value = null
         }
       }
     },
     disableUsed(){
       let that = this;
       _.forEach(this.mylisences, function(x){
-        if(x.name){
-          let lisenceIndex = _.findIndex(that.lisences, function(o) { return o.name == x.name });
+        if(x.value){
+          let lisenceIndex = _.findIndex(that.lisences, function(o) { return o.value === x.value });
           that.lisences[lisenceIndex].disabled = true
         }
       })
@@ -131,6 +170,9 @@ export default {
     saveForm(){
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
+    },
+    resetSelected(index){
+      this.mylisences[index].value = null
     }
   },
   created:function(){

@@ -4,7 +4,7 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-          <h4>My job preferences <button type="button" v-if="!showEditForm" @click="editForm()" class="btn btn-primary btn-sm">edit</button></h4>
+          <h4>My job preferences <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button></h4>
         </div>
       </div>
 
@@ -29,6 +29,7 @@
 export default {
   data() {
     return {
+      showEditForm : false,
       selected: [], // Must be an array reference!
       options: [
         { text: 'Civil', value: 'civil' },
@@ -38,6 +39,15 @@ export default {
         { text: 'Driving', value: 'driving' },
         { text: 'Trade Industry', value: 'trade_industry' },
       ]
+    }
+  },
+  methods: {
+    editForm() {
+      this.showEditForm = !this.showEditForm
+    },
+    saveForm(){
+      this.$emit('saveData')
+      this.showEditForm = !this.showEditForm
     }
   }
 }

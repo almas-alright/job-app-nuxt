@@ -15,14 +15,12 @@
         </div>
       </div>
     </section>
-    <availability></availability>
-    <job-preference></job-preference>
+
   </div>
 </template>
 
 <script>
-import Availability from '@/components/user/preference/Availability';
-import JobPreference from '@/components/user/preference/JobPreference';
+
 
 import Commons from '~/mixins/common'
 export default {
@@ -30,8 +28,7 @@ export default {
   layout: 'main',
   middleware: 'guest',
   components:{
-    Availability,
-    JobPreference
+
   },
   data(){
     return {

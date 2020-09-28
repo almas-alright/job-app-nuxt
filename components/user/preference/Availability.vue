@@ -4,7 +4,7 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-          <h4>My Availabilities <button type="button" v-if="!showEditForm" @click="editForm()" class="btn btn-primary btn-sm">edit</button></h4>
+          <h4>My Availabilities <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button></h4>
         </div>
       </div>
 
@@ -19,7 +19,7 @@
           <div v-for="(day, index) in days" :key="index" class="form-group">
             <div class="row">
               <div class="col-sm-3">
-                  {{ day.name }} :
+                  {{ day.day_name }} :
               </div>
               <div class="col-sm-2">
                 <b-form-checkbox
@@ -41,6 +41,17 @@
                   unchecked-value="no"
                 >
                   afternoon
+                </b-form-checkbox>
+              </div>
+              <div class="col-sm-2">
+                <b-form-checkbox
+                  :id="'checkbox-'+index+'-night'"
+                  v-model="day.night"
+                  name="checkbox-1"
+                  value="yes"
+                  unchecked-value="no"
+                >
+                  night
                 </b-form-checkbox>
               </div>
               <div class="col-sm-3">
@@ -80,13 +91,13 @@ export default {
     return {
       showEditForm : false,
       days:[
-        {name: 'Monday', morning: 'no', afternoon:'no', early_morning: 'no'},
-        {name: 'Tuesday', morning: 'no', afternoon:'no', early_morning: 'no'},
-        {name: 'Wednesday', morning: 'no', afternoon:'no', early_morning: 'no'},
-        {name: 'Thursday', morning: 'no', afternoon:'no', early_morning: 'no'},
-        {name: 'Friday', morning: 'no', afternoon:'no', early_morning: 'no'},
-        {name: 'Saturday', morning: 'no', afternoon:'no', early_morning: 'no'},
-        {name: 'Sunday', morning: 'no', afternoon:'no', early_morning: 'no'},
+        {day_name: 'Monday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
+        {day_name: 'Tuesday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
+        {day_name: 'Wednesday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
+        {day_name: 'Thursday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
+        {day_name: 'Friday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
+        {day_name: 'Saturday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
+        {day_name: 'Sunday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
       ],
     }
   },

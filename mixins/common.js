@@ -18,6 +18,7 @@ export default {
         return item[image_attr]
       }
     },
+
     addImage(images){
       for (let i = 0; i < images.length; i++) {
         this.$store.commit('addMedia', images[i])

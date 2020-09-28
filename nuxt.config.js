@@ -42,6 +42,7 @@ export default {
     './plugins/mixins/user',
     './plugins/mixins/images',
     './plugins/axios',
+    {src: '~/plugins/signature.js',mode:'client'}
   ],
   /*
   ** Auto import components
