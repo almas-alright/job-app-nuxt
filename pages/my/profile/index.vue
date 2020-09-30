@@ -18,12 +18,14 @@
 
     <general-info ref="gInfo" @saveData="saveData($event)" />
     <social-media ref="socialMedia" @saveData="saveData($event)" />
+    <accommodation></accommodation>
     <bank-details ref="bankDetails" @saveData="saveData($event)"/>
     <tax-details ref="taxDetails" @saveData="saveData($event)" />
     <work-experience ref="workExperience" @saveData="saveData($event)" />
     <education-qualification ref="eduQualification" @saveData="saveData($event)" />
     <professional-certificate ref="proCertificate" @saveData="saveData($event)" />
     <license-permission ref="lisence" @saveData="saveData($event)" />
+
     <availability></availability>
     <job-preference></job-preference>
     <transportation></transportation>
@@ -34,6 +36,7 @@
 <script>
 import GeneralInfo from '~/components/user/profile/GeneralInfo';
 import SocialMedia from '~/components/user/profile/SocialMedia';
+import Accommodation from "@/components/user/accommodation/Accommodation";
 import BankDetails from '~/components/user/profile/BankDetails';
 import TaxDetails from '~/components/user/profile/TaxDetails';
 import WorkExperience from '~/components/user/profile/WorkExperience';
@@ -52,6 +55,7 @@ export default {
   components:{
     GeneralInfo,
     SocialMedia,
+    Accommodation,
     BankDetails,
     TaxDetails,
     WorkExperience,
