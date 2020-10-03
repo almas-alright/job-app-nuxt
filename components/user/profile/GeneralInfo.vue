@@ -129,6 +129,7 @@ export default {
         this.showEditForm = !this.showEditForm
       },
       saveForm(){
+        this.sendData({personal_details:this.genInfo}, 'General Information')
         this.$emit('saveData')
         this.showEditForm = !this.showEditForm
       }
