@@ -104,7 +104,6 @@
                   right
                   locale="en-US"
                   aria-controls="example-input"
-                  @context="onContext"
                 ></b-form-datepicker>
               </b-input-group-append>
             </b-input-group>
@@ -173,9 +172,9 @@ export default {
         visa_subclass: null,
         visa_expiry: null,
         is_student: 'no',
-        coe_image: require('@/assets/images/placeholder.png'),
-        passport_image: require('@/assets/images/placeholder.png'),
-        visa_image: require('@/assets/images/placeholder.png'),
+        coe_image: null,
+        passport_image: null,
+        visa_image: null,
       }
     }
   },

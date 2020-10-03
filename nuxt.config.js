@@ -62,7 +62,11 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     'nuxt-sweetalert2',
-    '@nuxtjs/fontawesome',
+    ['@nuxtjs/fontawesome',
+      {
+        allowOutsideClick: false,
+      }
+    ]
   ],
   fontawesome:{
       component: 'fa',

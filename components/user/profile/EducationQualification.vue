@@ -96,7 +96,7 @@ export default {
         {course: 'diploma', disabled: false},
         {course: 'others', disabled: false},
       ],
-      mycertificates: [{course: null, institute: null, subject: '', certificate_image: require('@/assets/images/placeholder.png'), passing_year: ''}]
+      mycertificates: [{course: null, institute: null, subject: '', certificate_image: null, passing_year: ''}]
     }
   },
   methods:{
@@ -105,7 +105,7 @@ export default {
     },
     addCert(){
       if(this.mycertificates.length < 6){
-        this.mycertificates.push({course: null, institute: null, subject: '', certificate_image: require('@/assets/images/placeholder.png'), passing_year: ''})
+        this.mycertificates.push({course: null, institute: null, subject: '', certificate_image: null, passing_year: ''})
       } else {
         this.$swal.fire('You Can not add more links')
       }

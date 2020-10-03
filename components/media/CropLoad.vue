@@ -152,7 +152,7 @@ export default {
             let config = {
                 headers: { 'Content-Type': 'multipart/form-data' }
             }
-            this.$axios.$post('/media/up-media', fd, config).then(response => {
+            this.$axios.$post('/media/up-media', fd).then(response => {
               console.log(response.data)
               this.$store.dispatch('images/setMedia', response.data)
               that.$emit('imageUploaded')

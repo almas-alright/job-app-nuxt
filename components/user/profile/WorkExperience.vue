@@ -46,7 +46,6 @@
                   right
                   locale="en-US"
                   aria-controls="example-input"
-                  @context="onContext"
                 ></b-form-datepicker>
               </b-input-group-append>
             </b-input-group>

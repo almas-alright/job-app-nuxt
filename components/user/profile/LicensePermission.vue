@@ -56,7 +56,26 @@
                 <media-browser :size="index" v-model="mylisence.image"></media-browser>
               </div>
               <div class="col-sm-4">
-                <b-form-input size="sm" type="date" placeholder="Expiry Date" v-model="mylisence.expiry_date"></b-form-input>
+                <b-input-group size="sm" class="mb-3">
+                  <b-form-input
+                    id="example-input"
+                    v-model="mylisence.expiry_date"
+                    type="text"
+                    placeholder="YYYY-MM-DD"
+                    autocomplete="off"
+                    size="sm"
+                  ></b-form-input>
+                  <b-input-group-append>
+                    <b-form-datepicker
+                      size="sm"
+                      v-model="mylisence.expiry_date"
+                      button-only
+                      right
+                      locale="en-US"
+                      aria-controls="example-input"
+                    ></b-form-datepicker>
+                  </b-input-group-append>
+                </b-input-group>
               </div>
               <div class="col-sm-1">
                 <button type="button" @click="removeLisence(index)" class="btn btn-danger btn-sm">x</button>
@@ -105,7 +124,7 @@ export default {
         {text:'High Risk Work', value: 'high_risk_work'}
         ],
       lisences: license_list,
-      mylisences: [{ value: null, image:require('@/assets/images/placeholder.png'), expiry_date: null, license_type: null }]
+      mylisences: [{ value: null, image:null, expiry_date: null, license_type: null }]
     }
   },
   methods:{
@@ -114,7 +133,7 @@ export default {
     },
     addLisence(){
       if(this.mylisences.length < 5){
-        this.mylisences.push({ value: null, image:require('@/assets/images/placeholder.png'),  expiry_date: null, license_type: null })
+        this.mylisences.push({ value: null, image:null,  expiry_date: null, license_type: null })
       } else {
         this.$swal.fire('You Can not add more links')
       }
