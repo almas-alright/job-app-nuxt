@@ -193,6 +193,8 @@ export default {
       }
     },
     saveForm(){
+      // accommodation
+      this.sendData({accommodation: this.accommodation_info}, 'Accommodation Information')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },

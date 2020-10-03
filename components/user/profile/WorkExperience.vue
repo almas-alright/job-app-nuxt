@@ -103,7 +103,7 @@ export default {
       this.sendData({work_experience:this.experiences}, 'Work Experience')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
-    }
+    },
     addJob() {
       this.experiences.push({company_name: '', reference_number: '', job_title: '', end_at: '', is_current: 'resigned'})
     },
