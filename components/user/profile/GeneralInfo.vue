@@ -104,7 +104,9 @@ t<template>
 
 <script>
 import country_list from '~/static/country_list'
+import commons from '~/mixins/common'
 export default {
+  mixins:[commons],
   data(){
 
       return {

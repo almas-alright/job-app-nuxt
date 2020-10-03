@@ -70,7 +70,9 @@
 
 <script>
 import _ from 'lodash'
+import commons from '~/mixins/common'
 export default {
+  mixins:[commons],
   data(){
     return {
       showEditForm : false,

@@ -86,7 +86,9 @@
 </template>
 
 <script>
+import commons from '~/mixins/common'
 export default {
+  mixins:[commons],
   data(){
     return {
       showEditForm : false,
@@ -106,6 +108,7 @@ export default {
       this.showEditForm = !this.showEditForm
     },
     saveForm(){
+
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }

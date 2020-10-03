@@ -54,7 +54,9 @@
 </template>
 
 <script>
+import commons from '~/mixins/common'
 export default {
+  mixins:[commons],
   name: "Transportation",
   data(){
     return {
