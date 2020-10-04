@@ -20,7 +20,7 @@
     <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
     <accommodation v-if="loaded" ref="acc" :resident-info="candidate.accommodation" @saveData="saveData($event)"></accommodation>
     <bank-details v-if="loaded" ref="bankDetails" :bank-info="candidate.bank_details" @saveData="saveData($event)"/>
-    <tax-details v-if="loaded" ref="taxDetails" @saveData="saveData($event)" />
+    <tax-details v-if="loaded" ref="taxDetails" :tax-info="candidate.tax_details" @saveData="saveData($event)" />
     <work-experience ref="workExperience" @saveData="saveData($event)" />
     <education-qualification ref="eduQualification" @saveData="saveData($event)" />
     <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
