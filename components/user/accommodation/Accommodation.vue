@@ -4,7 +4,7 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-          <h4>Accommodation
+          <h4>Passport/Visa Information
             <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button>
           </h4>
         </div>
