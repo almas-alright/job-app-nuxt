@@ -144,7 +144,8 @@
             <div class="col-lg-2">
 
             </div>
-            <div class="offset-lg-7 col-lg-3">
+            <div class="offset-lg-6 col-lg-4">
+              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
               <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
             </div>
           </div>

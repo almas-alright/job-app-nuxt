@@ -72,7 +72,8 @@
             <div class="col-sm-1">
 
             </div>
-            <div class="offset-sm-8 col-sm-3">
+            <div class="offset-sm-7 col-sm-4">
+              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
               <button type="button"  v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
             </div>
           </div>
@@ -87,12 +88,22 @@
 
 <script>
 import commons from '~/mixins/common'
+import _ from "lodash";
 export default {
   mixins:[commons],
+  props: {
+    schedule: {
+      type: Array,
+      default: function (){
+        return this.dayClone
+      }
+    }
+  },
   data(){
     return {
       showEditForm : false,
-      days:[
+      days: this.schedule,
+      dayClone:[
         {day_name: 'Monday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
         {day_name: 'Tuesday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
         {day_name: 'Wednesday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
@@ -108,9 +119,20 @@ export default {
       this.showEditForm = !this.showEditForm
     },
     saveForm(){
-
+      this.sendData({available_schedule:this.days}, 'Schedule')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
+    }
+  },
+  watch:{
+    schedule: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler (val, oldVal) {
+        if(_.isEmpty(val)){
+          this.days = this.dayClone
+        }
+      }
     }
   }
 }

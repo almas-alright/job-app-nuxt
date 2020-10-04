@@ -74,7 +74,8 @@
           <div class="col-lg-2">
             <button type="button" @click="addJob()" class="btn btn-primary btn-sm">add</button>
           </div>
-          <div class="offset-lg-8 col-lg-2">
+          <div class="offset-sm-6 col-sm-4">
+            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
             <button type="button" v-if="experiences.length" v-on:click="saveForm()" class="btn btn-success btn-sm">save
               changes
             </button>

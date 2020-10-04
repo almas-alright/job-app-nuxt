@@ -25,7 +25,7 @@
     <education-qualification v-if="loaded" ref="eduQualification" :education-data="candidate.education_qualification" @saveData="saveData($event)" />
     <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
     <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
-    <availability ref="available"></availability>
+    <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
     <job-preference ref="jobPreference"></job-preference>
     <transportation ref="transportInformation"></transportation>
     <terms-conditions ref="tc"></terms-conditions>

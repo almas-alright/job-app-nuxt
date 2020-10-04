@@ -51,10 +51,11 @@
           </div>
 
           <div class="row">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
               <button type="button" @click="addLink()" class="btn btn-primary btn-sm">add</button>
             </div>
-            <div class="offset-sm-8 col-sm-3">
+            <div class="offset-sm-4 col-sm-6">
+              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
               <button type="button" v-if="mySocialLinks.length" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
             </div>
           </div>

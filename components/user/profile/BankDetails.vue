@@ -34,6 +34,7 @@ t<template>
                     <b-form-input size="sm" placeholder="ACCOUNT NUMBER" v-model="bankData.account_number"></b-form-input>
                 </div>
                 <div class="form-group">
+                  <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
                     <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
                 </div>
             </div>
