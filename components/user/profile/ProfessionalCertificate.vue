@@ -62,9 +62,7 @@
             <button type="button" @click="addProCert()" class="btn btn-primary btn-sm">add</button>
           </div>
           <div class="offset-lg-6 col-lg-4">
-            <button type="button" v-on:click="editForm()"
-                    class="btn btn-dark btn-sm">Cancel
-            </button>
+            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel </button>
             <button type="button" v-if="professional_certificate.length" v-on:click="saveForm()"
                     class="btn btn-success btn-sm">save changes
             </button>

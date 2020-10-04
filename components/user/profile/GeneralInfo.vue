@@ -6,7 +6,6 @@ t<template>
               <h4>Personal Details  <b-button pill size="sm" variant="info" v-if="!showEditForm" v-on:click="editForm()">edit</b-button></h4>
           </div>
         </div>
-
         <div v-if="showEditForm" class="row align-items-center">
           <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="form-group">
@@ -45,7 +44,7 @@ t<template>
 
           <div class="col-lg-6 ml-auto">
             <div class="form-group">
-              <b-form-input size="sm" :type="'email'" placeholder="mail@example.com" v-model="genInfo._email"></b-form-input>
+              <b-form-input size="sm" disabled :type="'email'" placeholder="mail@example.com" v-model="genInfo._email"></b-form-input>
             </div>
             <div class="form-group">
                 <b-form-input size="sm" placeholder="Enter Contact number" v-model="genInfo.contactNumber"></b-form-input>
@@ -58,6 +57,7 @@ t<template>
             </div>
           </div>
           <div class="col-lg-12">
+            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel </button>
             <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
           </div>
 
@@ -79,7 +79,6 @@ t<template>
                 <dd class="col-sm-6"> {{ genInfo.nationality | isEmpty('set Nationality') }} </dd>
               </dl>
           </div>
-
           <div class="col-lg-5 ml-auto">
             <dl class="row">
                 <dt class="col-sm-6">Email : </dt>
@@ -106,22 +105,30 @@ t<template>
 import country_list from '~/static/country_list'
 import commons from '~/mixins/common'
 export default {
+  props: {
+    personalDetails: {
+      type: Object,
+      default: function() {
+          return {
+            firstName: null,
+            lastName: null,
+            dateOfBirth: null,
+            maritalStatus: null,
+            nationality: null,
+            _email: null,
+            contactNumber: null,
+            emergencyContactNumber: null,
+            streetAddress: null,
+          }
+      }
+    }
+  },
   mixins:[commons],
   data(){
 
       return {
           showEditForm : false,
-          genInfo:{
-            firstName: '',
-            lastName: '',
-            dateOfBirth: '',
-            maritalStatus: '?',
-            nationality: null,
-            _email: '',
-            contactNumber: '',
-            emergencyContactNumber: '',
-            streetAddress: '',
-          },
+          genInfo: this.personalDetails,
           nationalities: country_list,
       }
 
@@ -131,7 +138,7 @@ export default {
         this.showEditForm = !this.showEditForm
       },
       saveForm(){
-        this.sendData({personal_details:this.genInfo}, 'General Information')
+        this.sendData({ personal_details: this.genInfo}, 'General Information')
         this.$emit('saveData')
         this.showEditForm = !this.showEditForm
       }

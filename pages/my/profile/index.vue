@@ -16,7 +16,7 @@
       </div>
     </section>
 
-    <general-info ref="gInfo" @saveData="saveData($event)" />
+    <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
     <social-media ref="socialMedia" @saveData="saveData($event)" />
     <accommodation ref="accommodation"></accommodation>
     <bank-details ref="bankDetails" @saveData="saveData($event)"/>
@@ -94,6 +94,7 @@ export default {
       let that = this
       this.$axios.get('/profile/get').then(response => {
         that.candidate = response.data.data
+        console.log(that.candidate)
         that.loaded = true
         // that.$store.dispatch('candidate/setCandidateData', response.data.data)
       });
