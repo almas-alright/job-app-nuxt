@@ -47,16 +47,25 @@ t<template>
 
 <script>
 import commons from '~/mixins/common'
+import _ from "lodash";
 export default {
   mixins:[commons],
+  props: {
+    bankInfo: {
+      type: Object,
+      default: function () {
+        return {
+          bbs_number: '',
+          bank_name: '',
+          account_number: ''
+        }
+      }
+    }
+  },
   data(){
     return {
       showEditForm : false,
-      bankData:{
-        bbs_number: '',
-        bank_name: '',
-        account_number: ''
-      }
+      bankData: this.bankInfo
     }
   },
   methods:{
@@ -67,6 +76,20 @@ export default {
       this.sendData({bank_details: this.bankData}, 'Bank Details')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
+    }
+  },
+  watch: {
+    bankInfo: {
+      immediate: true,
+      handler(val, oldVal) {
+        if (_.isEmpty(val)) {
+          this.bankData = {
+            bbs_number: '',
+            bank_name: '',
+            account_number: ''
+          }
+        }
+      }
     }
   }
 }
