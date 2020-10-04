@@ -14,30 +14,30 @@
         <div class="col-lg-6 mb-5 mb-lg-0">
           <dl class="row">
             <dt class="col-sm-6">Citizen Type :</dt>
-            <dd class="col-sm-6"> {{ accommodation_info.citizen_type }}</dd>
+            <dd class="col-sm-6"> {{ passport_info.citizen_type }}</dd>
           </dl>
           <dl class="row" v-if="!isCitizen">
             <dt class="col-sm-6">Passport Number :</dt>
-            <dd class="col-sm-6"> {{ accommodation_info.passport_number }}</dd>
+            <dd class="col-sm-6"> {{ passport_info.passport_number }}</dd>
             <dt class="col-sm-6">Passport Image :</dt>
             <dd class="col-sm-6">
-              <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid
+              <b-img class="img-border img-table" :src="getImage(passport_info.passport_image, 'thumb')" fluid
                      alt="Fluid image"></b-img>
             </dd>
             <dt class="col-sm-6">Visa Type :</dt>
-            <dd class="col-sm-6"> {{ accommodation_info.visa_type }}</dd>
+            <dd class="col-sm-6"> {{ passport_info.visa_type }}</dd>
             <dt class="col-sm-6">Visa Subclass :</dt>
-            <dd class="col-sm-6"> {{ accommodation_info.visa_subclass }}</dd>
+            <dd class="col-sm-6"> {{ passport_info.visa_subclass }}</dd>
             <dt class="col-sm-6">Visa Expiry Date :</dt>
-            <dd class="col-sm-6"> {{ accommodation_info.visa_expiry }}</dd>
+            <dd class="col-sm-6"> {{ passport_info.visa_expiry }}</dd>
             <dt class="col-sm-6">Visa Image :</dt>
             <dd class="col-sm-6">
-              <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid
+              <b-img class="img-border img-table" :src="getImage(passport_info.passport_image, 'thumb')" fluid
                      alt="Fluid image"></b-img>
             </dd>
             <dt class="col-sm-6">COE Image :</dt>
             <dd class="col-sm-6">
-              <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid
+              <b-img class="img-border img-table" :src="getImage(passport_info.passport_image, 'thumb')" fluid
                      alt="Fluid image"></b-img>
             </dd>
           </dl>
@@ -48,14 +48,14 @@
         <div class="col-lg-6 mb-5 mb-lg-0">
 
           <div class="form-group">
-            <b-form-select v-model="accommodation_info.citizen_type" :options="options" size="sm"
+            <b-form-select v-model="passport_info.citizen_type" :options="options" size="sm"
                            class="mt-3"></b-form-select>
           </div>
 
 
           <div id="conditional" v-if="!isCitizen">
             <b-form-group inline label="Passport Number:">
-              <b-form-input placeholder="passport number" v-model="accommodation_info.passport_number" size="sm"
+              <b-form-input placeholder="passport number" v-model="passport_info.passport_number" size="sm"
                             class="mt-3"></b-form-input>
             </b-form-group>
             <div class="row my-2">
@@ -63,7 +63,7 @@
                 <p>Passport Image : </p>
               </div>
               <div class="col-md-2">
-                <media-browser size="passport" v-model="accommodation_info.passport_image"></media-browser>
+                <media-browser size="passport" v-model="passport_info.passport_image"></media-browser>
               </div>
             </div>
 
@@ -72,7 +72,7 @@
                 <b-form-input
                   id="input-visa-type"
                   name="visa_type"
-                  v-model="accommodation_info.visa_type"
+                  v-model="passport_info.visa_type"
                   list="input-list-visa-type"
                   @change="updateVisaSubclass()"
                   class="capitalize"
@@ -81,13 +81,13 @@
                 ></b-form-input>
                 <b-form-datalist
                   id="input-list-visa-type"
-                  v-model="accommodation_info.visa_subclass"
+                  v-model="passport_info.visa_subclass"
                   :options="visaList"
                   value-field="type"
                   text-field="subclass"
                   size="sm"
                 ></b-form-datalist>
-                <b-form-input v-model="accommodation_info.visa_subclass" size="sm" disabled></b-form-input>
+                <b-form-input v-model="passport_info.visa_subclass" size="sm" disabled></b-form-input>
               </b-input-group>
             </b-form-group>
 
@@ -96,14 +96,14 @@
                 <p>Visa Image : </p>
               </div>
               <div class="col-md-2">
-                <media-browser size="visa" v-model="accommodation_info.visa_image"></media-browser>
+                <media-browser size="visa" v-model="passport_info.visa_image"></media-browser>
               </div>
             </div>
 
             <b-input-group size="sm" class="mb-3">
               <b-form-input
                 id="example-input"
-                v-model="accommodation_info.visa_expiry"
+                v-model="passport_info.visa_expiry"
                 type="text"
                 placeholder="YYYY-MM-DD"
                 autocomplete="off"
@@ -112,7 +112,7 @@
               <b-input-group-append>
                 <b-form-datepicker
                   size="sm"
-                  v-model="accommodation_info.visa_expiry"
+                  v-model="passport_info.visa_expiry"
                   button-only
                   right
                   locale="en-US"
@@ -125,7 +125,7 @@
               <div class="col-md-4">
                 <b-form-checkbox
                   id="checkbox-1"
-                  v-model="accommodation_info.is_student"
+                  v-model="passport_info.is_student"
                   name="checkbox-1"
                   value="yes"
                   unchecked-value="no"
@@ -135,7 +135,7 @@
                 </b-form-checkbox>
               </div>
               <div class="col-md-2">
-                <media-browser v-if="is_student" size="student" v-model="accommodation_info.coe_image"></media-browser>
+                <media-browser v-if="is_student" size="student" v-model="passport_info.coe_image"></media-browser>
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default {
   components: {MediaBrowser},
   name: "Accommodation",
   props: {
-    residentInfo: {
+    passportInfo: {
       type: Object,
       default: function () {
         return {
@@ -198,7 +198,7 @@ export default {
         {value: 'non-immigrant', text: 'Non-Immigrant'},
         {value: 'sheltered', text: 'Sheltered'},
       ],
-      accommodation_info: this.residentInfo
+      passport_info: this.passportInfo
     }
   },
   methods: {
@@ -208,34 +208,34 @@ export default {
     updateVisaSubclass() {
       let that = this
       let item = _.find(that.visaList, function (o) {
-        return o.type === that.accommodation_info.visa_type
+        return o.type === that.passport_info.visa_type
       })
       if (typeof item != "undefined") {
-        this.accommodation_info.visa_subclass = item.subclass
+        this.passport_info.visa_subclass = item.subclass
       } else {
-        this.accommodation_info.visa_type = null
-        this.accommodation_info.visa_subclass = null
+        this.passport_info.visa_type = null
+        this.passport_info.visa_subclass = null
       }
     },
     saveForm() {
       // accommodation
-      this.sendData({accommodation: this.accommodation_info}, 'Accommodation Information')
+      this.sendData({accommodation: this.passport_info}, 'Accommodation Information')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
   },
   computed: {
     isCitizen() {
-      return !(this.accommodation_info.citizen_type != null && this.accommodation_info.citizen_type !== 'citizen');
+      return !(this.passport_info.citizen_type != null && this.passport_info.citizen_type !== 'citizen');
     }
   },
   watch: {
-    residentInfo: {
+    passportInfo: {
       // the callback will be called immediately after the start of the observation
       immediate: true,
       handler(val, oldVal) {
         if (_.isEmpty(val)) {
-          this.accommodation_info = {
+          this.passport_info = {
             citizen_type: null,
             passport_number: null,
             visa_type: null,

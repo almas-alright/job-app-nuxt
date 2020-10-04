@@ -18,7 +18,7 @@
 
     <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
     <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
-    <accommodation v-if="loaded" ref="acc" :resident-info="candidate.accommodation" @saveData="saveData($event)"></accommodation>
+    <passport v-if="loaded" ref="acc" :passport-info="candidate.passport" @saveData="saveData($event)"></passport>
     <bank-details v-if="loaded" ref="bankDetails" :bank-info="candidate.bank_details" @saveData="saveData($event)"/>
     <tax-details v-if="loaded" ref="taxDetails" :tax-info="candidate.tax_details" @saveData="saveData($event)" />
     <work-experience v-if="loaded" ref="workExperience" :experience-data="candidate.work_experience" @saveData="saveData($event)" />
@@ -36,13 +36,13 @@
 <script>
 import GeneralInfo from '~/components/user/profile/GeneralInfo';
 import SocialMedia from '~/components/user/profile/SocialMedia';
-import Accommodation from '~/components/user/accommodation/Accommodation';
+import Passport from '~/components/user/others/Passport';
 import BankDetails from '~/components/user/profile/BankDetails';
 import TaxDetails from '~/components/user/profile/TaxDetails';
 import WorkExperience from '~/components/user/profile/WorkExperience';
 import EducationQualification from '~/components/user/profile/EducationQualification';
 import ProfessionalCertificate from '~/components/user/profile/ProfessionalCertificate';
-import LicensePermission from '~/components/user/profile/LicensePermission';
+import LicensePermission from '~/components/user/others/LicensePermission';
 import Availability from '~/components/user/preference/Availability';
 import JobPreference from '~/components/user/preference/JobPreference';
 import Transportation from '~/components/user/preference/Transportation';
@@ -55,7 +55,7 @@ export default {
   components:{
     GeneralInfo,
     SocialMedia,
-    Accommodation,
+    Passport,
     BankDetails,
     TaxDetails,
     WorkExperience,

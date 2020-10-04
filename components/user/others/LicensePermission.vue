@@ -104,7 +104,7 @@
 
 <script>
 import _ from 'lodash'
-import license_list from '~/static/license_list'
+import license_list from 'static/license_list'
 import MediaBrowser from '~/components/media/MediaBrowser';
 import Commons from '~/mixins/common'
 export default {

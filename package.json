@@ -24,7 +24,8 @@
     "nuxt-sweetalert2": "^1.0.0",
     "sass-loader": "^8.0.2",
     "vue-cropperjs": "^4.1.0",
-    "vue-signature-pad": "^2.0.2"
+    "vue-signature-pad": "^2.0.2",
+    "vue2-datepicker": "^3.6.2"
   },
   "devDependencies": {}
 }
