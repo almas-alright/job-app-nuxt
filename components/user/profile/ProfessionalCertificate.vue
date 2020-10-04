@@ -76,6 +76,7 @@
 <script>
 import MediaBrowser from '~/components/media/MediaBrowser';
 import Commons from '~/mixins/common'
+import _ from 'lodash'
 
 export default {
   mixins: [Commons],
@@ -83,11 +84,14 @@ export default {
   props: {
     certificates: {
       type: Array,
-      default: () => [{
+      default: function (){
+        return [{
         course: null,
         accomplished_on: null,
         certificate_image: null
       }]
+
+      }
     }
   },
   data() {
@@ -118,6 +122,21 @@ export default {
     },
 
   },
+  watch:{
+    certificates: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler (val, oldVal) {
+        if(_.isEmpty(val)){
+          this.professional_certificate = [{
+            course: null,
+            accomplished_on: null,
+            certificate_image: null
+          }]
+        }
+      }
+    }
+  }
 
 }
 </script>
