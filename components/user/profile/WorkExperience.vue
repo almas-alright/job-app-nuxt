@@ -88,11 +88,22 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import commons from '~/mixins/common'
 export default {
+  mixins:[commons],
+  props: {
+    experienceData: {
+      type: Array,
+      default: function (){
+        return [{company_name: null, reference_number: null, job_title: null, end_at: null, is_current: 'resigned'}]
+      }
+    }
+  },
   data() {
     return {
       showEditForm: false,
-      experiences: [{company_name: '', reference_number: '', job_title: '', end_at: '', is_current: 'resigned'}]
+      experiences: this.experienceData
     }
   },
   methods: {
@@ -109,6 +120,17 @@ export default {
     },
     removeJob(index) {
       this.experiences.splice(index, 1)
+    }
+  },
+  watch:{
+    experienceData: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler (val, oldVal) {
+        if(_.isEmpty(val)){
+          this.experiences = [{company_name: null, reference_number: null, job_title: null, end_at: null, is_current: 'resigned'}]
+        }
+      }
     }
   }
 }
