@@ -85,6 +85,14 @@ import commons from '~/mixins/common'
 export default {
   mixins:[commons],
   components:{ MediaBrowser },
+  props: {
+    educationData: {
+      type: Array,
+      default: function (){
+        return [{course: null, institute: null, subject: '', certificate_image: null, passing_year: null}]
+      }
+    }
+  },
   data(){
     return {
       showEditForm : false,
@@ -96,7 +104,7 @@ export default {
         {course: 'diploma', disabled: false},
         {course: 'others', disabled: false},
       ],
-      mycertificates: [{course: null, institute: null, subject: '', certificate_image: null, passing_year: ''}]
+      mycertificates: this.educationData
     }
   },
   methods:{
@@ -105,7 +113,7 @@ export default {
     },
     addCert(){
       if(this.mycertificates.length < 6){
-        this.mycertificates.push({course: null, institute: null, subject: '', certificate_image: null, passing_year: ''})
+        this.mycertificates.push({course: null, institute: null, subject: '', certificate_image: null, passing_year: null})
       } else {
         this.$swal.fire('You Can not add more links')
       }
@@ -148,6 +156,17 @@ export default {
   created:function(){
     this.disableUsed()
     //console.log('mounted')
+  },
+  watch:{
+    educationData: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler (val, oldVal) {
+        if(_.isEmpty(val)){
+          this.mycertificates = [{course: null, institute: null, subject: '', certificate_image: null, passing_year: null}]
+        }
+      }
+    }
   }
 }
 </script>

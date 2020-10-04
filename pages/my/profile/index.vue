@@ -22,9 +22,9 @@
     <bank-details v-if="loaded" ref="bankDetails" :bank-info="candidate.bank_details" @saveData="saveData($event)"/>
     <tax-details v-if="loaded" ref="taxDetails" :tax-info="candidate.tax_details" @saveData="saveData($event)" />
     <work-experience v-if="loaded" ref="workExperience" :experience-data="candidate.work_experience" @saveData="saveData($event)" />
-    <education-qualification ref="eduQualification" @saveData="saveData($event)" />
+    <education-qualification v-if="loaded" ref="eduQualification" :education-data="candidate.education_qualification" @saveData="saveData($event)" />
     <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
-    <license-permission ref="lisence" @saveData="saveData($event)" />
+    <license-permission v-if="loaded" ref="lisence" @saveData="saveData($event)" />
     <availability ref="available"></availability>
     <job-preference ref="jobPreference"></job-preference>
     <transportation ref="transportInformation"></transportation>
