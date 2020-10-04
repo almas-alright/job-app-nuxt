@@ -5,7 +5,7 @@ t<template>
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-            <h4>Bank Account Details  <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button></h4>
+            <h4>Bank Account Details  <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button></h4>
         </div>
       </div>
 
@@ -34,8 +34,8 @@ t<template>
                     <b-form-input size="sm" placeholder="ACCOUNT NUMBER" v-model="bankData.account_number"></b-form-input>
                 </div>
                 <div class="form-group">
-                  <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
-                    <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
+                  <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
+                    <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
                 </div>
             </div>
       </div>

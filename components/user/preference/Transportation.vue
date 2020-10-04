@@ -4,7 +4,7 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-          <h4>My Travel Preference <b-button pill size="sm" variant="info" @click="editForm()">edit</b-button></h4>
+          <h4>My Travel Preference <b-button pill size="sm" variant="info" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button></h4>
         </div>
       </div>
 

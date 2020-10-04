@@ -4,7 +4,7 @@
     <div class="row align-items-center">
       <div class="col-lg-12">
         <h4>Work Experience
-          <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button>
+          <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button>
         </h4>
       </div>
     </div>
@@ -63,7 +63,7 @@
             </b-form-checkbox>
           </div>
           <div class="col-lg-1 mb-5 mb-lg-0">
-            <button type="button" @click="removeJob(index)" class="btn btn-danger btn-sm">x</button>
+            <button type="button" @click="removeJob(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
           </div>
         </div>
       </div>
@@ -72,13 +72,11 @@
         <br>
         <div class="row">
           <div class="col-lg-2">
-            <button type="button" @click="addJob()" class="btn btn-primary btn-sm">add</button>
+            <button type="button" @click="addJob()" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
           </div>
           <div class="offset-sm-6 col-sm-4">
-            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
-            <button type="button" v-if="experiences.length" v-on:click="saveForm()" class="btn btn-success btn-sm">save
-              changes
-            </button>
+            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
+            <button type="button" v-if="experiences.length" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
           </div>
         </div>
       </div>

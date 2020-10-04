@@ -4,7 +4,7 @@
     <div class="row align-items-center">
       <div class="col-lg-12">
         <h4>Professional/Short Courses/Skill Development Certificates (SAP/OCP/MCP)
-          <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button>
+          <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button>
         </h4>
       </div>
     </div>
@@ -50,7 +50,7 @@
             <media-browser :size="index" v-model="pro_certificate.certificate_image"></media-browser>
           </div>
           <div class="col-lg-1 mb-5 mb-lg-0">
-            <button type="button" @click="removeProCert(index)" class="btn btn-danger btn-sm">x</button>
+            <button type="button" @click="removeProCert(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <br>
         <div class="row">
           <div class="col-lg-2">
-            <button type="button" @click="addProCert()" class="btn btn-primary btn-sm">add</button>
+            <button type="button" @click="addProCert()" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
           </div>
           <div class="offset-lg-6 col-lg-4">
             <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel </button>

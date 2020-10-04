@@ -5,7 +5,7 @@
       <div class="row align-items-center">
         <div class="col-lg-12">
           <h4>Passport/Visa Information
-            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button>
+            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button>
           </h4>
         </div>
       </div>
@@ -101,24 +101,7 @@
             </div>
 
             <b-input-group size="sm" class="mb-3">
-              <b-form-input
-                id="example-input"
-                v-model="passport_info.visa_expiry"
-                type="text"
-                placeholder="YYYY-MM-DD"
-                autocomplete="off"
-                size="sm"
-              ></b-form-input>
-              <b-input-group-append>
-                <b-form-datepicker
-                  size="sm"
-                  v-model="passport_info.visa_expiry"
-                  button-only
-                  right
-                  locale="en-US"
-                  aria-controls="example-input"
-                ></b-form-datepicker>
-              </b-input-group-append>
+              <date-picker v-model="passport_info.visa_expiry" valueType="format"></date-picker>
             </b-input-group>
 
             <div class="row my-2">
@@ -144,9 +127,9 @@
             <div class="col-lg-2">
 
             </div>
-            <div class="offset-lg-6 col-lg-4">
-              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel</button>
-              <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">save changes</button>
+            <div class="offset-lg-4 col-lg-6">
+              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
+              <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
             </div>
           </div>
 
@@ -159,6 +142,8 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import MediaBrowser from "@/components/media/MediaBrowser";
 import visa_list from "static/visa_list";
 import _ from "lodash";
@@ -166,7 +151,7 @@ import Commons from '~/mixins/common'
 
 export default {
   mixins: [Commons],
-  components: {MediaBrowser},
+  components: {MediaBrowser, DatePicker},
   name: "Accommodation",
   props: {
     passportInfo: {
