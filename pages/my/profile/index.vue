@@ -18,35 +18,35 @@
 
     <general-info ref="gInfo" @saveData="saveData($event)" />
     <social-media ref="socialMedia" @saveData="saveData($event)" />
-    <accommodation></accommodation>
+    <accommodation ref="accommodation"></accommodation>
     <bank-details ref="bankDetails" @saveData="saveData($event)"/>
     <tax-details ref="taxDetails" @saveData="saveData($event)" />
     <work-experience ref="workExperience" @saveData="saveData($event)" />
     <education-qualification ref="eduQualification" @saveData="saveData($event)" />
-    <professional-certificate ref="proCertificate" @saveData="saveData($event)" />
+    <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
     <license-permission ref="lisence" @saveData="saveData($event)" />
-
-    <availability></availability>
-    <job-preference></job-preference>
-    <transportation></transportation>
-    <terms-conditions></terms-conditions>
+    <availability ref="available"></availability>
+    <job-preference ref="jobPreference"></job-preference>
+    <transportation ref="transportInformation"></transportation>
+    <terms-conditions ref="tc"></terms-conditions>
+    {{ candidate }}
   </div>
 </template>
 
 <script>
 import GeneralInfo from '~/components/user/profile/GeneralInfo';
 import SocialMedia from '~/components/user/profile/SocialMedia';
-import Accommodation from "@/components/user/accommodation/Accommodation";
+import Accommodation from "~/components/user/accommodation/Accommodation";
 import BankDetails from '~/components/user/profile/BankDetails';
 import TaxDetails from '~/components/user/profile/TaxDetails';
 import WorkExperience from '~/components/user/profile/WorkExperience';
 import EducationQualification from '~/components/user/profile/EducationQualification';
 import ProfessionalCertificate from '~/components/user/profile/ProfessionalCertificate';
 import LicensePermission from '~/components/user/profile/LicensePermission';
-import Availability from '@/components/user/preference/Availability';
-import JobPreference from '@/components/user/preference/JobPreference';
-import Transportation from "@/components/user/preference/Transportation";
-import TermsConditions from "@/components/auth/TermsConditions";
+import Availability from '~/components/user/preference/Availability';
+import JobPreference from '~/components/user/preference/JobPreference';
+import Transportation from "~/components/user/preference/Transportation";
+import TermsConditions from "~/components/auth/TermsConditions";
 import Commons from '~/mixins/common'
 export default {
   mixins:[Commons],
@@ -69,20 +69,34 @@ export default {
   },
   data(){
     return {
-      candidate:{}
+      candidate: new Object(null),
+      loaded: false
     }
   },
   methods:{
     saveData(sd){
-      this.candidate.general_info = this.$refs.gInfo.genInfo
-      this.candidate.social_media = this.$refs.socialMedia.mySocialLinks
-      this.candidate.bank_details = this.$refs.bankDetails.bankData
-      this.candidate.tax_details = this.$refs.taxDetails.taxData
-      this.candidate.work_experience = this.$refs.workExperience.experiences
-      this.candidate.education_qualification = this.$refs.eduQualification.mycertificates
-      this.candidate.professional_certificate = this.$refs.proCertificate.professional_certificate
-      this.candidate.lisence = this.$refs.lisence.mylisences
+      // this.candidate.user_id = null
+      // this.candidate.profileImage = null
+      // this.candidate.signature = null
+      // this.candidate.personal_details = this.$refs.gInfo.genInfo
+      // this.candidate.social_medias = this.$refs.socialMedia.mySocialLinks
+      // this.candidate.accommodation = this.$refs.accommodation.accomodation_info
+      // this.candidate.bank_details = this.$refs.bankDetails.bankData
+      // this.candidate.tax_details = this.$refs.taxDetails.taxData
+      // this.candidate.work_experience = this.$refs.workExperience.experiences
+      // this.candidate.education_qualification = this.$refs.eduQualification.mycertificates
+      // this.candidate.professional_certificate = this.$refs.proCertificate.professional_certificate
+      // this.candidate.license_information = this.$refs.lisence.mylisences
+      // this.candidate.available_schedule = this.$refs.available.days
       console.log(this.candidate)
+    },
+    loadCandidate(){
+      let that = this
+      this.$axios.get('/profile/get').then(response => {
+        that.candidate = response.data.data
+        that.loaded = true
+        // that.$store.dispatch('candidate/setCandidateData', response.data.data)
+      });
     },
     loadAllImages(){
       let that = this
@@ -95,6 +109,7 @@ export default {
   },
   mounted() {
      this.loadAllImages()
+     this.loadCandidate()
   }
 }
 </script>

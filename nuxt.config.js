@@ -41,6 +41,7 @@ export default {
     './plugins/mixins/validation',
     './plugins/mixins/user',
     './plugins/mixins/images',
+    // './plugins/mixins/candidate',
     './plugins/axios',
     {src: '~/plugins/signature.js',mode:'client'}
   ],

@@ -33,7 +33,7 @@
         v-on:input="$emit('input', $event.target.value)"
       >
 
-      <b-img class="img-border" @click="showModal()" :src="placeholderImg" fluid alt="Fluid image"></b-img>
+      <b-img class="img-border" @click="showModal()" :src="getImage(value, 'thumb')" fluid alt="Fluid image"></b-img>
     </div>
 </template>
 <script>
@@ -80,7 +80,7 @@ export default {
             }
         },
         selectImage(image){
-            this.placeholderImg = this.getImage(image, "thumb")
+            // this.placeholderImg = this.getImage(image, "thumb")
             this.$emit("input", image) ;
             this.hideModal()
         },

@@ -68,9 +68,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -81,14 +79,20 @@ import Commons from '~/mixins/common'
 export default {
   mixins: [Commons],
   components: {MediaBrowser},
+  props: {
+    certificates: {
+      type: Array,
+      default: () => [{
+        course: null,
+        accomplished_on: null,
+        certificate_image: null
+      }]
+    }
+  },
   data() {
     return {
       showEditForm: false,
-      professional_certificate: [{
-        course: '',
-        accomplished_on: '',
-        certificate_image: null
-      }]
+      professional_certificate: this.certificates
     }
   },
   methods: {
@@ -102,8 +106,8 @@ export default {
     },
     addProCert() {
       this.professional_certificate.push({
-        course: '',
-        accomplished_on: '',
+        course: null,
+        accomplished_on: null,
         certificate_image: null
       })
     },
@@ -112,6 +116,15 @@ export default {
     },
 
   },
+  watch: {
+    // certificates: {
+    //   // the callback will be called immediately after the start of the observation
+    //   // immediate: true,
+    //   handler (val, oldVal) {
+    //     this.professional_certificate = val
+    //   }
+    // }
+  }
 
 }
 </script>
