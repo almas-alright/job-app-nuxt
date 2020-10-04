@@ -4,31 +4,42 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-          <h4>Accommodation Info  <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button></h4>
+          <h4>Accommodation
+            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">edit</b-button>
+          </h4>
         </div>
       </div>
 
       <div v-if="!showEditForm" class="row">
         <div class="col-lg-6 mb-5 mb-lg-0">
           <dl class="row">
-            <dt class="col-sm-6">Citizen Type : </dt>
+            <dt class="col-sm-6">Citizen Type :</dt>
             <dd class="col-sm-6"> {{ accommodation_info.citizen_type }}</dd>
           </dl>
-          <dl class="row" v-if="!isCitizen" >
-            <dt class="col-sm-6">Passport Number : </dt>
+          <dl class="row" v-if="!isCitizen">
+            <dt class="col-sm-6">Passport Number :</dt>
             <dd class="col-sm-6"> {{ accommodation_info.passport_number }}</dd>
-            <dt class="col-sm-6">Passport Image : </dt>
-            <dd class="col-sm-6"> <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid alt="Fluid image"></b-img></dd>
-            <dt class="col-sm-6">Visa Type : </dt>
+            <dt class="col-sm-6">Passport Image :</dt>
+            <dd class="col-sm-6">
+              <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid
+                     alt="Fluid image"></b-img>
+            </dd>
+            <dt class="col-sm-6">Visa Type :</dt>
             <dd class="col-sm-6"> {{ accommodation_info.visa_type }}</dd>
-            <dt class="col-sm-6">Visa Subclass : </dt>
+            <dt class="col-sm-6">Visa Subclass :</dt>
             <dd class="col-sm-6"> {{ accommodation_info.visa_subclass }}</dd>
-            <dt class="col-sm-6">Visa Expiry Date : </dt>
+            <dt class="col-sm-6">Visa Expiry Date :</dt>
             <dd class="col-sm-6"> {{ accommodation_info.visa_expiry }}</dd>
-            <dt class="col-sm-6">Visa Image : </dt>
-            <dd class="col-sm-6"> <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid alt="Fluid image"></b-img></dd>
-            <dt class="col-sm-6">COE Image : </dt>
-            <dd class="col-sm-6"> <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid alt="Fluid image"></b-img></dd>
+            <dt class="col-sm-6">Visa Image :</dt>
+            <dd class="col-sm-6">
+              <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid
+                     alt="Fluid image"></b-img>
+            </dd>
+            <dt class="col-sm-6">COE Image :</dt>
+            <dd class="col-sm-6">
+              <b-img class="img-border img-table" :src="getImage(accommodation_info.passport_image, 'thumb')" fluid
+                     alt="Fluid image"></b-img>
+            </dd>
           </dl>
         </div>
       </div>
@@ -37,13 +48,15 @@
         <div class="col-lg-6 mb-5 mb-lg-0">
 
           <div class="form-group">
-            <b-form-select v-model="accommodation_info.citizen_type" :options="options" size="sm" class="mt-3"></b-form-select>
+            <b-form-select v-model="accommodation_info.citizen_type" :options="options" size="sm"
+                           class="mt-3"></b-form-select>
           </div>
 
 
           <div id="conditional" v-if="!isCitizen">
             <b-form-group inline label="Passport Number:">
-              <b-form-input placeholder="passport number" v-model="accommodation_info.passport_number" size="sm" class="mt-3"></b-form-input>
+              <b-form-input placeholder="passport number" v-model="accommodation_info.passport_number" size="sm"
+                            class="mt-3"></b-form-input>
             </b-form-group>
             <div class="row my-2">
               <div class="col-md-4">
@@ -149,59 +162,91 @@ import MediaBrowser from "@/components/media/MediaBrowser";
 import visa_list from "static/visa_list";
 import _ from "lodash";
 import Commons from '~/mixins/common'
+
 export default {
-  mixins:[Commons],
-  components:{ MediaBrowser },
+  mixins: [Commons],
+  components: {MediaBrowser},
   name: "Accommodation",
-  data(){
+  props: {
+    residentInfo: {
+      type: Object,
+      default: function () {
+        return {
+          citizen_type: null,
+          passport_number: null,
+          visa_type: null,
+          visa_subclass: null,
+          visa_expiry: null,
+          is_student: 'no',
+          coe_image: null,
+          passport_image: null,
+          visa_image: null,
+        }
+      }
+    }
+  },
+  data() {
     return {
       visaList: visa_list,
-      showEditForm : false,
+      showEditForm: false,
       is_student: false,
-      options:[
-        { value: null, text: 'select resident type' },
-        { value: 'citizen', text: 'Citizen' },
-        { value: 'permanent-resident', text: 'Permanent-Resident' },
-        { value: 'non-immigrant', text: 'Non-Immigrant' },
-        { value: 'sheltered', text: 'Sheltered' },
+      options: [
+        {value: null, text: 'select resident type'},
+        {value: 'citizen', text: 'Citizen'},
+        {value: 'permanent-resident', text: 'Permanent-Resident'},
+        {value: 'non-immigrant', text: 'Non-Immigrant'},
+        {value: 'sheltered', text: 'Sheltered'},
       ],
-      accommodation_info:{
-        citizen_type: null,
-        passport_number: null,
-        visa_type: null,
-        visa_subclass: null,
-        visa_expiry: null,
-        is_student: 'no',
-        coe_image: null,
-        passport_image: null,
-        visa_image: null,
-      }
+      accommodation_info: this.residentInfo
     }
   },
   methods: {
     editForm() {
       this.showEditForm = !this.showEditForm
     },
-    updateVisaSubclass(){
+    updateVisaSubclass() {
       let that = this
-      let item  = _.find(that.visaList, function(o) { return o.type === that.accommodation_info.visa_type })
-      if(typeof item != "undefined"){
+      let item = _.find(that.visaList, function (o) {
+        return o.type === that.accommodation_info.visa_type
+      })
+      if (typeof item != "undefined") {
         this.accommodation_info.visa_subclass = item.subclass
       } else {
         this.accommodation_info.visa_type = null
         this.accommodation_info.visa_subclass = null
       }
     },
-    saveForm(){
+    saveForm() {
       // accommodation
       this.sendData({accommodation: this.accommodation_info}, 'Accommodation Information')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
   },
-  computed:{
-    isCitizen(){
+  computed: {
+    isCitizen() {
       return !(this.accommodation_info.citizen_type != null && this.accommodation_info.citizen_type !== 'citizen');
+    }
+  },
+  watch: {
+    residentInfo: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler(val, oldVal) {
+        if (_.isEmpty(val)) {
+          this.accommodation_info = {
+            citizen_type: null,
+            passport_number: null,
+            visa_type: null,
+            visa_subclass: null,
+            visa_expiry: null,
+            is_student: 'no',
+            coe_image: null,
+            passport_image: null,
+            visa_image: null,
+          }
+        }
+      }
     }
   }
 }

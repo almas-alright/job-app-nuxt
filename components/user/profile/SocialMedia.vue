@@ -73,6 +73,14 @@ import _ from 'lodash'
 import commons from '~/mixins/common'
 export default {
   mixins:[commons],
+  props: {
+    socialMedeaData: {
+      type: Array,
+      default: function (){
+        return [{name: null, url:null, disabled:null}]
+      }
+    }
+  },
   data(){
     return {
       showEditForm : false,
@@ -83,7 +91,7 @@ export default {
         {name: 'instagram', url: null, disabled: false},
         {name: 'youtube', url: null, disabled: false},
       ],
-      mySocialLinks: [{name: null, url:'', disabled:null}]
+      mySocialLinks: this.socialMedeaData
     }
   },
   methods:{
@@ -135,6 +143,17 @@ export default {
   created:function(){
     this.disableUsed()
     //console.log('mounted')
+  },
+  watch:{
+    socialMedeaData: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler (val, oldVal) {
+        if(_.isEmpty(val)){
+          this.mySocialLinks = [{name: null, url:null, disabled:null}]
+        }
+      }
+    }
   }
 }
 </script>

@@ -17,8 +17,8 @@
     </section>
 
     <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
-    <social-media ref="socialMedia" @saveData="saveData($event)" />
-    <accommodation ref="accommodation"></accommodation>
+    <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
+    <accommodation v-if="loaded" ref="acc" :resident-info="candidate.accommodation" @saveData="saveData($event)"></accommodation>
     <bank-details ref="bankDetails" @saveData="saveData($event)"/>
     <tax-details ref="taxDetails" @saveData="saveData($event)" />
     <work-experience ref="workExperience" @saveData="saveData($event)" />
@@ -36,7 +36,7 @@
 <script>
 import GeneralInfo from '~/components/user/profile/GeneralInfo';
 import SocialMedia from '~/components/user/profile/SocialMedia';
-import Accommodation from "~/components/user/accommodation/Accommodation";
+import Accommodation from '~/components/user/accommodation/Accommodation';
 import BankDetails from '~/components/user/profile/BankDetails';
 import TaxDetails from '~/components/user/profile/TaxDetails';
 import WorkExperience from '~/components/user/profile/WorkExperience';
@@ -45,8 +45,8 @@ import ProfessionalCertificate from '~/components/user/profile/ProfessionalCerti
 import LicensePermission from '~/components/user/profile/LicensePermission';
 import Availability from '~/components/user/preference/Availability';
 import JobPreference from '~/components/user/preference/JobPreference';
-import Transportation from "~/components/user/preference/Transportation";
-import TermsConditions from "~/components/auth/TermsConditions";
+import Transportation from '~/components/user/preference/Transportation';
+import TermsConditions from '~/components/auth/TermsConditions';
 import Commons from '~/mixins/common'
 export default {
   mixins:[Commons],
