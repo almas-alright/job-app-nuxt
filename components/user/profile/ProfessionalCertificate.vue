@@ -61,7 +61,10 @@
           <div class="col-lg-2">
             <button type="button" @click="addProCert()" class="btn btn-primary btn-sm">add</button>
           </div>
-          <div class="offset-lg-8 col-lg-2">
+          <div class="offset-lg-6 col-lg-4">
+            <button type="button" v-on:click="editForm()"
+                    class="btn btn-dark btn-sm">Cancel
+            </button>
             <button type="button" v-if="professional_certificate.length" v-on:click="saveForm()"
                     class="btn btn-success btn-sm">save changes
             </button>
@@ -113,18 +116,10 @@ export default {
     },
     removeProCert(index) {
       this.professional_certificate.splice(index, 1)
+      this.sendData({professional_certificate: this.professional_certificate}, 'Professional Certificates')
     },
 
   },
-  watch: {
-    // certificates: {
-    //   // the callback will be called immediately after the start of the observation
-    //   // immediate: true,
-    //   handler (val, oldVal) {
-    //     this.professional_certificate = val
-    //   }
-    // }
-  }
 
 }
 </script>

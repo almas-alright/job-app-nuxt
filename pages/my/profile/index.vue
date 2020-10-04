@@ -88,7 +88,7 @@ export default {
       // this.candidate.professional_certificate = this.$refs.proCertificate.professional_certificate
       // this.candidate.license_information = this.$refs.lisence.mylisences
       // this.candidate.available_schedule = this.$refs.available.days
-      console.log(this.candidate)
+      this.loadCandidate()
     },
     loadCandidate(){
       let that = this
