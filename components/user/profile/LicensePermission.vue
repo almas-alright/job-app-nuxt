@@ -109,6 +109,14 @@ import Commons from '~/mixins/common'
 export default {
   mixins:[Commons],
   components:{ MediaBrowser },
+  props: {
+    lisenceData: {
+      type: Array,
+      default: function (){
+        return [{ value: null, image:null, expiry_date: null, license_type: null }]
+      }
+    }
+  },
   data(){
     return {
       showEditForm : false,
@@ -124,7 +132,7 @@ export default {
         {text:'High Risk Work', value: 'high_risk_work'}
         ],
       lisences: license_list,
-      mylisences: [{ value: null, image:null, expiry_date: null, license_type: null }]
+      mylisences: this.lisenceData
     }
   },
   methods:{
@@ -198,6 +206,17 @@ export default {
   created:function(){
     this.disableUsed()
     //console.log('mounted')
+  },
+  watch:{
+    lisenceData: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler (val, oldVal) {
+        if(_.isEmpty(val)){
+          this.mylisences = [{ value: null, image:null, expiry_date: null, license_type: null }]
+        }
+      }
+    }
   }
 }
 </script>
