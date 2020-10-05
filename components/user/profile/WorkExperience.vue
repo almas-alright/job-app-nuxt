@@ -29,7 +29,7 @@
             <b-form-input size="sm" v-model="experience.job_title" placeholder="Job Title"></b-form-input>
           </div>
           <div class="col-lg-2 mb-5 mb-lg-0">
-            <date-picker v-model="experience.end_at" valueType="format"></date-picker>
+            <date-picker input-class="form-control form-control-sm c-dp" placeholder="end at" v-model="experience.end_at" valueType="format"></date-picker>
           </div>
           <div class="col-lg-1 mb-5 mb-lg-0">
             <b-form-checkbox

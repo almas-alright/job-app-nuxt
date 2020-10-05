@@ -25,7 +25,7 @@
             <b-form-input v-model="pro_certificate.course" placeholder="Course Name" size="sm"></b-form-input>
           </div>
           <div class="col-lg-3 mb-5 mb-lg-0">
-            <date-picker v-model="pro_certificate.accomplished_on" valueType="format"></date-picker>
+            <date-picker input-class="form-control form-control-sm c-dp" placeholder="Accomplished On" v-model="pro_certificate.accomplished_on" valueType="format"></date-picker>
           </div>
           <div class="col-lg-2 mb-5 mb-lg-0">
             <media-browser :size="index" v-model="pro_certificate.certificate_image"></media-browser>

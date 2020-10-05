@@ -49,7 +49,7 @@
                 <b-form-input size="sm" placeholder="Subject Name" v-model="certificate.subject"></b-form-input>
               </div>
                <div class="col-sm-2">
-                <b-form-input size="sm" placeholder="Passing Year" v-model="certificate.passing_year"></b-form-input>
+                 <date-picker input-class="form-control form-control-sm c-dp" v-model="certificate.passing_year" type="year" placeholder="passing year" valueType="format"></date-picker>
               </div>
               <div class="col-sm-1">
                 <media-browser :size="index" v-model="certificate.certificate_image"></media-browser>
@@ -80,12 +80,14 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import _ from 'lodash'
 import MediaBrowser from '~/components/media/MediaBrowser';
 import commons from '~/mixins/common'
 export default {
   mixins:[commons],
-  components:{ MediaBrowser },
+  components:{ MediaBrowser, DatePicker },
   props: {
     educationData: {
       type: Array,
@@ -192,5 +194,8 @@ export default {
 <style>
   .img-table{
     max-width: 50px;
+  }
+  .mx-datepicker{
+    max-width: 80%;
   }
 </style>

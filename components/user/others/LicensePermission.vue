@@ -56,7 +56,7 @@
                 <media-browser :size="index" v-model="mylisence.image"></media-browser>
               </div>
               <div class="col-sm-4">
-                  <date-picker v-model="mylisence.expiry_date" valueType="format"></date-picker>
+                  <date-picker input-class="form-control form-control-sm c-dp" v-model="mylisence.expiry_date" valueType="format"></date-picker>
               </div>
               <div class="col-sm-1">
                 <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>

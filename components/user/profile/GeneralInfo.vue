@@ -18,7 +18,7 @@ t
             <b-form-input size="sm" placeholder="Enter Last Name" v-model="genInfo.lastName"></b-form-input>
           </div>
           <div class="form-group">
-            <date-picker v-model="genInfo.dateOfBirth" valueType="format"></date-picker>
+            <date-picker input-class="form-control form-control-sm c-dp" placeholder="date of birth" v-model="genInfo.dateOfBirth" valueType="format"></date-picker>
           </div>
           <div class="form-group">
             <select v-model="genInfo.maritalStatus" class="form-control form-control-sm">
