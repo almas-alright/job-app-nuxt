@@ -63,7 +63,7 @@
             </b-form-checkbox>
           </div>
           <div class="col-lg-1 mb-5 mb-lg-0">
-            <button type="button" @click="removeJob(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
+            <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
           </div>
         </div>
       </div>
@@ -116,6 +116,24 @@ export default {
     },
     addJob() {
       this.experiences.push({company_name: '', reference_number: '', job_title: '', end_at: '', is_current: 'resigned'})
+    },
+    doRemove(index){
+      if(typeof this.experienceData[index] === 'undefined'){
+        this.removeJob(index)
+      } else {
+        this.$swal.fire({
+          title: 'Are you sure?',
+          text: "delete this!",
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete!'
+        }).then((result) => {
+          if (result.value) {
+            this.removeJob(index)
+            this.sendData2({work_experience:this.experiences}, 'Work Experience')
+          }
+        })
+      }
     },
     removeJob(index) {
       this.experiences.splice(index, 1)

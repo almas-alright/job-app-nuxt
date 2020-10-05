@@ -78,7 +78,7 @@
                 </b-input-group>
               </div>
               <div class="col-sm-1">
-                <button type="button" @click="removeLisence(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
+                <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
               </div>
             </div>
           </div>
@@ -147,7 +147,25 @@ export default {
         this.$swal.fire('You Can not add more links')
       }
     },
-    removeLisence(index){
+    doRemove(index){
+      if(typeof this.lisenceData[index] === 'undefined'){
+        this.removeLisence(index)
+      } else {
+        this.$swal.fire({
+          title: 'Are you sure?',
+          text: "delete this!",
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete!'
+        }).then((result) => {
+          if (result.value) {
+            this.removeLisence(index)
+            this.sendData2({license_information:this.mylisences}, 'License Information')
+          }
+        })
+      }
+    },
+      removeLisence(index){
       let removeQue = this.mylisences[index].value
       if(removeQue){
         let lisenceIndex = _.findIndex(this.lisences, function(o) { return o.value === removeQue });

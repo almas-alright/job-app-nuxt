@@ -55,7 +55,7 @@
                 <media-browser :size="index" v-model="certificate.certificate_image"></media-browser>
               </div>
               <div class="col-sm-1">
-                <button type="button" @click="removeCert(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
+                <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
               </div>
             </div>
           </div>
@@ -119,10 +119,28 @@ export default {
         this.$swal.fire('You Can not add more links')
       }
     },
+    doRemove(index){
+      if(typeof this.educationData[index] === 'undefined'){
+        this.removeCert(index)
+      } else {
+        this.$swal.fire({
+          title: 'Are you sure?',
+          text: "delete this!",
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete!'
+        }).then((result) => {
+          if (result.value) {
+            this.removeCert(index)
+            this.sendData2({education_qualification: this.mycertificates}, 'Educational Qualification')
+          }
+        })
+      }
+    },
     removeCert(index){
       let removeQue = this.mycertificates[index].course
       if(removeQue){
-        let certIndex = _.findIndex(this.certificates, function(o) { return o.course == removeQue });
+        let certIndex = _.findIndex(this.certificates, function(o) { return o.course === removeQue });
         this.certificates[certIndex].disabled = false
       }
       this.mycertificates.splice(index, 1)

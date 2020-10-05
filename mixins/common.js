@@ -53,6 +53,33 @@ export default {
           })
         }
       })
+    },
+    sendData2(data, title) {
+      let that = this
+      let config = {
+        headers: {'Access-Control-Allow-Origin': '*'}
+      }
+      this.$swal({
+        title: 'updating '+title,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading()
+      this.$axios.$post('/profile/set', data).then(response => {
+        that.$swal.close()
+        if(response.success){
+          that.$swal({
+            title: title+' has been deleted',
+            type: 'success',
+            allowOutsideClick: false,
+          })
+        } else {
+          that.$swal({
+            title: title+' not updated',
+            type: 'error',
+            allowOutsideClick: false,
+          })
+        }
+      })
     }
   },
   created() {

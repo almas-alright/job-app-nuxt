@@ -45,7 +45,7 @@
                 <b-form-input size="sm" placeholder="Enter url" v-model="mySocialLink.url"></b-form-input>
               </div>
               <div class="col-sm-1">
-                <button type="button" @click="removeLink(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
+                <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
               </div>
             </div>
           </div>
@@ -104,6 +104,24 @@ export default {
         this.mySocialLinks.push({name: null, url:'', disabled:null})
       } else {
         this.$swal.fire('You Can not add more links')
+      }
+    },
+    doRemove(index){
+      if(typeof this.socialMedeaData[index] === 'undefined'){
+        this.removeLink(index)
+      } else {
+        this.$swal.fire({
+          title: 'Are you sure?',
+          text: "delete this!",
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete!'
+        }).then((result) => {
+          if (result.value) {
+            this.removeLink(index)
+            this.sendData2({social_medias: this.mySocialLinks}, 'Social Media')
+          }
+        })
       }
     },
     removeLink(index){

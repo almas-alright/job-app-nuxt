@@ -50,7 +50,7 @@
             <media-browser :size="index" v-model="pro_certificate.certificate_image"></media-browser>
           </div>
           <div class="col-lg-1 mb-5 mb-lg-0">
-            <button type="button" @click="removeProCert(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
+            <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
           </div>
         </div>
       </div>
@@ -62,10 +62,8 @@
             <button type="button" @click="addProCert()" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
           </div>
           <div class="offset-lg-6 col-lg-4">
-            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">Cancel </button>
-            <button type="button" v-if="professional_certificate.length" v-on:click="saveForm()"
-                    class="btn btn-success btn-sm">save changes
-            </button>
+            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
+            <button type="button" v-if="professional_certificate.length" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
           </div>
         </div>
       </div>
@@ -116,9 +114,26 @@ export default {
         certificate_image: null
       })
     },
+    doRemove(index){
+      if(typeof this.certificates[index] === 'undefined'){
+        this.removeProCert(index)
+      } else {
+        this.$swal.fire({
+          title: 'Are you sure?',
+          text: "delete this!",
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete!'
+        }).then((result) => {
+          if (result.value) {
+            this.removeProCert(index)
+            this.sendData2({professional_certificate: this.professional_certificate}, 'Professional Certificates')
+          }
+        })
+      }
+    },
     removeProCert(index) {
       this.professional_certificate.splice(index, 1)
-      this.sendData({professional_certificate: this.professional_certificate}, 'Professional Certificates')
     },
 
   },
