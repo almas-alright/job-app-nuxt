@@ -9,14 +9,20 @@
       </div>
 
       <div v-if="!showEditForm" class="row">
-        <div class="col-lg-6 mb-5 mb-lg-0">
-          <b-table striped hover :items="days"></b-table>
+        <div class="col-lg-12 mb-5 mb-lg-0">
+          <div v-if="my_schedule.from_to" class="p-3 mb-2 bg-info text-white">
+            <span class="font-weight-bold">from:</span> {{ my_schedule.from_to[0] }} <span class="font-weight-bold">to:</span> {{ my_schedule.from_to[1] }}
+          </div>
         </div>
+        <div class="col-lg-12">
+          <b-table striped hover :items="my_schedule.days" :fields="fields"></b-table>
+        </div>
+
       </div>
 
       <div v-if="showEditForm" class="row">
         <div class="col-lg-8 mb-5 mb-lg-0">
-          <div v-for="(day, index) in days" :key="index" class="form-group">
+          <div v-for="(day, index) in my_schedule.days" :key="index" class="form-group">
             <div class="row">
               <div class="col-sm-3">
                   {{ day.day_name }} :
@@ -67,7 +73,11 @@
               </div>
             </div>
           </div>
-
+          <div class="row">
+            <div class="col-sm-4">
+              <date-picker range="true" input-class="form-control form-control-sm c-dp" v-model="my_schedule.from_to" placeholder="in between" valueType="format"></date-picker>
+            </div>
+          </div>
           <div class="row">
             <div class="col-sm-1">
 
@@ -87,22 +97,36 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import commons from '~/mixins/common'
 import _ from "lodash";
 export default {
   mixins:[commons],
+  components:{DatePicker},
   props: {
     schedule: {
-      type: Array,
+      type: Object,
       default: function (){
-        return this.dayClone
+        return {
+          my_schedule: this.dayClone,
+          from_to:this.from_to
+        }
       }
     }
   },
   data(){
     return {
+      fields:[
+        { key: 'day_name', label:'Day' },
+        { key: 'early_morning', label:'Early Morning (02am-06am)' },
+        { key: 'morning', label:'Morning (07am-12pm)' },
+        { key: 'afternoon', label:'Afternoon (12pm-06pm)' },
+        { key: 'night', label:'Night (8pm-02am)' },
+      ],
       showEditForm : false,
-      days: this.schedule,
+      my_schedule: this.schedule,
+      from_to:null,
       dayClone:[
         {day_name: 'Monday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
         {day_name: 'Tuesday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
@@ -119,7 +143,7 @@ export default {
       this.showEditForm = !this.showEditForm
     },
     saveForm(){
-      this.sendData({available_schedule:this.days}, 'Schedule')
+      this.sendData({available_schedule:this.my_schedule}, 'Schedule')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }
@@ -130,7 +154,10 @@ export default {
       immediate: true,
       handler (val, oldVal) {
         if(_.isEmpty(val)){
-          this.days = this.dayClone
+          this.my_schedule = {
+            days: this.dayClone,
+            from_to:this.from_to
+          }
         }
       }
     }
