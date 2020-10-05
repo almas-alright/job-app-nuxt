@@ -26,7 +26,7 @@
     <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
     <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
     <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
-    <job-preference ref="jobPreference"></job-preference>
+    <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
     <transportation ref="transportInformation"></transportation>
     <terms-conditions ref="tc"></terms-conditions>
     {{ candidate }}
