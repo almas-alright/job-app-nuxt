@@ -27,7 +27,8 @@
     <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
     <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
     <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
-    <transportation ref="transportInformation"></transportation>
+    <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
+    <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
     <terms-conditions ref="tc"></terms-conditions>
     {{ candidate }}
   </div>
@@ -46,6 +47,7 @@ import LicensePermission from '~/components/user/others/LicensePermission';
 import Availability from '~/components/user/preference/Availability';
 import JobPreference from '~/components/user/preference/JobPreference';
 import Transportation from '~/components/user/preference/Transportation';
+import HealthFitness from '~/components/user/others/HealthFitness';
 import TermsConditions from '~/components/auth/TermsConditions';
 import Commons from '~/mixins/common'
 export default {
@@ -65,6 +67,7 @@ export default {
     Availability,
     JobPreference,
     Transportation,
+    HealthFitness,
     TermsConditions
   },
   data(){
