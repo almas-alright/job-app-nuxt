@@ -56,26 +56,7 @@
                 <media-browser :size="index" v-model="mylisence.image"></media-browser>
               </div>
               <div class="col-sm-4">
-                <b-input-group size="sm" class="mb-3">
-                  <b-form-input
-                    id="example-input"
-                    v-model="mylisence.expiry_date"
-                    type="text"
-                    placeholder="YYYY-MM-DD"
-                    autocomplete="off"
-                    size="sm"
-                  ></b-form-input>
-                  <b-input-group-append>
-                    <b-form-datepicker
-                      size="sm"
-                      v-model="mylisence.expiry_date"
-                      button-only
-                      right
-                      locale="en-US"
-                      aria-controls="example-input"
-                    ></b-form-datepicker>
-                  </b-input-group-append>
-                </b-input-group>
+                  <date-picker v-model="mylisence.expiry_date" valueType="format"></date-picker>
               </div>
               <div class="col-sm-1">
                 <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
@@ -103,13 +84,15 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import _ from 'lodash'
 import license_list from 'static/license_list'
 import MediaBrowser from '~/components/media/MediaBrowser';
 import Commons from '~/mixins/common'
 export default {
   mixins:[Commons],
-  components:{ MediaBrowser },
+  components:{ MediaBrowser, DatePicker},
   props: {
     lisenceData: {
       type: Array,

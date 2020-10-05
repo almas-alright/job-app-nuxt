@@ -29,26 +29,7 @@
             <b-form-input size="sm" v-model="experience.job_title" placeholder="Job Title"></b-form-input>
           </div>
           <div class="col-lg-2 mb-5 mb-lg-0">
-            <b-input-group size="sm" class="mb-3">
-              <b-form-input
-                id="example-input"
-                v-model="experience.end_at"
-                type="text"
-                placeholder="YYYY-MM-DD"
-                autocomplete="off"
-                size="sm"
-              ></b-form-input>
-              <b-input-group-append>
-                <b-form-datepicker
-                  size="sm"
-                  v-model="experience.end_at"
-                  button-only
-                  right
-                  locale="en-US"
-                  aria-controls="example-input"
-                ></b-form-datepicker>
-              </b-input-group-append>
-            </b-input-group>
+            <date-picker v-model="experience.end_at" valueType="format"></date-picker>
           </div>
           <div class="col-lg-1 mb-5 mb-lg-0">
             <b-form-checkbox
@@ -87,10 +68,13 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import _ from 'lodash'
 import commons from '~/mixins/common'
 export default {
   mixins:[commons],
+  components:{DatePicker},
   props: {
     experienceData: {
       type: Array,

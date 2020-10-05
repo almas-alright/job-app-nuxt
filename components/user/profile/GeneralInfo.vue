@@ -18,8 +18,7 @@ t
             <b-form-input size="sm" placeholder="Enter Last Name" v-model="genInfo.lastName"></b-form-input>
           </div>
           <div class="form-group">
-            <input type="date" v-model="genInfo.dateOfBirth" class="form-control form-control-sm"
-                   aria-describedby="emailHelp" placeholder="Date Of Birth" min="1980-01-01">
+            <date-picker v-model="genInfo.dateOfBirth" valueType="format"></date-picker>
           </div>
           <div class="form-group">
             <select v-model="genInfo.maritalStatus" class="form-control form-control-sm">
@@ -111,8 +110,10 @@ t
 <script>
 import country_list from '~/static/country_list'
 import commons from '~/mixins/common'
-
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 export default {
+  components:{DatePicker},
   props: {
     personalDetails: {
       type: Object,
