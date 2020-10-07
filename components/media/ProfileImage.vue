@@ -43,6 +43,11 @@ export default {
     getCData(datax){
       let that = this
       let iData = datax.getCroppedCanvas().toDataURL()
+      this.$swal({
+        title: 'updating profile image' ,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading();
       fetch(iData)
         .then(res => res.blob())
         .then(blob => {
@@ -53,9 +58,21 @@ export default {
             headers: {'Content-Type': 'multipart/form-data'}
           }
           this.$axios.$post('/media/up-personal-single', fd).then(response => {
+            that.$swal.close()
             if(response.success){
               that.userAvatar = iData
               that.$emit('profileImageUploaded')
+              that.$swal({
+                title: 'profile image has been updated',
+                type: 'success',
+                allowOutsideClick: false,
+              })
+            } else {
+              that.$swal({
+                title: 'Opps! Something Happened Wrong',
+                type: 'error',
+                allowOutsideClick: false,
+              })
             }
           })
         })
