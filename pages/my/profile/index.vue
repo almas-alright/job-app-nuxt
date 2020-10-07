@@ -4,14 +4,16 @@
       :style="{ backgroundImage: 'url(' + require('@/assets/images/hero_1.jpg') + ')' }" id="home-section">
       <div class="container">
         <div class="row align-items-center justify-content-center">
-          <div class="col-md-12">
-            <div class="mb-5 text-center">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <div class="m-2 text-center">
               <h1 class="text-white font-weight-bold">My Profile</h1>
-              <div class="text-center">
-                <img src="https://via.placeholder.com/200x200?text=profile+image" class="rounded" >
+              <div class="p-5 text-center">
+                <profile-image v-if="loaded" :profile-image="candidate.profileImage" @profileImageUploaded="saveData($event)"></profile-image>
               </div>
             </div>
           </div>
+          <div class="col-md-4"></div>
         </div>
       </div>
     </section>
@@ -29,12 +31,13 @@
     <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
     <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
     <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
-    <terms-conditions ref="tc"></terms-conditions>
+    <terms-conditions v-if="loaded" ref="tc"></terms-conditions>
     {{ candidate }}
   </div>
 </template>
 
 <script>
+import ProfileImage from '~/components/media/ProfileImage';
 import GeneralInfo from '~/components/user/profile/GeneralInfo';
 import SocialMedia from '~/components/user/profile/SocialMedia';
 import Passport from '~/components/user/others/Passport';
@@ -55,6 +58,7 @@ export default {
   layout: 'main',
   middleware: 'guest',
   components:{
+    ProfileImage,
     GeneralInfo,
     SocialMedia,
     Passport,
