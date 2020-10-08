@@ -132,7 +132,7 @@
               <p><u><strong>CONFIRMATION OF INDUCTION</strong></u></p>
               <p>You will be given two inductions before you start your work. One will be given in our office premises
                 and the other will be in your future workplace. In the office induction you will be confident and
-                understand the following:</p>
+                understand the following: </p>
               <ol>
                 <li>Emergency evacuation procedure</li>
                 <li>General safety rules</li>
