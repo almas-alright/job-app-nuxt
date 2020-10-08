@@ -87,7 +87,7 @@ export default {
       immediate: true,
       handler (val, oldVal) {
         if(_.isEmpty(val)){
-
+          this.userAvatar = require('@/assets/images/placeholder.png')
         }
       }
     }

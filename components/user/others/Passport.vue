@@ -204,7 +204,7 @@ export default {
     },
     saveForm() {
       // accommodation
-      this.sendData({accommodation: this.passport_info}, 'Accommodation Information')
+      this.sendData({ passport: this.passport_info}, 'Accommodation Information')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },

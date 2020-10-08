@@ -31,7 +31,7 @@
     <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
     <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
     <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
-    <terms-conditions v-if="loaded" ref="tc"></terms-conditions>
+    <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
     {{ candidate }}
   </div>
 </template>
