@@ -1,6 +1,6 @@
 <template>
 
-  <section class="site-section pb-0">
+  <section class="pb-0">
     <div class="container">
 
       <div class="row align-items-center">

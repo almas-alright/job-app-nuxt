@@ -21,9 +21,6 @@
                 <nuxt-link to="/my/profile">my profile</nuxt-link>
               </li>
               <li v-if="authenticated">
-                <nuxt-link to="/my/preferences">my preferences</nuxt-link>
-              </li>
-              <li v-if="authenticated">
                 <a href="javascript:" @click.prevent="logout()">logout</a>
               </li>
 

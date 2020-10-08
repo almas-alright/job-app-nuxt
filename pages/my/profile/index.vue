@@ -18,21 +18,43 @@
       </div>
     </section>
 
-    <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
-    <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
-    <passport v-if="loaded" ref="acc" :passport-info="candidate.passport" @saveData="saveData($event)"></passport>
-    <bank-details v-if="loaded" ref="bankDetails" :bank-info="candidate.bank_details" @saveData="saveData($event)"/>
-    <tax-details v-if="loaded" ref="taxDetails" :tax-info="candidate.tax_details" @saveData="saveData($event)" />
-    <work-experience v-if="loaded" ref="workExperience" :experience-data="candidate.work_experience" @saveData="saveData($event)" />
-    <education-qualification v-if="loaded" ref="eduQualification" :education-data="candidate.education_qualification" @saveData="saveData($event)" />
-    <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
-    <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
-    <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
-    <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
-    <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
-    <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
-    <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
-    {{ candidate }}
+    <div>
+      <b-tabs content-class="mt-3" small card align="center">
+        <b-tab title="About Me" active>
+          <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
+          <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
+        </b-tab>
+        <b-tab title="Passport & Citizen">
+          <passport v-if="loaded" ref="acc" :passport-info="candidate.passport" @saveData="saveData($event)"></passport>
+        </b-tab>
+        <b-tab title="My Financial">
+          <bank-details v-if="loaded" ref="bankDetails" :bank-info="candidate.bank_details" @saveData="saveData($event)"/>
+          <tax-details v-if="loaded" ref="taxDetails" :tax-info="candidate.tax_details" @saveData="saveData($event)" />
+        </b-tab>
+        <b-tab title="My Education and Works">
+          <work-experience v-if="loaded" ref="workExperience" :experience-data="candidate.work_experience" @saveData="saveData($event)" />
+          <education-qualification v-if="loaded" ref="eduQualification" :education-data="candidate.education_qualification" @saveData="saveData($event)" />
+          <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
+        </b-tab>
+        <b-tab title="My Licence & Permissions">
+          <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
+        </b-tab>
+        <b-tab title="My Schedule">
+          <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
+        </b-tab>
+        <b-tab title="My Preferences">
+          <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
+          <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
+        </b-tab>
+        <b-tab title="My Health & Fitness">
+          <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
+        </b-tab>
+        <b-tab title="Terms & Conditions">
+          <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
+        </b-tab>
+      </b-tabs>
+    </div>
+
   </div>
 </template>
 
