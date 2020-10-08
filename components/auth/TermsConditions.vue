@@ -4,14 +4,14 @@
       <div class="row align-items-center">
         <div class="col-lg-12">
           <h4>Terms & Condition
-            <b-button v-b-modal.modal-lg size="sm" variant="info">show terms and conditions</b-button>
+            <b-button v-b-modal.modal-tc size="sm" variant="info">show terms and conditions</b-button>
           </h4>
         </div>
         <div class="col-lg-12">
 
         </div>
       </div>
-      <b-modal id="modal-lg" size="lg" title="Terms & Conditions">
+      <b-modal id="modal-tc" size="lg" title="Terms & Conditions">
         <div class="row">
           <div class="col-lg-12">
             <div style="height: calc(100vh - 300px);" class="overflow-auto">
@@ -132,7 +132,7 @@
               <p><u><strong>CONFIRMATION OF INDUCTION</strong></u></p>
               <p>You will be given two inductions before you start your work. One will be given in our office premises
                 and the other will be in your future workplace. In the office induction you will be confident and
-                understand the following:</p>
+                understand the following: </p>
               <ol>
                 <li>Emergency evacuation procedure</li>
                 <li>General safety rules</li>
@@ -158,7 +158,10 @@
               <p><strong>I understand all the information presented to me in the office induction, held on
                 the&nbsp;</strong></p>
             </div>
-            <div style="min-height: 200px">
+            <div v-if="tcAccepted" style="min-height: 150px">
+              <img :src="signImage" class="rounded" >
+            </div>
+            <div v-if="!tcAccepted" style="min-height: 200px">
               <VueSignaturePad
                 class="border"
                 width="100%"
@@ -169,10 +172,10 @@
             </div>
             <b-form-text id="password-help-block" class="text-info">put your signature above using mouse</b-form-text>
             <b-form-checkbox
-              id="checkbox-1"
-              name="checkbox-1"
-              value="accepted"
-              unchecked-value="not_accepted"
+              v-if="!tcAccepted"
+              v-model="accepted"
+              value="1"
+              unchecked-value="0"
             >
               By Signing above im accepting all terms and conditions.
             </b-form-checkbox>
@@ -181,9 +184,12 @@
         <template v-slot:modal-footer>
           <b-container>
             <b-row>
-              <b-col col lg="12" class="text-center">
+              <b-col v-if="accepted" col lg="12" class="text-center">
                 <b-button pill variant="info" @click="save" size="sm">Save</b-button>
                 <b-button pill variant="info" @click="undo" size="sm">Undo</b-button>
+              </b-col>
+              <b-col v-if="tcAccepted" col lg="12" class="text-center">
+                <b-button pill variant="info" @click="closeModal" size="sm">Close</b-button>
               </b-col>
             </b-row>
           </b-container>
@@ -197,12 +203,21 @@
 <script>
 export default {
   name: "TermsConditions",
-  // components:{
-  //   VueSignaturePad
-  // },
+  props:{
+    signImage:{
+      type:String,
+      default: require('@/assets/images/placeholder.png')
+    },
+    tcAccepted:{
+      type:Number,
+      default: 0
+    }
+
+  },
   data() {
     return {
-      imgData: null
+      imgData: null,
+      accepted:0
     }
   },
   methods: {
@@ -211,6 +226,10 @@ export default {
     },
     save() {
       let that = this
+      this.$swal({
+        title: 'updating terms & Condition' ,
+        allowOutsideClick: false,
+      });
       const {isEmpty, data} = this.imgData
       // console.log(isEmpty);
       // console.log(data);
@@ -224,14 +243,33 @@ export default {
             headers: {'Content-Type': 'multipart/form-data'}
           }
           this.$axios.$post('/media/up-personal-single', fd).then(response => {
-            // console.log(response)
-            that.$emit('imageUploaded')
+            that.$swal.close()
+            if(response.success){
+              that.closeModal()
+              that.userAvatar = iData
+              that.$emit('tcUpdated')
+              that.$bvModal.hide()
+              that.$swal({
+                title: 't&c has been updated',
+                type: 'success',
+                allowOutsideClick: false,
+              })
+            } else {
+              that.$swal({
+                title: 'Opps! Something Happened Wrong',
+                type: 'error',
+                allowOutsideClick: false,
+              })
+            }
           })
         })
     },
     onEnd() {
       console.log('=== End ===');
       this.imgData = this.$refs.signaturePad.saveSignature();
+    },
+    closeModal(){
+      this.$bvModal.hide('modal-tc')
     }
   }
 }
