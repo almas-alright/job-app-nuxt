@@ -75,12 +75,10 @@ export default {
         solid:true
       }
   },
+
   axios: {
-
     // baseURL: 'http://127.0.0.1:8000/api/v1'
-    baseURL: 'http://127.0.0.1:8000/api/v1', // Live
-  // baseURL: 'http://bc.nagadbazaar.com/api/v1', // Live
-
+    baseURL: 'http://api.stevejobs.com.au/api/v1', // Live
    // proxyHeaders: false,
   //  credentials: true
  },
