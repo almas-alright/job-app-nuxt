@@ -35,14 +35,14 @@ export default {
   },
   methods:{
       submit(){
-        // let that = this
-        // this.$axios.$post('/auth/register', that.form)
-        // .then(function (response) {
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
+        let that = this
+        this.$axios.$post('/auth/register', that.form)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
       }
   }
 }
