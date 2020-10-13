@@ -14,39 +14,44 @@
             </div>
           </div>
           <div class="col-md-4"></div>
+          <div class="col-md-12">
+            <complete-progress v-if="loaded" :candidate-full="candidate"></complete-progress>
+          </div>
         </div>
       </div>
     </section>
 
     <div>
-      <b-tabs content-class="mt-3" small card align="center">
-        <b-tab title="About Me" active>
+      <b-tabs content-class="mt-3" pills vertical end>
+        <b-tab title="My Details" active>
           <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
           <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
         </b-tab>
-        <b-tab title="Passport & Citizen">
+        <b-tab title="Visa & Passport">
           <passport v-if="loaded" ref="acc" :passport-info="candidate.passport" @saveData="saveData($event)"></passport>
         </b-tab>
         <b-tab title="My Financial">
           <bank-details v-if="loaded" ref="bankDetails" :bank-info="candidate.bank_details" @saveData="saveData($event)"/>
           <tax-details v-if="loaded" ref="taxDetails" :tax-info="candidate.tax_details" @saveData="saveData($event)" />
         </b-tab>
-        <b-tab title="My Education and Works">
-          <work-experience v-if="loaded" ref="workExperience" :experience-data="candidate.work_experience" @saveData="saveData($event)" />
+        <b-tab title="My Education">
           <education-qualification v-if="loaded" ref="eduQualification" :education-data="candidate.education_qualification" @saveData="saveData($event)" />
           <professional-certificate v-if="loaded" ref="proCertificate" :certificates="candidate.professional_certificate" @saveData="saveData($event)" />
         </b-tab>
-        <b-tab title="My Licence & Permissions">
+        <b-tab title="My Experience">
+          <work-experience v-if="loaded" ref="workExperience" :experience-data="candidate.work_experience" @saveData="saveData($event)" />
+        </b-tab>
+        <b-tab title="My Licence">
           <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
         </b-tab>
-        <b-tab title="My Schedule">
+        <b-tab title="My Availabilities">
           <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
         </b-tab>
         <b-tab title="My Preferences">
           <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
           <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
         </b-tab>
-        <b-tab title="My Health & Fitness">
+        <b-tab title="My Health">
           <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
         </b-tab>
         <b-tab title="Terms & Conditions">
@@ -59,6 +64,7 @@
 </template>
 
 <script>
+import CompleteProgress from '~/components/user/profile/CompleteProgress';
 import ProfileImage from '~/components/media/ProfileImage';
 import GeneralInfo from '~/components/user/profile/GeneralInfo';
 import SocialMedia from '~/components/user/profile/SocialMedia';
@@ -80,6 +86,7 @@ export default {
   layout: 'main',
   middleware: 'guest',
   components:{
+    CompleteProgress,
     ProfileImage,
     GeneralInfo,
     SocialMedia,
@@ -120,6 +127,7 @@ export default {
       this.loadCandidate()
     },
     loadCandidate(){
+      this.loaded = false
       let that = this
       this.$axios.get('/profile/get').then(response => {
         that.candidate = response.data.data

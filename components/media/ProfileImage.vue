@@ -2,13 +2,14 @@
   <div>
     <div class="img-container">
 <!--      <img v-if="userAvatar" :src="userAvatar">-->
-      <img :src="userAvatar" class="rounded" >
+      <img v-if="!change" :src="userAvatar" class="rounded" >
       <b-button class="change" pill variant="info" @click="selectImage" size="sm">Change</b-button>
     </div>
     <crop-avatar
       class="upImage"
       ref="cropper"
       @uploaded="handleUploaded"
+      @cancel="change=false"
       :upload-handler="getCData"
     >
 
@@ -32,6 +33,7 @@ export default {
   },
   data() {
     return {
+      change:false,
       userAvatar: this.profileImage,
     }
   },
@@ -61,6 +63,7 @@ export default {
             that.$swal.close()
             if(response.success){
               that.userAvatar = iData
+              console.log(that.userAvatar)
               that.$emit('profileImageUploaded')
               that.$swal({
                 title: 'profile image has been updated',
@@ -78,6 +81,8 @@ export default {
         })
     },
     selectImage(e){
+      this.change = true
+      this.userAvatar = null
       this.$refs.cropper.pickImage(e)
     }
   },

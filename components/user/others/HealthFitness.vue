@@ -4,7 +4,7 @@
 
     <div class="row align-items-center">
       <div class="col-lg-12">
-        <h4>My Health & Fitness <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button></h4>
+        <h4>My Health <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button></h4>
       </div>
     </div>
 
