@@ -1,5 +1,5 @@
 <template>
-<div>{{ candidateFull }}</div>
+<div></div>
 </template>
 
 <script>
