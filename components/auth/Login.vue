@@ -46,7 +46,7 @@ export default {
       });
     },
 
-    async login(){
+    login(){
       let that = this
       this.$auth.login({ data: that.form })
       // that.$router.push({ name : 'user-profile'})

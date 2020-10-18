@@ -13,7 +13,8 @@
           <!-- <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : errors.password }" v-model="form.password" required>
           <input type="password" placeholder="Enter Password again" id="pswc" :class="{'is-invalid' : errors.password }" v-model="form.password_confirmation" required> -->
           <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }}</div>
-          <button type="button" v-on:click="submit()">Sign in</button>
+          <div class="text-center" v-if="showLoader"><b-spinner type="grow" label="Spinning"></b-spinner></div>
+          <button type="button" v-if="!showLoader" v-on:click="submit()">Sign in</button>
         </div>
       </div>
     </div>
@@ -21,10 +22,12 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   data() {
 
     return {
+      showLoader: false,
       form: {
         name: 'new user',
         email: '',
@@ -36,13 +39,17 @@ export default {
   },
   methods: {
     submit() {
+      this.showLoader = true
       let pass = this.randomString(10, 'an')
       this.form.password = pass
       this.form.password_confirmation = pass
       let that = this
       this.$axios.$post('/auth/register', that.form)
         .then(function (response) {
-          console.log(response);
+          that.showLoader = false
+          if(response.success){
+            that.login()
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -59,9 +66,27 @@ export default {
         str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
       }
       return str;
+    },
+    login(){
+      let that = this
+      this.$auth.login({ data: that.form })
+        // that.$router.push({ name : 'user-profile'})
+        .then(function (response) {
+          if(response.data.success){
+            that.$router.push({ name : 'my-profile'})
+
+          }
+        })
     }
 
-  }
+  },
+  // computed:{
+  //   hasError(){
+  //     if(_.isEmpty(this.errors)){
+  //       return false
+  //     }
+  //   }
+  // }
 }
 </script>
 
