@@ -16,7 +16,7 @@
 <!--    <b-col lg="4" class="pb-2"><b-button>Default Button</b-button></b-col>-->
 <!--    <b-col lg="4" class="pb-2"><b-button size="lg">Large Button</b-button></b-col>-->
 <!--  </b-row>-->
-  {{ mediaImages }}
+<!--  {{ mediaImages }}-->
 </div>
 </template>
 
