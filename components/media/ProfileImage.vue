@@ -43,6 +43,7 @@ export default {
       this.userAvatar = resp.relative_url;
     },
     getCData(datax){
+      let filename = this.$refs.cropper.getFileName()
       let that = this
       let iData = datax.getCroppedCanvas().toDataURL()
       this.$swal({
@@ -54,8 +55,9 @@ export default {
         .then(res => res.blob())
         .then(blob => {
           const fd = new FormData();
-          const file = new File([blob], 'avatar.png');
+          const file = new File([blob], that.makeFilename(filename));
           fd.append('image', file)
+          fd.append('image_type', 'avatar')
           let config = {
             headers: {'Content-Type': 'multipart/form-data'}
           }
@@ -79,6 +81,14 @@ export default {
             }
           })
         })
+    },
+    makeFilename(filename){
+      let extension = filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+      let onlyName = filename.replace("."+extension, "")
+      onlyName = onlyName.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+        .map(x => x.toLowerCase())
+        .join('_');
+      return onlyName+"."+extension
     },
     selectImage(e){
       this.change = true

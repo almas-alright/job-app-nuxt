@@ -239,6 +239,7 @@ export default {
           const fd = new FormData();
           const file = new File([blob], 'signature.png');
           fd.append('image', file)
+          fd.append('image_type', 'signature')
           let config = {
             headers: {'Content-Type': 'multipart/form-data'}
           }
