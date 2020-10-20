@@ -159,6 +159,9 @@ export default {
     createCropper() {
       this.cropper = new Cropper(this.$refs.img, this.cropperOptions)
     },
+    getFileName(){
+      return this.filename;
+    },
     uploadImage() {
       this.cropper.getCroppedCanvas(this.outputOptions)
         .toBlob(
