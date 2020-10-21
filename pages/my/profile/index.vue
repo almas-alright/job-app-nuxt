@@ -22,7 +22,8 @@
     </section>
 
     <div>
-      <b-tabs content-class="mt-3" pills vertical end>
+      <b-card no-body>
+        <b-tabs pills card align="center">
         <b-tab title="My Details" active>
           <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
           <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
@@ -58,6 +59,7 @@
           <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
         </b-tab>
       </b-tabs>
+      </b-card>
     </div>
 
   </div>
@@ -148,6 +150,18 @@ export default {
   mounted() {
      this.loadAllImages()
      this.loadCandidate()
+  },
+  head() {
+    return {
+      title: 'my profile | stevejobs',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'stevejobs is a job searching and candidate hosting application'
+        }
+      ]
+    }
   }
 }
 </script>

@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      
+
     </section>
 </template>
 
@@ -34,11 +34,18 @@ export default {
   layout: 'main',
   // middleware: 'auth',
   components:{Register},
-  // data() {
-  //   return {
-  //     bgImg: "@/assets/images/hero_1.jpg",
-  //   };
-  // },
+  head() {
+    return {
+      title: 'register | stevejobs',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'stevejobs is a job searching and candidate hosting application'
+        }
+      ]
+    }
+  }
 }
 </script>
 
