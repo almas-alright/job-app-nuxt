@@ -150,6 +150,18 @@ export default {
   mounted() {
      this.loadAllImages()
      this.loadCandidate()
+  },
+  head() {
+    return {
+      title: 'my profile | stevejobs',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'stevejobs is a job searching and candidate hosting application'
+        }
+      ]
+    }
   }
 }
 </script>

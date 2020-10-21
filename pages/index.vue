@@ -31,6 +31,18 @@ export default {
     }
   },
   methods:{
+  },
+  head() {
+    return {
+      title: 'home | stevejobs',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'stevejobs is a job searching and candidate hosting application'
+        }
+      ]
+    }
   }
 }
 </script>
