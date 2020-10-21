@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="site-logo col-6">
           <nuxt-link to="/">
-            <img src="~assets/images/logo3.jpeg" alt="">
+            <img src="~assets/images/logo3.png" alt="">
           </nuxt-link>
         </div>
 
