@@ -4,17 +4,11 @@
       <div class="container">
         <div class="col-12">
           <div class="text-danger text-center" v-if="errors.abc">{{ errors.abc[0] }}</div>
-          <!-- <input type="text" placeholder="Enter Username" id="uname" :class="{'is-invalid' : errors.name }" v-model="form.name" required>
-            <div class="invalid-feedback" v-if="errors.name">{{ errors.name[0] }}</div> -->
           <input type="text" placeholder="Enter Email" id="email" :class="{'is-invalid' : errors.email }"
                  v-model="form.email" required>
           <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
-          <!-- <label for="psw"><b>Password</b></label> -->
-          <!-- <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : errors.password }" v-model="form.password" required>
-          <input type="password" placeholder="Enter Password again" id="pswc" :class="{'is-invalid' : errors.password }" v-model="form.password_confirmation" required> -->
-          <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }}</div>
           <div class="text-center" v-if="showLoader"><b-spinner type="grow" label="Spinning"></b-spinner></div>
-          <button type="button" v-if="!showLoader" v-on:click="submit()">Sign Up</button>
+          <button type="button" class="btn-info" v-if="!showLoader" v-on:click="submit()">Reset My Password</button>
         </div>
       </div>
     </div>
@@ -29,7 +23,6 @@ export default {
     return {
       showLoader: false,
       form: {
-        // name: 'new user',
         email: '',
         password: '',
         password_confirmation: ''
@@ -39,16 +32,23 @@ export default {
   },
   methods: {
     submit() {
-      this.showLoader = true
+      // this.showLoader = true
       let pass = this.randomString(10, 'an')
       this.form.password = pass
       this.form.password_confirmation = pass
       let that = this
-      this.$axios.$post('/auth/register', that.form)
+      this.$axios.$patch('/auth/password-reset', that.form)
         .then(function (response) {
           that.showLoader = false
           if(response.success){
-            that.login()
+            that.$swal({
+              title: 'Done!',
+              text: response.message,
+              type: 'success',
+              allowOutsideClick: false,
+            }).then((result) => {
+              that.$router.push({ path : 'login'})
+            })
           }
         })
         .catch(function (error) {
@@ -67,26 +67,8 @@ export default {
       }
       return str;
     },
-    login(){
-      let that = this
-      this.$auth.login({ data: that.form })
-        // that.$router.push({ name : 'user-profile'})
-        .then(function (response) {
-          if(response.data.success){
-            that.$router.push({ name : 'my-profile'})
+  }
 
-          }
-        })
-    }
-
-  },
-  // computed:{
-  //   hasError(){
-  //     if(_.isEmpty(this.errors)){
-  //       return false
-  //     }
-  //   }
-  // }
 }
 </script>
 

@@ -6,7 +6,7 @@
         <div class="row align-items-center justify-content-center">
           <div class="col-md-12">
             <div class="mb-5 text-center">
-              <h1 class="text-white font-weight-bold">My Preferences</h1>
+              <h1 class="text-white font-weight-bold">Account Settings</h1>
               <div class="text-center">
 
               </div>
@@ -16,11 +16,14 @@
       </div>
     </section>
 
+    <section>
+
+    </section>
+
   </div>
 </template>
 
 <script>
-
 
 import Commons from '~/mixins/common'
 export default {

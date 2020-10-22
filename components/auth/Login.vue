@@ -12,6 +12,9 @@
               <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }}</div>
             <button type="submit" v-on:click="login()">Login</button>
           </div>
+        <p v-if="!errors.abc" class="text-info text-sm-center">do not have an account? <nuxt-link to="/register">sign up</nuxt-link></p>
+        <div v-if="errors.abc" class="text-danger text-sm-center bg-custom mx-3">forgot password? <nuxt-link to="/forgot-password">reset password</nuxt-link></div>
+        <div v-if="errors.abc" class="text-warning text-sm-center bg-custom mx-3">or if you do not have an account then <nuxt-link to="/register">create an account</nuxt-link></div>
       </div>
     </div>
   </div>
@@ -181,6 +184,10 @@ export default {
         .cancelbtn {
           width: 100%;
         }
+      }
+
+      .bg-custom{
+        background: rgba(0,0,0, 0.6);
       }
 
 </style>
