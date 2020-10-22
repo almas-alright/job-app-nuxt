@@ -13,10 +13,6 @@
             <li>
               <nuxt-link to="/">home</nuxt-link>
             </li>
-            <!-- <li><a href="job-listings.html">Job Listings</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="blog.html">Blog</a></li> -->
             <li v-if="!authenticated">
               <nuxt-link to="/login">login</nuxt-link>
             </li>
@@ -26,9 +22,6 @@
             <li v-if="authenticated">
               <nuxt-link to="/my/profile">my profile</nuxt-link>
             </li>
-            <li v-if="authenticated">
-              <a href="javascript:" @click.prevent="logout()">logout</a>
-            </li>
             <li>
               <a href="#">contact us</a>
             </li>
@@ -37,8 +30,11 @@
         <!-- class="d-lg-none" -->
         <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
           <div class="ml-auto">
-<!--            <a href="javascript:" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span-->
-<!--              class="mr-2 icon-paper-plane"></span>Contact Us</a>-->
+            <b-dropdown right v-if="authenticated" size="sm" :text="'welcome '+user.name" variant="outline-info" class="m-2">
+              <b-dropdown-item to="/my/account-settings"><fa :icon="['fas', 'user-cog']"/> settings</b-dropdown-item>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item href="javascript:" @click.prevent="logout()"><fa :icon="['fas', 'sign-out-alt']"/> logout</b-dropdown-item>
+            </b-dropdown>
           </div>
           <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span
             class="icon-menu h3 m-0 p-0 mt-2"></span></a>
@@ -53,9 +49,8 @@
 export default {
   methods: {
     logout() {
-      this.$auth.logout().then(function (response) {
-        console.log(response);
-      })
+      let that = this
+      this.$auth.logout()
     }
   }
 }
