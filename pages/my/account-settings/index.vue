@@ -17,16 +17,17 @@
     </section>
 
     <section>
-
+      <new-password></new-password>
     </section>
 
   </div>
 </template>
 
 <script>
-
+import NewPassword from '~/components/auth/NewPassword';
 import Commons from '~/mixins/common'
 export default {
+  comments:{NewPassword},
   mixins:[Commons],
   layout: 'main',
   middleware: 'guest',

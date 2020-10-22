@@ -22,9 +22,6 @@
             <li v-if="authenticated">
               <nuxt-link to="/my/profile">my profile</nuxt-link>
             </li>
-            <li v-if="authenticated">
-              <a href="javascript:" @click.prevent="logout()">logout</a>
-            </li>
             <li>
               <a href="#">contact us</a>
             </li>
@@ -33,8 +30,10 @@
         <!-- class="d-lg-none" -->
         <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
           <div class="ml-auto">
-            <b-dropdown v-if="authenticated" size="sm" :text="'welcome '+user.name" variant="outline-info" class="m-2">
-              <b-dropdown-item to="/my/account-settings">Settings</b-dropdown-item>
+            <b-dropdown right v-if="authenticated" size="sm" :text="'welcome '+user.name" variant="outline-info" class="m-2">
+              <b-dropdown-item to="/my/account-settings"><fa :icon="['fas', 'user-cog']"/> settings</b-dropdown-item>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item href="javascript:" @click.prevent="logout()"><fa :icon="['fas', 'sign-out-alt']"/> logout</b-dropdown-item>
             </b-dropdown>
           </div>
           <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span
@@ -50,9 +49,8 @@
 export default {
   methods: {
     logout() {
-      this.$auth.logout().then(function (response) {
-        console.log(response);
-      })
+      let that = this
+      this.$auth.logout()
     }
   }
 }
