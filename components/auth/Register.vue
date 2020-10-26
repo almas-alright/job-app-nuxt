@@ -69,6 +69,7 @@ export default {
     },
     login(){
       let that = this
+      this.form.active = '1'
       this.$auth.login({ data: that.form })
         // that.$router.push({ name : 'user-profile'})
         .then(function (response) {

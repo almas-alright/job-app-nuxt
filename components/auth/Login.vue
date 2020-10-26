@@ -3,6 +3,7 @@
     <div class="row">
       <div class="container">
         <div class="col-12">
+          <div class="text-danger text-center" v-if="errors.active">{{ errors.active[0] }}</div>
           <div class="text-danger text-center" v-if="errors.abc">{{ errors.abc[0] }}</div>
             <!-- <label for="uname"><b>Username</b></label> -->
             <input type="text" placeholder="Enter Email" id="uname" :class="{'is-invalid' : errors.email }" v-model="form.email" required>
@@ -27,7 +28,8 @@ export default {
     return{
       form:{
         email: '',
-        password: ''
+        password: '',
+        active: '1'
       }
     }
   },
