@@ -1,6 +1,7 @@
 <template>
   <section class="site-section pb-0">
-    <div class="container">
+    <br>
+    <div class="container my-4">
       <div class="row align-items-center">
         <div class="col-lg-12">
           <h4>Terms & Condition

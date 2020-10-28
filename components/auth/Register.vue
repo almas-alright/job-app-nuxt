@@ -29,7 +29,7 @@ export default {
     return {
       showLoader: false,
       form: {
-        // name: 'new user',
+        name: '--',
         email: '',
         password: '',
         password_confirmation: ''
