@@ -4,7 +4,7 @@
 
       <div class="row align-items-center">
         <div class="col-lg-12">
-          <h4>My Induction</h4>
+          <h4></h4>
         </div>
       </div>
 
@@ -35,12 +35,13 @@
       </div>
 
       <br>
-      <div class="row">
-        <div class="col-lg-6">
+      <div class="row my-5">
+        <div class="col-lg-12">
           <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">
             <fa :icon="['fas', 'save']"/>
-            save
+            Submit
           </button>
+          <br>
         </div>
       </div>
 
