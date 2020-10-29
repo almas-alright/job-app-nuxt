@@ -16,7 +16,7 @@
               <div class="col-lg-12 bg-info text-center"><h4 class="text-white my-2">{{ section.title }}</h4></div>
             </div>
             <div v-for="(question, qindex) in section.questions" :key="qindex" class="row border">
-              <div class="col-lg-6">{{ question.quest }}</div>
+              <div class="col-lg-8">{{ question.quest }}</div>
               <div class="col-lg-2">
                 <b-form-radio-group
                   size="sm"
@@ -26,8 +26,10 @@
                   :name="section.slug+'-'+qindex"
                 ></b-form-radio-group>
               </div>
-              <div class="col-lg-4">
-
+              <div class="col-lg-2">
+                <fa v-if="isCorrect(question.ans,question.ca) === 'y'" class="text-success" :icon="['fas', 'check-circle']"></fa>
+                <fa v-else-if="isCorrect(question.ans,question.ca) === 'n'" class="text-danger" :icon="['fas', 'times-circle']"></fa>
+                <fa v-else-if="isCorrect(question.ans,question.ca) === 'o'" class="text-primary" :icon="['fas', 'circle']"></fa>
               </div>
             </div>
           </div>
@@ -37,7 +39,7 @@
       <br>
       <div class="row my-5">
         <div class="col-lg-12">
-          <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">
+          <button v-if="!answered" type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">
             <fa :icon="['fas', 'save']"/>
             Submit
           </button>
@@ -67,7 +69,8 @@ export default {
   },
   data() {
     return {
-      showEditForm: false,
+      answer:{ cans:0, ians:0, nans:0},
+      answered: false,
       questionSections: this.extraData,
       radio_option: [
         {text: 'Yes', value: 1},
@@ -83,6 +86,20 @@ export default {
       this.sendData({extra_info: this.questionSections}, 'Inductions')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
+    },
+    isCorrect(ans,cans){
+      if(!this.answered){
+        return 'x'
+      } else {
+        if(ans == null){
+          return 'o'
+        }
+        if(ans === cans){
+          return 'y'
+        } else {
+          return 'n'
+        }
+      }
     }
   },
   watch: {
@@ -91,6 +108,8 @@ export default {
       handler(val, oldVal) {
         if (_.isEmpty(val)) {
           this.questionSections = inductions
+        } else {
+          this.answered = true
         }
       }
     },

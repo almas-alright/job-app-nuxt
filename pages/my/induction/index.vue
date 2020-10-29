@@ -22,7 +22,7 @@
       <b-container>
         <b-row>
           <b-col col lg="12" class="text-center">
-              <general-questions v-if="loaded" :extra-data="candidate.extra_info"></general-questions>
+              <general-questions v-if="loaded" @saveData="saveData($event)" :extra-data="candidate.extra_info"></general-questions>
           </b-col>
         </b-row>
       </b-container>
