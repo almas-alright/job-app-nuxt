@@ -26,7 +26,7 @@
               <b-container>
                 <b-row>
                   <b-col col lg="12" class="text-center">
-                    if you are done with presentation above please click <a  href="/" size="sm">Next</a> to face general questions about <it></it>
+                    if you are done with presentation above please click <a  href="/my/induction" size="sm">Next</a> to face general questions about <it></it>
                   </b-col>
                 </b-row>
               </b-container>
