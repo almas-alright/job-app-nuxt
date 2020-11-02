@@ -3,19 +3,19 @@
     <div class="row">
       <div class="container">
         <div class="col-12">
-          <div class="text-danger text-center" v-if="errors.active">{{ errors.active[0] }}</div>
-          <div class="text-danger text-center" v-if="errors.abc">{{ errors.abc[0] }}</div>
+          <div class="text-danger text-center" v-if="lv_errors.active">{{ lv_errors.active[0] }}</div>
+          <div class="text-danger text-center" v-if="lv_errors.abc">{{ lv_errors.abc[0] }}</div>
             <!-- <label for="uname"><b>Username</b></label> -->
-            <input type="text" placeholder="Enter Email" id="uname" :class="{'is-invalid' : errors.email }" v-model="form.email" required>
-              <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
+            <input type="text" placeholder="Enter Email" id="uname" :class="{'is-invalid' : lv_errors.email }" v-model="form.email" required>
+              <div class="invalid-feedback" v-if="lv_errors.email">{{ lv_errors.email[0] }}</div>
             <!-- <label for="psw"><b>Password</b></label> -->
-            <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : errors.password }" v-model="form.password" required>
-              <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }}</div>
+            <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : lv_errors.password }" v-model="form.password" required>
+              <div class="invalid-feedback" v-if="lv_errors.password">{{ lv_errors.password[0] }}</div>
             <button type="submit" v-on:click="login()">Login</button>
           </div>
-        <p v-if="!errors.abc" class="text-info text-sm-center">do not have an account? <nuxt-link to="/register">sign up</nuxt-link></p>
-        <div v-if="errors.abc" class="text-danger text-sm-center bg-custom mx-3">forgot password? <nuxt-link to="/forgot-password">reset password</nuxt-link></div>
-        <div v-if="errors.abc" class="text-warning text-sm-center bg-custom mx-3">or if you do not have an account then <nuxt-link to="/register">create an account</nuxt-link></div>
+        <p v-if="!lv_errors.abc" class="text-info text-sm-center">do not have an account? <nuxt-link to="/register">sign up</nuxt-link></p>
+        <div v-if="lv_errors.abc" class="text-danger text-sm-center bg-custom mx-3">forgot password? <nuxt-link to="/forgot-password">reset password</nuxt-link></div>
+        <div v-if="lv_errors.abc" class="text-warning text-sm-center bg-custom mx-3">or if you do not have an account then <nuxt-link to="/register">create an account</nuxt-link></div>
       </div>
     </div>
   </div>

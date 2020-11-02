@@ -14,11 +14,11 @@
               id="cpsw"
               type="password"
               v-model="form_cp.password_current"
-              :class="{'is-invalid' : errors.password_current }"
+              :class="{'is-invalid' : lv_errors.password_current }"
               placeholder="Enter your current password"
               trim
             ></b-form-input>
-            <div class="invalid-feedback" v-if="errors.password_current">{{ errors.password_current[0] }}</div>
+            <div class="invalid-feedback" v-if="lv_errors.password_current">{{ lv_errors.password_current[0] }}</div>
           </div>
           <div class="my-2" role="group">
             <label for="psw">New Password :</label>
@@ -26,11 +26,11 @@
               id="psw"
               type="password"
               v-model="form_cp.password"
-              :class="{'is-invalid' : errors.password}"
+              :class="{'is-invalid' : lv_errors.password}"
               placeholder="New Password"
               trim
             ></b-form-input>
-            <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }}</div>
+            <div class="invalid-feedback" v-if="lv_errors.password">{{ lv_errors.password[0] }}</div>
           </div>
           <div class="my-2" role="group">
             <label for="pswc">Retype New Password :</label>
@@ -38,12 +38,12 @@
               id="pswc"
               type="password"
               v-model="form_cp.password_confirmation"
-              :class="{'is-invalid' : errors.password_confirmation}"
+              :class="{'is-invalid' : lv_errors.password_confirmation}"
               placeholder="Retype New Password"
               trim
             ></b-form-input>
-            <div class="invalid-feedback" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</div>
-            <div class="text-danger text-center" v-if="errors.abc">{{ errors.abc[0] }}</div>
+            <div class="invalid-feedback" v-if="lv_errors.password_confirmation">{{ lv_errors.password_confirmation[0] }}</div>
+            <div class="text-danger text-center" v-if="lv_errors.abc">{{ lv_errors.abc[0] }}</div>
           </div>
           <div class="form-group my-2">
             <button @click="changePassword()" type="button" class="btn btn-success btn-sm"> <fa :icon="['fas', 'save']"/> Change Password </button>
