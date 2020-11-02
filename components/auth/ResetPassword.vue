@@ -3,10 +3,10 @@
     <div class="row">
       <div class="container">
         <div class="col-12">
-          <div class="text-danger text-center" v-if="errors.abc">{{ errors.abc[0] }}</div>
-          <input type="text" placeholder="Enter Email" id="email" :class="{'is-invalid' : errors.email }"
+          <div class="text-danger text-center" v-if="lv_errors.abc">{{ lv_errors.abc[0] }}</div>
+          <input type="text" placeholder="Enter Email" id="email" :class="{'is-invalid' : lv_errors.email }"
                  v-model="form.email" required>
-          <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
+          <div class="invalid-feedback" v-if="lv_errors.email">{{ lv_errors.email[0] }}</div>
           <div class="text-center" v-if="showLoader"><b-spinner type="grow" label="Spinning"></b-spinner></div>
           <button type="button" class="btn-info" v-if="!showLoader" v-on:click="submit()">Reset My Password</button>
         </div>

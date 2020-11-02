@@ -43,7 +43,9 @@ export default {
     './plugins/mixins/images',
     // './plugins/mixins/candidate',
     './plugins/axios',
-    {src: '~/plugins/signature.js',mode:'client'}
+    {src: '~/plugins/signature.js',mode:'client'},
+    {src: '~/plugins/validation.js',mode:'client'},
+    // {src: '~/plugins/i18n.js',mode:'client'}
   ],
   /*
   ** Auto import components
