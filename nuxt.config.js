@@ -69,6 +69,17 @@ export default {
       {
         allowOutsideClick: false,
       }
+    ],
+    [
+      'nuxt-compress',
+      {
+        gzip: {
+          cache: true
+        },
+        brotli: {
+          threshold: 10240
+        }
+      }
     ]
   ],
   fontawesome:{
