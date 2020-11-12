@@ -30,5 +30,7 @@
     "vue-signature-pad": "^2.0.2",
     "vue2-datepicker": "^3.6.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxtjs/moment": "^1.6.1"
+  }
 }

@@ -80,7 +80,10 @@ export default {
           })
         }
       })
-    }
+    },
+    getValidationState({dirty, validated, valid = null}) {
+      return dirty || validated ? valid : null;
+    },
   },
   created() {
 

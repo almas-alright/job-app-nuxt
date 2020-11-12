@@ -56,6 +56,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/moment'
   ],
   /*
   ** Nuxt.js modules
