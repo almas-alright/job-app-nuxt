@@ -3,7 +3,7 @@
     <div class="row">
       <div class="container">
         <div class="col-12">
-          <div class="text-danger text-center" v-if="lv_lv_errors.abc">{{ lv_errors.abc[0] }}</div>
+          <div class="text-danger text-center" v-if="lv_errors.abc">{{ lv_errors.abc[0] }}</div>
           <!-- <input type="text" placeholder="Enter Username" id="uname" :class="{'is-invalid' : lv_errors.name }" v-model="form.name" required>
             <div class="invalid-feedback" v-if="lv_errors.name">{{ lv_errors.name[0] }}</div> -->
           <input type="text" placeholder="Enter Email" id="email" :class="{'is-invalid' : lv_errors.email }"
@@ -13,8 +13,8 @@
           <!-- <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : lv_errors.password }" v-model="form.password" required>
           <input type="password" placeholder="Enter Password again" id="pswc" :class="{'is-invalid' : lv_errors.password }" v-model="form.password_confirmation" required> -->
           <div class="invalid-feedback" v-if="lv_errors.password">{{ lv_errors.password[0] }}</div>
-          <div class="text-center" v-if="showLoader"><b-spinner type="grow" label="Spinning"></b-spinner></div>
-          <button type="button" v-if="!showLoader" v-on:click="submit()">Sign Up</button>
+<!--          <div class="text-center" v-if="showLoader"><b-spinner type="grow" label="Spinning"></b-spinner></div>-->
+          <button type="button" v-on:click="submit()">Sign Up</button>
         </div>
       </div>
     </div>

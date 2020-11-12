@@ -43,7 +43,7 @@
                 rules="required"
                 v-slot="validationContext"
               >
-                <input type="hidden" v-model="genInfo.dateOfBirth" :state="getValidationState(validationContext)"/>
+                <b-form-input v-show="false" v-model="genInfo.dateOfBirth" :state="getValidationState(validationContext)"/>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
             </div>
@@ -276,9 +276,6 @@ export default {
       this.sendData({personal_details: this.genInfo}, 'General Information')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
-    },
-    getValidationState({dirty, validated, valid = null}) {
-      return dirty || validated ? valid : null;
     },
     getState(){
       let that = this
