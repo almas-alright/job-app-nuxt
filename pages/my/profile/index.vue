@@ -119,19 +119,6 @@ export default {
   },
   methods:{
     saveData(sd){
-      // this.candidate.user_id = null
-      // this.candidate.profileImage = null
-      // this.candidate.signature = null
-      // this.candidate.personal_details = this.$refs.gInfo.genInfo
-      // this.candidate.social_medias = this.$refs.socialMedia.mySocialLinks
-      // this.candidate.accommodation = this.$refs.accommodation.accomodation_info
-      // this.candidate.bank_details = this.$refs.bankDetails.bankData
-      // this.candidate.tax_details = this.$refs.taxDetails.taxData
-      // this.candidate.work_experience = this.$refs.workExperience.experiences
-      // this.candidate.education_qualification = this.$refs.eduQualification.mycertificates
-      // this.candidate.professional_certificate = this.$refs.proCertificate.professional_certificate
-      // this.candidate.license_information = this.$refs.lisence.mylisences
-      // this.candidate.available_schedule = this.$refs.available.days
       this.loadCandidate()
     },
     loadCandidate(){
