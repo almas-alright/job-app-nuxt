@@ -273,7 +273,13 @@ export default {
       this.showEditForm = !this.showEditForm
     },
     saveForm() {
-      this.sendData({personal_details: this.genInfo}, 'General Information')
+      this.sendData({
+        personal_details: this.genInfo,
+        age: this.genInfo.dateOfBirth,
+        state_id: this.genInfo.state,
+        suburb_id: this.genInfo.suburb,
+        phone_number: this.genInfo.contactNumber,
+      }, 'General Information')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
