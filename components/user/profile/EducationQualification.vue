@@ -11,7 +11,7 @@
 
       <div v-if="!showEditForm" class="row">
         <div class="col-lg-12 mb-5 mb-lg-0">
-          <b-table striped hover :items="mycertificates">
+          <b-table striped hover :items="mycertificates" :fields="fields">
             <template v-slot:cell(certificate_image)="items">
               <b-img class="img-border img-table" :src="getImage(items.value, 'thumb')" fluid alt="Fluid image"></b-img>
             </template>
@@ -107,7 +107,14 @@ export default {
         {course: 'diploma', disabled: false},
         {course: 'others', disabled: false},
       ],
-      mycertificates: this.educationData
+      mycertificates: this.educationData,
+      fields:[
+        { key: 'course', label:'Course' },
+        { key: 'institute', label:'Institute name' },
+        { key: 'subject', label:'Subject/Major' },
+        { key: 'certificate_image', label:'Certificate Image' },
+        { key: 'passing_year', label:'Year of compilation' }
+      ],
     }
   },
   methods:{
