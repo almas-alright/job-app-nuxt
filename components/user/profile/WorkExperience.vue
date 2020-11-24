@@ -24,6 +24,9 @@
     </div>
 
   <validation-observer v-if="showEditForm" tag="div" class="row" ref="observer" v-slot="{ handleSubmit }">
+    <div class="col-lg-12">
+
+    </div>
     <div class="col-lg-12 mb-5 mb-lg-0">
       <div v-for="(experience, index) in experiences" :key="index" class="row jex-single">
         <div class="col-lg-2 mb-5 mb-lg-0">
@@ -68,23 +71,50 @@
           </validation-provider>
         </div>
         <div class="col-lg-2 mb-5 mb-lg-0">
-          <date-picker input-class="form-control form-control-sm c-dp" placeholder="end at" @change="difference(index)" v-model="experience.end_at" valueType="format"></date-picker>
+<!--          <b-form-checkbox-->
+<!--            size="sm"-->
+<!--            :id="'checkbox-'+index"-->
+<!--            v-model="experience.is_current"-->
+<!--            :name="'checkbox-'+index"-->
+<!--            value="continuing"-->
+<!--            unchecked-value="resigned"-->
+<!--            @change="differenceContinue(index)"-->
+<!--          >-->
+<!--            continuing-->
+<!--          </b-form-checkbox>-->
+          <div class="form-group">
+            <validation-provider
+              name="Job Status"
+              rules="required"
+              v-slot="validationContext"
+            >
+              <b-form-select
+                size="sm"
+                v-model="experience.is_current"
+                :options="jobStatusOptions"
+                :state="getValidationState(validationContext)"
+                @change="differenceContinue(index)"
+              >
+                <template v-slot:first>
+                  <b-form-select-option :value="'null'" disabled >-- Select Status --</b-form-select-option>
+                </template>
+              </b-form-select>
+              <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+            </validation-provider>
+          </div>
         </div>
-        <div class="col-lg-1 mb-5 mb-lg-0">
-          <b-form-checkbox
-            size="sm"
-            :id="'checkbox-'+index"
-            v-model="experience.is_current"
-            :name="'checkbox-'+index"
-            value="continuing"
-            unchecked-value="resigned"
-            @change="differenceContinue(index)"
+        <div class="col-lg-2 mb-5 mb-lg-0">
+          <date-picker v-if="experience.is_current === 'resigned'" input-class="form-control form-control-sm c-dp" placeholder="end at" @change="difference(index)" v-model="experience.end_at" valueType="format"></date-picker>
+          <validation-provider
+            v-if="experience.is_current === 'resigned'"
+            name="End Date"
+            rules="required"
+            v-slot="validationContext"
           >
-            continuing
-          </b-form-checkbox>
-        </div>
-        <div class="col-lg-1 mb-5 mb-lg-0">
-          <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
+            <b-form-input v-show="false" v-model="experience.end_at" :state="getValidationState(validationContext)"/>
+            <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+          </validation-provider>
+          <b-badge variant="danger" @click="doRemove(index)" ><fa :icon="['fas', 'trash-alt']"/></b-badge>
         </div>
       </div>
     </div>
@@ -118,7 +148,7 @@ export default {
     experienceData: {
       type: Array,
       default: function (){
-        return [{company_name: null, reference_number: null, job_title: null, started_at:null, end_at: null, year_experience:0, is_current: 'resigned'}]
+        return [{company_name: null, reference_number: null, job_title: null, started_at:null, end_at: null, year_experience:0, is_current: null}]
       }
     }
   },
@@ -134,6 +164,10 @@ export default {
         { key: 'year_experience', label:'Passed Years' },
         { key: 'is_current', label:'Status' },
       ],
+      jobStatusOptions:[
+        { value: 'continuing', text: 'Continuing' },
+        { value: 'resigned', text: 'Resigned' }
+      ]
     }
   },
   methods: {
@@ -147,7 +181,7 @@ export default {
       this.showEditForm = !this.showEditForm
     },
     addJob() {
-      this.experiences.push({company_name: null, reference_number: null, job_title: null, started_at:null, end_at: null, year_experience:0, is_current: 'resigned'})
+      this.experiences.push({company_name: null, reference_number: null, job_title: null, started_at:null, end_at: null, year_experience:0, is_current: null})
     },
     doRemove(index){
       if(typeof this.experienceData[index] === 'undefined'){
@@ -178,12 +212,14 @@ export default {
     },
     differenceContinue(index){
       let experience = this.experiences[index]
-      let now = this.$moment().format('YYYY-M-D');
-      if(experience.started_at){
-        let mStart = this.$moment(experience.started_at)
-        let mEnd = this.$moment()
-        let diff = mEnd.diff(mStart, 'years')
-        this.experiences[index].year_experience = diff
+      if(experience.is_current === 'continuing'){
+        let now = this.$moment().format('YYYY-M-D');
+        if(experience.started_at){
+          let mStart = this.$moment(experience.started_at)
+          let mEnd = this.$moment()
+          let diff = mEnd.diff(mStart, 'years')
+          this.experiences[index].year_experience = diff
+        }
       }
     },
     removeJob(index) {
@@ -196,7 +232,7 @@ export default {
       immediate: true,
       handler (val, oldVal) {
         if(_.isEmpty(val)){
-          this.experiences = [{company_name: null, reference_number: null, job_title: null, started_at:null, end_at: null, year_experience:0, is_current: 'resigned'}]
+          this.experiences = [{company_name: null, reference_number: null, job_title: null, started_at:null, end_at: null, year_experience:0, is_current: null}]
         }
       }
     }
