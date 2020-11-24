@@ -43,7 +43,8 @@
                 rules="required"
                 v-slot="validationContext"
               >
-                <b-form-input v-show="false" v-model="genInfo.dateOfBirth" :state="getValidationState(validationContext)"/>
+                <b-form-input v-show="false" v-model="genInfo.dateOfBirth"
+                              :state="getValidationState(validationContext)"/>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
             </div>
@@ -114,23 +115,34 @@
             <fieldset> Address
               <div class="form-group">
                 <validation-provider
+                  name="Address"
+                  rules="required"
+                  v-slot="validationContext"
+                >
+                  <b-form-input size="sm" placeholder="Street Address" v-model="genInfo.streetAddress"
+                                :state="getValidationState(validationContext)"></b-form-input>
+                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </validation-provider>
+              </div>
+              <div class="form-group">
+                <validation-provider
                   name="State"
                   rules="required"
                   v-slot="validationContext"
                 >
-                <b-form-select
-                  size="sm"
-                  v-model="genInfo.state"
-                  :options="stateOptions"
-                  :state="getValidationState(validationContext)"
-                  value-field="id"
-                  text-field="state_name"
-                  @change="getSubarb"
-                >
-                  <template v-slot:first>
-                    <b-form-select-option :value="'null'" disabled>-- Please Select State --</b-form-select-option>
-                  </template>
-                </b-form-select>
+                  <b-form-select
+                    size="sm"
+                    v-model="genInfo.state"
+                    :options="stateOptions"
+                    :state="getValidationState(validationContext)"
+                    value-field="id"
+                    text-field="state_name"
+                    @change="getSubarb"
+                  >
+                    <template v-slot:first>
+                      <b-form-select-option :value="'null'" disabled>-- Please Select State --</b-form-select-option>
+                    </template>
+                  </b-form-select>
                   <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
               </div>
@@ -156,17 +168,7 @@
                   <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
               </div>
-              <div class="form-group">
-                <validation-provider
-                  name="Address"
-                  rules="required"
-                  v-slot="validationContext"
-                >
-                  <b-form-input size="sm" placeholder="Street Address" v-model="genInfo.streetAddress"
-                                :state="getValidationState(validationContext)"></b-form-input>
-                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                </validation-provider>
-              </div>
+
             </fieldset>
 
           </div>
@@ -244,7 +246,7 @@ export default {
           contactNumber: null,
           emergencyContactNumber: null,
           state: null,
-          suburb:null,
+          suburb: null,
           streetAddress: null,
         }
       }
@@ -263,8 +265,8 @@ export default {
         {value: 'married', text: 'Married'},
         {value: 'separated', text: 'Separated'}
       ],
-      stateOptions:[],
-      suburbOptions:[]
+      stateOptions: [],
+      suburbOptions: []
     }
 
   },
@@ -283,19 +285,19 @@ export default {
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
-    getState(){
+    getState() {
       let that = this
       this.$axios.get('sd/get-states').then(response => {
         that.stateOptions = response.data
-      }).finally(function(){
-        if(that.genInfo.state != null){
+      }).finally(function () {
+        if (that.genInfo.state != null) {
           that.getSubarb()
         }
       })
     },
-    getSubarb(){
+    getSubarb() {
       let that = this
-      this.$axios.get('sd/get-suburbs',{
+      this.$axios.get('sd/get-suburbs', {
         params: {
           state_id: that.genInfo.state
         }
@@ -303,8 +305,8 @@ export default {
         that.suburbOptions = response.data
       })
     },
-    selectState(){
-      if(that.genInfo.state === null){
+    selectState() {
+      if (that.genInfo.state === null) {
         console.log('adsddasdas')
       }
     }
