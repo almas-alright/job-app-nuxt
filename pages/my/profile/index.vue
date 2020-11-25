@@ -28,7 +28,7 @@
             <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
             <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
           </b-tab>
-          <b-tab title="Visa & Passport">
+          <b-tab title="My Passport">
             <passport v-if="loaded" ref="acc" :passport-info="candidate.passport" @saveData="saveData($event)"></passport>
           </b-tab>
           <b-tab title="My Financial">

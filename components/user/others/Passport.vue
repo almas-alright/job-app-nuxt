@@ -106,19 +106,20 @@
 
             <div class="row my-2">
               <div class="col-md-4">
-                <b-form-checkbox
-                  id="checkbox-1"
-                  v-model="passport_info.is_student"
-                  name="checkbox-1"
-                  value="yes"
-                  unchecked-value="no"
-                  @change="is_student = !is_student"
-                >
-                  I am student
-                </b-form-checkbox>
+<!--                <b-form-checkbox-->
+<!--                  id="checkbox-1"-->
+<!--                  v-model="passport_info.is_student"-->
+<!--                  name="checkbox-1"-->
+<!--                  value="yes"-->
+<!--                  unchecked-value="no"-->
+<!--                  @change="is_student = !is_student"-->
+<!--                >-->
+<!--                  I am student-->
+<!--                </b-form-checkbox>-->
+                <span v-show="isStudent">coe image</span>
               </div>
               <div class="col-md-2">
-                <media-browser v-if="is_student" size="student" v-model="passport_info.coe_image"></media-browser>
+                <media-browser v-if="isStudent" size="student" v-model="passport_info.coe_image"></media-browser>
               </div>
             </div>
           </div>
@@ -181,6 +182,7 @@ export default {
         {value: 'citizen', text: 'Citizen'},
         {value: 'permanent-resident', text: 'Permanent-Resident'},
         {value: 'non-immigrant', text: 'Non-Immigrant'},
+        {value: 'student', text: 'Student'},
         {value: 'sheltered', text: 'Sheltered'},
       ],
       passport_info: this.passportInfo
@@ -212,6 +214,9 @@ export default {
   computed: {
     isCitizen() {
       return !(this.passport_info.citizen_type != null && this.passport_info.citizen_type !== 'citizen');
+    },
+    isStudent() {
+      return !(this.passport_info.citizen_type != null && this.passport_info.citizen_type !== 'student');
     }
   },
   watch: {
