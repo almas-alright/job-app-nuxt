@@ -79,6 +79,7 @@
               <b-form-input size="sm" placeholder="emergency contact"
                             v-model="genInfo.emergencyContactNumber"></b-form-input>
             </div>
+
           </div>
 
           <div class="col-lg-6 ml-auto">
@@ -172,14 +173,57 @@
             </fieldset>
 
           </div>
+          <div class="col-lg-12"></div>
+          <div class="col-lg-6">
+            <div class="bg-light p-3 text-info">
+              <b-form-group label="currently i am ">
+                <validation-provider
+                  name="Has Job"
+                  rules="required"
+                  v-slot="validationContext"
+                >
+                <b-form-radio-group
+                  id="radio-group-x"
+                  v-model="genInfo.has_job"
+                  :options="hasJobOptions"
+                  :state="getValidationState(validationContext)"
+                  name="js-radio-options"
+                ></b-form-radio-group>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </validation-provider>
+              </b-form-group>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="bg-light p-3 text-info">
+              <b-form-group label="currently i am looking for a job!">
+                <validation-provider
+                  name="Search Job"
+                  rules="required"
+                  v-slot="validationContext"
+                >
+                <b-form-radio-group
+                  id="radio-group-1"
+                  v-model="genInfo.searching_job"
+                  :options="searchingJobOptions"
+                  :state="getValidationState(validationContext)"
+                  name="radio-options"
+                ></b-form-radio-group>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </validation-provider>
+              </b-form-group>
+            </div>
+          </div>
           <div class="col-lg-12">
-            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">
-              <fa :icon="['fas', 'window-close']"/>
-            </button>
-            <button type="button" v-on:click="handleSubmit(saveForm)" class="btn btn-success btn-sm">
-              <fa :icon="['fas', 'save']"/>
-              save
-            </button>
+            <div class="p-3">
+              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">
+                <fa :icon="['fas', 'window-close']"/>
+              </button>
+              <button type="button" v-on:click="handleSubmit(saveForm)" class="btn btn-success btn-sm">
+                <fa :icon="['fas', 'save']"/>
+                save
+              </button>
+            </div>
           </div>
         </validation-observer>
       </div>
@@ -248,6 +292,8 @@ export default {
           state: null,
           suburb: null,
           streetAddress: null,
+          has_job:null,
+          searching_job:null,
         }
       }
     }
@@ -266,7 +312,15 @@ export default {
         {value: 'separated', text: 'Separated'}
       ],
       stateOptions: [],
-      suburbOptions: []
+      suburbOptions: [],
+      hasJobOptions:[
+        { text: 'employed', value: '1' },
+        { text: 'unemployed', value: '0' }
+      ],
+      searchingJobOptions:[
+        { text: 'yes', value: '1' },
+        { text: 'no', value: '0' }
+      ],
     }
 
   },
@@ -280,6 +334,8 @@ export default {
         age: this.genInfo.dateOfBirth,
         state_id: this.genInfo.state,
         suburb_id: this.genInfo.suburb,
+        has_job: this.genInfo.has_job,
+        searching_job: this.genInfo.searching_job,
         phone_number: this.genInfo.contactNumber,
       }, 'General Information')
       this.$emit('saveData')
