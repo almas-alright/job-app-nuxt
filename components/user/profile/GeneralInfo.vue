@@ -168,9 +168,9 @@
                       </template>
                     </b-form-select>
                     <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-                    <b-input-group-append v-if="!validationContext.errors">
+                    <b-input-group-append v-if="!validationContext.errors[0]">
                       <b-input-group-text>
-                        post code :
+                        post code : {{ getSubarbValue(genInfo.suburb, 'postcode') }}
                       </b-input-group-text>
                     </b-input-group-append>
                   </b-input-group>
@@ -251,6 +251,13 @@
 
             <dt class="col-sm-6">Nationality :</dt>
             <dd class="col-sm-6"> {{ genInfo.nationality | isEmpty('set Nationality') }}</dd>
+
+            <dt class="col-sm-6">Currently in job :</dt>
+            <dd class="col-sm-6"> {{ genInfo.has_job ? "Yes" : "No" }}</dd>
+
+            <dt class="col-sm-6">Searching job :</dt>
+            <dd class="col-sm-6"> {{ genInfo.searching_job ? "Yes" : "No" }}</dd>
+
           </dl>
         </div>
         <div class="col-lg-5 ml-auto">
@@ -268,10 +275,10 @@
             <dd class="col-sm-6"> {{ genInfo.streetAddress | isEmpty('set address') }}</dd>
 
             <dt class="col-sm-6">Suburb :</dt>
-            <dd class="col-sm-6"> {{ genInfo.suburb | isEmpty('set Suburb') }}</dd>
+            <dd class="col-sm-6"> {{ getSubarbValue(genInfo.suburb, 'suburb_name') | isEmpty('set Suburb') }} <span class="text-info">( post code : {{ getSubarbValue(genInfo.suburb, 'postcode') }} )</span></dd>
 
             <dt class="col-sm-6">State :</dt>
-            <dd class="col-sm-6"> {{ genInfo.state | isEmpty('set State') }}</dd>
+            <dd class="col-sm-6 text-capitalize"> {{ getStateValue(genInfo.state, 'state_name') | isEmpty('set State') }}</dd>
 
           </dl>
         </div>
@@ -375,6 +382,24 @@ export default {
       }).then(response => {
         that.suburbOptions = response.data
       })
+    },
+    getSubarbValue(id, key){
+      let name = ''
+      if(id){
+        name =_.result(_.find(this.suburbOptions, function(su) {
+          return su.id === id;
+        }), key);
+      }
+      return name
+    },
+    getStateValue(id, key){
+      let name = ''
+      if(id){
+        name =_.result(_.find(this.stateOptions, function(st) {
+          return st.id === id;
+        }), key);
+      }
+      return name
     },
     selectState() {
       if (that.genInfo.state === null) {
