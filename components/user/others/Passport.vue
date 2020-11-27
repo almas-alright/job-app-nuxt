@@ -5,7 +5,9 @@
       <div class="row align-items-center">
         <div class="col-lg-12">
           <h4>Passport/Visa Information
-            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button>
+            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">
+              <fa :icon="['fas', 'edit']"/>
+            </b-button>
           </h4>
         </div>
       </div>
@@ -32,53 +34,90 @@
             <dd class="col-sm-6"> {{ passport_info.visa_expiry }}</dd>
             <dt class="col-sm-6">Visa Image :</dt>
             <dd class="col-sm-6">
-              <b-img class="img-border img-table" :src="getImage(passport_info.passport_image, 'thumb')" fluid
+              <b-img class="img-border img-table" :src="getImage(passport_info.visa_image, 'thumb')" fluid
                      alt="Fluid image"></b-img>
             </dd>
             <dt class="col-sm-6">COE Image :</dt>
             <dd class="col-sm-6">
-              <b-img class="img-border img-table" :src="getImage(passport_info.passport_image, 'thumb')" fluid
+              <b-img class="img-border img-table" :src="getImage(passport_info.coe_image, 'thumb')" fluid
                      alt="Fluid image"></b-img>
             </dd>
           </dl>
         </div>
       </div>
 
-      <div v-if="showEditForm" class="row">
+      <validation-observer v-if="showEditForm" tag="div" class="row" ref="observer" v-slot="{ handleSubmit }">
         <div class="col-lg-6 mb-5 mb-lg-0">
 
-          <div class="form-group">
-            <b-form-select v-model="passport_info.citizen_type" :options="options" size="sm"
-                           class="mt-3"></b-form-select>
-          </div>
+          <b-form-group label="Select Citizen Type">
+            <validation-provider
+              name="Citizen Type"
+              :rules="{ required: true }"
+              v-slot="validationContext"
+            >
+            <b-form-select
+              v-model="passport_info.citizen_type"
+              :options="options"
+              :state="getValidationState(validationContext)"
+              size="sm"
+              class="mt-3">
+            </b-form-select>
+              <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+            </validation-provider>
+          </b-form-group>
 
 
           <div id="conditional" v-if="!isCitizen">
             <b-form-group inline label="Passport Number:">
+              <validation-provider
+                name="Passport number"
+                :rules="{ required: true }"
+                v-slot="validationContext"
+              >
               <b-form-input placeholder="passport number" v-model="passport_info.passport_number" size="sm"
-                            class="mt-3"></b-form-input>
+                            class="mt-3" :state="getValidationState(validationContext)"></b-form-input>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+              </validation-provider>
             </b-form-group>
             <div class="row my-2">
               <div class="col-md-4">
-                <p>Passport Image : </p>
+                <p class="text-black-50">Passport Image : </p>
               </div>
               <div class="col-md-2">
                 <media-browser size="passport" v-model="passport_info.passport_image"></media-browser>
+              </div>
+              <div class="col-md-6">
+                <validation-provider
+                  name="Passport Image"
+                  rules="required"
+                  v-slot="validationContext"
+                >
+                  <b-form-input v-show="false" v-model="passport_info.passport_image"
+                                :state="getValidationState(validationContext)"/>
+                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </validation-provider>
               </div>
             </div>
 
             <b-form-group inline label="Select Visa Type:" label-for="input-visa-type">
               <b-input-group prepend="Visa" size="sm" class="mb-2">
+                <validation-provider
+                  name="Type of Visa"
+                  :rules="{ required: true }"
+                  v-slot="validationContext"
+                >
                 <b-form-input
                   id="input-visa-type"
                   name="visa_type"
                   v-model="passport_info.visa_type"
+                  :state="getValidationState(validationContext)"
                   list="input-list-visa-type"
                   @change="updateVisaSubclass()"
                   class="capitalize"
                   placeholder="Select Visa Type"
                   size="sm"
                 ></b-form-input>
+                </validation-provider>
                 <b-form-datalist
                   id="input-list-visa-type"
                   v-model="passport_info.visa_subclass"
@@ -93,33 +132,57 @@
 
             <div class="row my-2">
               <div class="col-md-4">
-                <p>Visa Image : </p>
+                <p class="text-black-50">Visa Image : </p>
               </div>
               <div class="col-md-2">
                 <media-browser size="visa" v-model="passport_info.visa_image"></media-browser>
+
               </div>
+              <div class="col-md-6">
+                <validation-provider
+                  name="Visa Image"
+                  rules="required"
+                  v-slot="validationContext"
+                >
+                  <b-form-input v-show="false" v-model="passport_info.visa_image"
+                                :state="getValidationState(validationContext)"/>
+                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </validation-provider>
+              </div>
+
             </div>
 
             <b-input-group size="sm" class="mb-3">
+              <p class="text-black-50">Visa Expiry Date : </p>
               <date-picker v-model="passport_info.visa_expiry" valueType="format"></date-picker>
+              <validation-provider
+                name="Visa Expiry Date"
+                rules="required"
+                v-slot="validationContext"
+              >
+                <b-form-input v-show="false" v-model="passport_info.visa_expiry"
+                              :state="getValidationState(validationContext)"/>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+              </validation-provider>
             </b-input-group>
 
             <div class="row my-2">
               <div class="col-md-4">
-<!--                <b-form-checkbox-->
-<!--                  id="checkbox-1"-->
-<!--                  v-model="passport_info.is_student"-->
-<!--                  name="checkbox-1"-->
-<!--                  value="yes"-->
-<!--                  unchecked-value="no"-->
-<!--                  @change="is_student = !is_student"-->
-<!--                >-->
-<!--                  I am student-->
-<!--                </b-form-checkbox>-->
-                <span v-show="isStudent">coe image</span>
+                <p v-if="isStudent" class="text-black-50">Coe Image : </p>
               </div>
               <div class="col-md-2">
                 <media-browser v-if="isStudent" size="student" v-model="passport_info.coe_image"></media-browser>
+              </div>
+              <div class="col-md-6">
+                <validation-provider
+                  name="Students COE Image"
+                  rules="required"
+                  v-slot="validationContext"
+                >
+                  <b-form-input v-show="false" v-model="passport_info.coe_image"
+                                :state="getValidationState(validationContext)"/>
+                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                </validation-provider>
               </div>
             </div>
           </div>
@@ -129,13 +192,19 @@
 
             </div>
             <div class="offset-lg-4 col-lg-6">
-              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
-              <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
+              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">
+                <fa :icon="['fas', 'window-close']"/>
+              </button>
+              <button type="button" v-on:click="handleSubmit(saveForm)" class="btn btn-success btn-sm">
+                <fa :icon="['fas', 'save']"/>
+                save
+              </button>
             </div>
           </div>
 
         </div>
-      </div>
+      </validation-observer>
+      <!--      here-->
 
     </div>
     <br>
@@ -206,7 +275,7 @@ export default {
     },
     saveForm() {
       // accommodation
-      this.sendData({ passport: this.passport_info}, 'Accommodation Information')
+      this.sendData({passport: this.passport_info}, 'Accommodation Information')
       this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
