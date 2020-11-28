@@ -74,15 +74,19 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-4">
-              <date-picker range="true" input-class="form-control form-control-sm c-dp" v-model="my_schedule.from_to" placeholder="in between" valueType="format"></date-picker>
+            <div class="col-sm-6">
+              From:
+              <date-picker input-class="form-control form-control-sm c-dp" v-model="my_schedule.from_to[0]" placeholder="From" valueType="format"></date-picker>
+            </div>
+            <div class="col-sm-6">
+              To:
+              <date-picker input-class="form-control form-control-sm c-dp" v-model="my_schedule.from_to[1]" placeholder="To" valueType="format"></date-picker>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-1">
-
-            </div>
-            <div class="offset-sm-7 col-sm-4">
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <button type="button" v-on:click="select('no')" class="btn btn-outline-info btn-sm"><fa :icon="['fas', 'square']"/> deselect all</button>
+              <button type="button" v-on:click="select('yes')" class="btn btn-outline-info btn-sm"><fa :icon="['fas', 'check-square']"/> select all</button>
               <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
               <button type="button"  v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
             </div>
@@ -126,7 +130,7 @@ export default {
       ],
       showEditForm : false,
       my_schedule: this.schedule,
-      from_to:null,
+      from_to:[null,null],
       dayClone:[
         {day_name: 'Monday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
         {day_name: 'Tuesday', morning: 'no', afternoon:'no', night:'no', early_morning: 'no'},
@@ -139,6 +143,14 @@ export default {
     }
   },
   methods: {
+    select(all){
+      for (let i in this.my_schedule.days) {
+        this.my_schedule.days[i].morning = all
+        this.my_schedule.days[i].early_morning = all
+        this.my_schedule.days[i].afternoon = all
+        this.my_schedule.days[i].night = all
+      }
+    },
     editForm() {
       this.showEditForm = !this.showEditForm
     },
