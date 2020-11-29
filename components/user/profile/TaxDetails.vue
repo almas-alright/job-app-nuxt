@@ -7,7 +7,9 @@ t
       <div class="row align-items-center">
         <div class="col-lg-12">
           <h4>Tax Id Details
-            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()"><fa :icon="['fas', 'edit']"/></b-button>
+            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">
+              <fa :icon="['fas', 'edit']"/>
+            </b-button>
           </h4>
         </div>
       </div>
@@ -35,17 +37,18 @@ t
 
       <div v-if="showEditForm" class="row">
         <div class="col-lg-6 mb-5 mb-lg-0">
-          <div class="form-group">
+          <b-form-group label="TFN NUMBER">
             <b-form-input size="sm" placeholder="TFN NUMBER" v-model="taxData.tfn_number"></b-form-input>
-          </div>
+          </b-form-group>
 
-          <div class="form-group">
+          <b-form-group label="Has ABN?">
             <b-form-select v-model="taxData.has_abn.status" :options="abn_options" size="sm"
-                           class="mt-3"></b-form-select>
-          </div>
-          <div v-if="taxData.has_abn.status" class="form-group">
+            ></b-form-select>
+          </b-form-group>
+
+          <b-form-group v-if="taxData.has_abn.status" label="ABN">
             <b-form-input size="sm" v-model="taxData.has_abn.abn_number" placeholder="ABN NUMBER"></b-form-input>
-          </div>
+          </b-form-group>
           <div v-if="!taxData.has_abn.status" class="form-group">
             <b-form-checkbox
               id="checkbox-1"
@@ -56,20 +59,21 @@ t
             >
               I accept the term below
             </b-form-checkbox>
-            <b-form-text id="input-live-help">
+            <p class="text-info" style="font-size: 14px">
               IF I DO NOT PROVIDE ABN, I CONSENT TO AN ABN APPLICATION BEING MADE ON MY BEHALF, FOR A FEE OF 38.5 AUD.
               THIS WILL BE DEDUCTED FROM MY FIRST PAY. I AM ALSO AVAILABLE TO WORK UNDER ABN *
-            </b-form-text>
+            </p>
           </div>
 
-          <div class="form-group">
+          <b-form-group label="Has Super Number?">
             <b-form-select v-model="taxData.has_super_number.status" :options="super_number_options" size="sm"
-                           class="mt-3"></b-form-select>
-          </div>
-          <div v-if="taxData.has_super_number.status" class="form-group">
-            <b-form-input size="sm" v-model="taxData.has_super_number.super_number"
-                          placeholder="ABN NUMBER"></b-form-input>
-          </div>
+            ></b-form-select>
+          </b-form-group>
+
+          <b-form-group v-if="taxData.has_super_number.status" label="SUPER NUMBER">
+            <b-form-input size="sm" v-model="taxData.has_super_number.super_number" placeholder="SUPER NUMBER"></b-form-input>
+          </b-form-group>
+
           <div v-if="!taxData.has_super_number.status" class="form-group">
             <b-form-checkbox
               id="checkbox-1"
@@ -82,10 +86,15 @@ t
             </b-form-checkbox>
           </div>
 
-          <div class="form-group">
-            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
-            <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
-          </div>
+          <b-form-group>
+            <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">
+              <fa :icon="['fas', 'window-close']"/>
+            </button>
+            <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">
+              <fa :icon="['fas', 'save']"/>
+              save
+            </button>
+          </b-form-group>
         </div>
       </div>
 

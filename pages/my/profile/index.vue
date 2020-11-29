@@ -126,7 +126,7 @@ export default {
       let that = this
       this.$axios.get('/profile/get').then(response => {
         that.candidate = response.data.data
-        console.log(that.candidate)
+        // console.log(that.candidate)
         that.loaded = true
         // that.$store.dispatch('candidate/setCandidateData', response.data.data)
       });

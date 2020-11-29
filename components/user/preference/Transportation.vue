@@ -20,7 +20,7 @@
 
       <div v-if="showEditForm" class="row">
         <div class="col-lg-8 mb-5 mb-lg-0">
-          <b-form-group label="Using options array:">
+          <b-form-group label="I have:">
             <b-form-checkbox-group
               id="checkbox-group-r"
               v-model="travel.transports"

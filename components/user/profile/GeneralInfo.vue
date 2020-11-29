@@ -13,30 +13,30 @@
       <div v-if="showEditForm">
         <validation-observer tag="div" class="row align-items-center" ref="observer" v-slot="{ handleSubmit }">
           <div class="col-lg-6 mb-5 mb-lg-0">
-            <div class="form-group">
+            <b-form-group label="First Name">
               <validation-provider
                 name="First Name"
-                :rules="{ required: true, min: 3 }"
+                :rules="{ required: true, alpha_spaces:true }"
                 v-slot="validationContext"
               >
                 <b-form-input size="sm" placeholder="Enter First Name" v-model="genInfo.firstName"
                               :state="getValidationState(validationContext)"></b-form-input>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
-            </div>
-            <div class="form-group">
+            </b-form-group>
+            <b-form-group label="Last Name">
               <validation-provider
                 name="Last Name"
-                :rules="{ required: true, min: 3 }"
+                :rules="{ required: true, alpha_spaces:true }"
                 v-slot="validationContext"
               >
                 <b-form-input size="sm" placeholder="Enter Last Name" v-model="genInfo.lastName"
                               :state="getValidationState(validationContext)"></b-form-input>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
-            </div>
-            <div class="form-group">
-              <date-picker input-class="form-control form-control-sm c-dp" placeholder="date of birth"
+            </b-form-group>
+            <b-form-group label="Date of Birth">
+              <date-picker :default-value="$moment().subtract(20, 'years').format('YYYY-MM-DD')" input-class="form-control form-control-sm c-dp" placeholder="date of birth"
                            v-model="genInfo.dateOfBirth" valueType="format"></date-picker>
               <validation-provider
                 name="Date Of Birth"
@@ -47,8 +47,8 @@
                               :state="getValidationState(validationContext)"/>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
-            </div>
-            <div class="form-group">
+            </b-form-group>
+            <b-form-group label="Marital Status">
               <validation-provider
                 name="marital status"
                 rules="required"
@@ -63,8 +63,8 @@
                 </b-form-select>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
-            </div>
-            <div class="form-group">
+            </b-form-group>
+            <b-form-group label="Contact Number">
               <validation-provider
                 name="Contact Number"
                 :rules="{ required:true, regx: /\+?\d+$/  }"
@@ -74,20 +74,20 @@
                               :state="getValidationState(validationContext)"></b-form-input>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
-            </div>
-            <div class="form-group">
+            </b-form-group>
+            <b-form-group label="Emergency Contact">
               <b-form-input size="sm" placeholder="emergency contact"
                             v-model="genInfo.emergencyContactNumber"></b-form-input>
-            </div>
+            </b-form-group>
 
           </div>
 
           <div class="col-lg-6 ml-auto">
-            <div class="form-group">
+            <b-form-group label="Email">
               <b-form-input size="sm" disabled :type="'email'" placeholder="mail@example.com"
                             v-model="genInfo._email"></b-form-input>
-            </div>
-            <div class="form-group">
+            </b-form-group>
+            <b-form-group label="Nationality">
               <validation-provider
                 name="Nationality"
                 rules="required"
@@ -111,10 +111,10 @@
                 </b-form-select>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
-            </div>
+            </b-form-group>
 
             <fieldset> Address
-              <div class="form-group">
+              <b-form-group label="Street">
                 <validation-provider
                   name="Address"
                   rules="required"
@@ -124,8 +124,8 @@
                                 :state="getValidationState(validationContext)"></b-form-input>
                   <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
-              </div>
-              <div class="form-group">
+              </b-form-group>
+              <b-form-group label="State">
                 <validation-provider
                   name="State"
                   rules="required"
@@ -146,29 +146,36 @@
                   </b-form-select>
                   <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
-              </div>
-              <div class="form-group">
+              </b-form-group>
+              <b-form-group label="Suburb">
                 <validation-provider
                   name="Suburb"
                   rules="required"
                   v-slot="validationContext"
                 >
-                  <b-form-select
-                    size="sm"
-                    v-model="genInfo.suburb"
-                    :options="suburbOptions"
-                    :state="getValidationState(validationContext)"
-                    value-field="id"
-                    text-field="suburb_name"
-                    @click="selectState"
-                  >
-                    <template v-slot:first>
-                      <b-form-select-option :value="'null'" disabled>-- Please Select State --</b-form-select-option>
-                    </template>
-                  </b-form-select>
-                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  <b-input-group size="sm">
+                    <b-form-select
+                      size="sm"
+                      v-model="genInfo.suburb"
+                      :options="suburbOptions"
+                      :state="getValidationState(validationContext)"
+                      value-field="id"
+                      text-field="suburb_name"
+                      @click="selectState"
+                    >
+                      <template v-slot:first>
+                        <b-form-select-option value="null" disabled>-- Please Select Suburb --</b-form-select-option>
+                      </template>
+                    </b-form-select>
+                    <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                    <b-input-group-append v-if="!validationContext.errors[0]">
+                      <b-input-group-text>
+                        post code : {{ getSubarbValue(genInfo.suburb, 'postcode') }}
+                      </b-input-group-text>
+                    </b-input-group-append>
+                  </b-input-group>
                 </validation-provider>
-              </div>
+              </b-form-group>
 
             </fieldset>
 
@@ -182,14 +189,14 @@
                   rules="required"
                   v-slot="validationContext"
                 >
-                <b-form-radio-group
-                  id="radio-group-x"
-                  v-model="genInfo.has_job"
-                  :options="hasJobOptions"
-                  :state="getValidationState(validationContext)"
-                  name="js-radio-options"
-                ></b-form-radio-group>
-                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  <b-form-radio-group
+                    id="radio-group-x"
+                    v-model="genInfo.has_job"
+                    :options="hasJobOptions"
+                    :state="getValidationState(validationContext)"
+                    name="js-radio-options"
+                  ></b-form-radio-group>
+                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
               </b-form-group>
             </div>
@@ -202,14 +209,14 @@
                   rules="required"
                   v-slot="validationContext"
                 >
-                <b-form-radio-group
-                  id="radio-group-1"
-                  v-model="genInfo.searching_job"
-                  :options="searchingJobOptions"
-                  :state="getValidationState(validationContext)"
-                  name="radio-options"
-                ></b-form-radio-group>
-                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  <b-form-radio-group
+                    id="radio-group-1"
+                    v-model="genInfo.searching_job"
+                    :options="searchingJobOptions"
+                    :state="getValidationState(validationContext)"
+                    name="radio-options"
+                  ></b-form-radio-group>
+                  <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                 </validation-provider>
               </b-form-group>
             </div>
@@ -244,6 +251,13 @@
 
             <dt class="col-sm-6">Nationality :</dt>
             <dd class="col-sm-6"> {{ genInfo.nationality | isEmpty('set Nationality') }}</dd>
+
+            <dt class="col-sm-6">Currently in job :</dt>
+            <dd class="col-sm-6"> {{ genInfo.has_job ? "Yes" : "No" }}</dd>
+
+            <dt class="col-sm-6">Searching job :</dt>
+            <dd class="col-sm-6"> {{ genInfo.searching_job ? "Yes" : "No" }}</dd>
+
           </dl>
         </div>
         <div class="col-lg-5 ml-auto">
@@ -259,6 +273,13 @@
 
             <dt class="col-sm-6">Street Address :</dt>
             <dd class="col-sm-6"> {{ genInfo.streetAddress | isEmpty('set address') }}</dd>
+
+            <dt class="col-sm-6">Suburb :</dt>
+            <dd class="col-sm-6"> {{ getSubarbValue(genInfo.suburb, 'suburb_name') | isEmpty('set Suburb') }} <span class="text-info">( post code : {{ getSubarbValue(genInfo.suburb, 'postcode') }} )</span></dd>
+
+            <dt class="col-sm-6">State :</dt>
+            <dd class="col-sm-6 text-capitalize"> {{ getStateValue(genInfo.state, 'state_name') | isEmpty('set State') }}</dd>
+
           </dl>
         </div>
       </div>
@@ -273,6 +294,7 @@ import country_list from '~/static/country_list'
 import commons from '~/mixins/common'
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+import _ from "lodash";
 
 export default {
   components: {DatePicker},
@@ -292,8 +314,8 @@ export default {
           state: null,
           suburb: null,
           streetAddress: null,
-          has_job:null,
-          searching_job:null,
+          has_job: 0,
+          searching_job: 1,
         }
       }
     }
@@ -313,13 +335,13 @@ export default {
       ],
       stateOptions: [],
       suburbOptions: [],
-      hasJobOptions:[
-        { text: 'employed', value: '1' },
-        { text: 'unemployed', value: '0' }
+      hasJobOptions: [
+        {text: 'employed', value: '1'},
+        {text: 'unemployed', value: '0'}
       ],
-      searchingJobOptions:[
-        { text: 'yes', value: '1' },
-        { text: 'no', value: '0' }
+      searchingJobOptions: [
+        {text: 'yes', value: '1'},
+        {text: 'no', value: '0'}
       ],
     }
 
@@ -361,6 +383,24 @@ export default {
         that.suburbOptions = response.data
       })
     },
+    getSubarbValue(id, key){
+      let name = ''
+      if(id){
+        name =_.result(_.find(this.suburbOptions, function(su) {
+          return su.id === id;
+        }), key);
+      }
+      return name
+    },
+    getStateValue(id, key){
+      let name = ''
+      if(id){
+        name =_.result(_.find(this.stateOptions, function(st) {
+          return st.id === id;
+        }), key);
+      }
+      return name
+    },
     selectState() {
       if (that.genInfo.state === null) {
         console.log('adsddasdas')
@@ -379,6 +419,32 @@ export default {
   created() {
     this.genInfo._email = this.user.email
     this.getState();
+  },
+  watch:{
+    personalDetails: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler (val, oldVal) {
+        if(_.isEmpty(val)){
+          this.genInfo = {
+            firstName: null,
+            lastName: null,
+            dateOfBirth: null,
+            maritalStatus: null,
+            nationality: null,
+            _email: null,
+            contactNumber: null,
+            emergencyContactNumber: null,
+            state: null,
+            suburb: null,
+            streetAddress: null,
+            has_job: 0,
+            searching_job: 1,
+          }
+        }
+      }
+    }
   }
+
 }
 </script>

@@ -1,7 +1,8 @@
 <template>
   <section class="site-section pb-0">
     <br>
-    <div class="container my-4">
+
+      <validation-observer tag="div" class="container my-4" ref="observer" v-slot="{ handleSubmit }">
       <div class="row align-items-center">
         <div class="col-lg-12">
           <h4>Terms & Condition
@@ -170,6 +171,15 @@
                 ref="signaturePad"
                 :options="{onBegin: () => {$refs.signaturePad.resizeCanvas()}, onEnd}"
               />
+              <validation-provider
+                name="Signature"
+                rules="required"
+                v-slot="validationContext"
+              >
+                <b-form-input v-show="false" v-model="signed"
+                              :state="getValidationState(validationContext)"/>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+              </validation-provider>
             </div>
             <b-form-text id="password-help-block" class="text-info">put your signature above using mouse</b-form-text>
             <b-form-checkbox
@@ -185,8 +195,8 @@
         <template v-slot:modal-footer>
           <b-container>
             <b-row>
-              <b-col v-if="accepted" col lg="12" class="text-center">
-                <b-button pill variant="info" @click="save" size="sm">Save</b-button>
+              <b-col v-if="isAccepted(accepted)" col lg="12" class="text-center">
+                <b-button pill variant="info" @click="handleSubmit(save)" size="sm">Save</b-button>
                 <b-button pill variant="info" @click="undo" size="sm">Undo</b-button>
               </b-col>
               <b-col v-if="tcAccepted" col lg="12" class="text-center">
@@ -196,13 +206,18 @@
           </b-container>
         </template>
       </b-modal>
-    </div>
+      </validation-observer>
+<!--    here-->
   </section>
 
 </template>
 
 <script>
+
+import commons from "@/mixins/common";
+
 export default {
+  mixins:[commons],
   name: "TermsConditions",
   props:{
     signImage:{
@@ -218,12 +233,14 @@ export default {
   data() {
     return {
       imgData: null,
-      accepted:0
+      accepted:0,
+      signed:null
     }
   },
   methods: {
     undo() {
       this.$refs.signaturePad.undoSignature();
+      this.signed = null
     },
     save() {
       let that = this
@@ -248,7 +265,7 @@ export default {
             that.$swal.close()
             if(response.success){
               that.closeModal()
-              that.userAvatar = iData
+              // that.userAvatar = iData
               that.$emit('tcUpdated')
               that.$bvModal.hide()
               that.$swal({
@@ -267,11 +284,19 @@ export default {
         })
     },
     onEnd() {
-      console.log('=== End ===');
+      // console.log('=== End ===');
       this.imgData = this.$refs.signaturePad.saveSignature();
+      this.signed = 'yes'
     },
     closeModal(){
       this.$bvModal.hide('modal-tc')
+    },
+    isAccepted(str){
+      if(str === '1'){
+        return true
+      }else{
+        return false
+      }
     }
   }
 }

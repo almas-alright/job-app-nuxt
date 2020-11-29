@@ -9,7 +9,7 @@
             <input type="text" placeholder="Enter Email" id="uname" :class="{'is-invalid' : lv_errors.email }" v-model="form.email" required>
               <div class="invalid-feedback" v-if="lv_errors.email">{{ lv_errors.email[0] }}</div>
             <!-- <label for="psw"><b>Password</b></label> -->
-            <input type="password" placeholder="Enter Password" id="psw" :class="{'is-invalid' : lv_errors.password }" v-model="form.password" required>
+            <input type="password" placeholder="Enter Password" v-on:keyup.enter="login()" id="psw" :class="{'is-invalid' : lv_errors.password }" v-model="form.password" required>
               <div class="invalid-feedback" v-if="lv_errors.password">{{ lv_errors.password[0] }}</div>
             <button type="submit" v-on:click="login()">Login</button>
           </div>
@@ -62,7 +62,6 @@ export default {
           }
       })
     },
-
   }
 }
 </script>
