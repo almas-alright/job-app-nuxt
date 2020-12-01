@@ -40,6 +40,7 @@ export default {
       this.$axios.$post('/profile/set', data).then(response => {
         that.$swal.close()
         if(response.success){
+          this.$emit('saveData')
           that.$swal({
             title: title+' has been updated',
             type: 'success',
