@@ -277,7 +277,7 @@ export default {
     saveForm() {
       // accommodation
       this.sendData({passport: this.passport_info}, 'Accommodation Information')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
   },

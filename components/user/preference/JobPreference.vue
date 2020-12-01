@@ -66,7 +66,7 @@ export default {
     },
     saveForm(){
       this.sendData({job_preference:this.selected}, 'Job Preference')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
     getJobCat() {

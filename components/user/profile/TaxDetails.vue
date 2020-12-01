@@ -153,7 +153,7 @@ export default {
 
     saveForm() {
       this.sendData({tax_details: this.taxData}, 'Tax Information')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }
 

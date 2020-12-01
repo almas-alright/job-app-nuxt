@@ -156,7 +156,7 @@ export default {
     },
     saveForm(){
       this.sendData({available_schedule:this.my_schedule}, 'Schedule')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }
   },

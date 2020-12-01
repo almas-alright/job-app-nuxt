@@ -86,7 +86,7 @@ export default {
     },
     saveForm() {
       this.sendData({professional_certificate: this.professional_certificate}, 'Professional Certificates')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
     addProCert() {
