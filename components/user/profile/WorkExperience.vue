@@ -177,7 +177,7 @@ export default {
     saveForm(){
       let totalExp = _.sumBy(this.experiences, 'year_experience');
       this.sendData({work_experience:this.experiences, experience: totalExp }, 'Work Experience')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
     addJob() {

@@ -86,7 +86,7 @@ export default {
     },
     saveForm() {
       this.sendData({bank_details: this.bankData}, 'Bank Details')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }
   },

@@ -177,7 +177,7 @@ export default {
     },
     saveForm(){
       this.sendData({education_qualification: this.mycertificates}, 'Educational Qualifications')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }
   },

@@ -198,7 +198,7 @@ export default {
     },
     saveForm() {
       this.sendData({social_medias: this.mySocialLinks}, 'Social Media')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }
   },

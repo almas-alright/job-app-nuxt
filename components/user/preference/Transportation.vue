@@ -96,7 +96,7 @@ export default {
     },
     saveForm(){
       this.sendData({travel_preference:this.travel}, 'Travel Preference')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     }
   },
