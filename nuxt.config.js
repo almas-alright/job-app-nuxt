@@ -45,6 +45,7 @@ export default {
     './plugins/axios',
     {src: '~/plugins/signature.js',mode:'client'},
     {src: '~/plugins/validation.js',mode:'client'},
+    {src: '~/plugins/select2.js',mode:'client'},
     // {src: '~/plugins/i18n.js',mode:'client'}
   ],
   /*

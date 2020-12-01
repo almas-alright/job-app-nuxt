@@ -175,6 +175,7 @@
               </div>
               <div class="col-md-6">
                 <validation-provider
+                  v-if="isStudent"
                   name="Students COE Image"
                   rules="required"
                   v-slot="validationContext"

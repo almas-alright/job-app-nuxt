@@ -360,7 +360,6 @@ export default {
         searching_job: this.genInfo.searching_job,
         phone_number: this.genInfo.contactNumber,
       }, 'General Information')
-      this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
     getState() {
