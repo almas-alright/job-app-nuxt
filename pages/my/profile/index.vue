@@ -46,11 +46,11 @@
             <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
           </b-tab>
           <b-tab title="My Availabilities">
-            <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
+            <availability v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></availability>
           </b-tab>
           <b-tab title="My Preferences">
-            <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
-            <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
+            <job-preference v-if="loaded" ref="jobPreference" @saveData="saveData($event)" :preferences="candidate.job_preference"></job-preference>
+            <transportation v-if="loaded" ref="transportInformation" @saveData="saveData($event)" :travel-preference="candidate.travel_preference"></transportation>
           </b-tab>
           <b-tab title="My Health">
             <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
@@ -59,7 +59,7 @@
               <induction-slide v-if="loaded"></induction-slide>
           </b-tab>
           <b-tab title="Terms & Conditions">
-            <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
+            <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :party-name="partyName" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
           </b-tab>
         </b-tabs>
       </b-card>
@@ -114,7 +114,8 @@ export default {
   data(){
     return {
       candidate: new Object(null),
-      loaded: false
+      loaded: false,
+      partyName: ""
     }
   },
   methods:{
@@ -127,6 +128,11 @@ export default {
       this.$axios.get('/profile/get').then(response => {
         that.candidate = response.data.data
         // console.log(that.candidate)
+        if(that.candidate.personal_details.firstName && that.candidate.personal_details.lastName){
+          that.partyName = that.candidate.personal_details.firstName+" "+that.candidate.personal_details.lastName
+        } else {
+          that.partyName = "?"
+        }
         that.loaded = true
         // that.$store.dispatch('candidate/setCandidateData', response.data.data)
       });

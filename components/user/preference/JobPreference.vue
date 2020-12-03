@@ -57,7 +57,8 @@ export default {
     return {
       showEditForm : false,
       selected: this.preferences, // Must be an array reference!
-      job_cat_options: null
+      job_cat_options: [],
+      job_cat_options2: []
     }
   },
   methods: {
@@ -72,26 +73,26 @@ export default {
     getJobCat() {
       let that = this
       this.$axios.get('job-category').then(response => {
-        let data = response.data
-        let result = data.map(({ name:text , id:id }) => ({text, id}));
+        let data = response.data.data
+        let result = data.map(({ name:text , id:id }) => ( {text, id}));
         that.job_cat_options = result
+      }).finally(function(){
+        that.job_cat_options2 = JSON.parse(JSON.stringify(that.job_cat_options))
       })
-        // .finally()
     },
     getJobCatName(id){
-      let name = null
-      if(id){
-        name = _.result(_.find(this.job_cat_options, function(st) {
-          return st.id === id;
-        }), "text");
-      }
-      // return this.job_cat_options[3]
+      let name = ''
+      let sobj = JSON.parse(JSON.stringify(this.job_cat_options2))
+      name =_.result(_.find(sobj, function(jc) {
+        return parseInt(jc.id) === parseInt(id);
+      }), 'text');
+      return name
     },
     myChangeEvent(val){
-      console.log(val);
+      // console.log(val);
     },
     mySelectEvent({id, text}){
-      console.log({id, text})
+      // console.log({id, text})
     },
   },
   created() {

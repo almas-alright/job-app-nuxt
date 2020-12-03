@@ -18,7 +18,7 @@
           <div class="col-lg-12">
             <div style="height: calc(100vh - 300px);" class="overflow-auto">
               <p><strong>PRIVACY POLICY AGREEMENT</strong></p>
-              <p>&hellip;.&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.
+              <p>&hellip;<u class="text-success">{{ partyName }}</u>
                 is committed to maintaining your privacy. We comply with the Australian Privacy Act 1988 and the
                 Australian Privacy Amendment (Private Sector) Act 2000. The Privacy Act contains 10 National Privacy
                 Principles (NPP) that demand compliance from our Company.</p>
@@ -220,6 +220,10 @@ export default {
   mixins:[commons],
   name: "TermsConditions",
   props:{
+    partyName:{
+      type:String,
+      default: ""
+    },
     signImage:{
       type:String,
       default: require('@/assets/images/placeholder.png')

@@ -1,11 +1,11 @@
 <template>
-  <section class="pb-0">
+  <section class="mt-4">
     <div class="container">
 
-      <div class="row align-items-center">
+      <div v-if="!showEditForm" class="row align-items-center">
         <div class="col-lg-12">
           <h4>Passport/Visa Information
-            <b-button pill size="sm" variant="info" v-if="!showEditForm" @click="editForm()">
+            <b-button pill size="sm" variant="info" @click="editForm()">
               <fa :icon="['fas', 'edit']"/>
             </b-button>
           </h4>
@@ -37,8 +37,8 @@
               <b-img class="img-border img-table" :src="getImage(passport_info.visa_image, 'thumb')" fluid
                      alt="Fluid image"></b-img>
             </dd>
-            <dt class="col-sm-6">COE Image :</dt>
-            <dd class="col-sm-6">
+            <dt v-if="isStudent" class="col-sm-6">COE Image :</dt>
+            <dd v-if="isStudent" class="col-sm-6">
               <b-img class="img-border img-table" :src="getImage(passport_info.coe_image, 'thumb')" fluid
                      alt="Fluid image"></b-img>
             </dd>
@@ -48,25 +48,11 @@
 
       <validation-observer v-if="showEditForm" tag="div" class="row" ref="observer" v-slot="{ handleSubmit }">
         <div class="col-lg-6 mb-5 mb-lg-0">
-
-          <b-form-group label="Select Citizen Type">
-            <validation-provider
-              name="Citizen Type"
-              :rules="{ required: true }"
-              v-slot="validationContext"
-            >
-            <b-form-select
-              v-model="passport_info.citizen_type"
-              :options="options"
-              :state="getValidationState(validationContext)"
-              size="sm"
-              class="mt-3">
-            </b-form-select>
-              <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-            </validation-provider>
-          </b-form-group>
-
-
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <h4>Passport</h4>
+            </div>
+          </div>
           <div id="conditional" v-if="!isCitizen">
             <b-form-group inline label="Passport Number:">
               <validation-provider
@@ -74,8 +60,8 @@
                 :rules="{ required: true }"
                 v-slot="validationContext"
               >
-              <b-form-input placeholder="passport number" v-model="passport_info.passport_number" size="sm"
-                            class="mt-3" :state="getValidationState(validationContext)"></b-form-input>
+                <b-form-input placeholder="passport number" v-model="passport_info.passport_number" size="sm"
+                              class="mt-3" :state="getValidationState(validationContext)"></b-form-input>
                 <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
               </validation-provider>
             </b-form-group>
@@ -99,6 +85,29 @@
               </div>
             </div>
 
+            <div class="row align-items-center">
+              <div class="col-lg-12">
+                <h4>Visa Information</h4>
+              </div>
+            </div>
+
+            <b-form-group label="Select Citizen Type">
+              <validation-provider
+                name="Citizen Type"
+                :rules="{ required: true }"
+                v-slot="validationContext"
+              >
+                <b-form-select
+                  v-model="passport_info.citizen_type"
+                  :options="options"
+                  :state="getValidationState(validationContext)"
+                  size="sm"
+                  class="mt-3">
+                </b-form-select>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+              </validation-provider>
+            </b-form-group>
+
             <b-form-group inline label="Select Visa Type:" label-for="input-visa-type">
               <b-input-group prepend="Visa" size="sm" class="mb-2">
                 <validation-provider
@@ -106,17 +115,17 @@
                   :rules="{ required: true }"
                   v-slot="validationContext"
                 >
-                <b-form-input
-                  id="input-visa-type"
-                  name="visa_type"
-                  v-model="passport_info.visa_type"
-                  :state="getValidationState(validationContext)"
-                  list="input-list-visa-type"
-                  @change="updateVisaSubclass()"
-                  class="capitalize"
-                  placeholder="Select Visa Type"
-                  size="sm"
-                ></b-form-input>
+                  <b-form-input
+                    id="input-visa-type"
+                    name="visa_type"
+                    v-model="passport_info.visa_type"
+                    :state="getValidationState(validationContext)"
+                    list="input-list-visa-type"
+                    @change="updateVisaSubclass()"
+                    class="capitalize"
+                    placeholder="Select Visa Type"
+                    size="sm"
+                  ></b-form-input>
                 </validation-provider>
                 <b-form-datalist
                   id="input-list-visa-type"

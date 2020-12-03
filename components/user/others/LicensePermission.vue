@@ -1,6 +1,6 @@
 <template>
 
-  <section class="pb-0">
+  <section class="mt-4">
     <div class="container">
 
       <div class="row align-items-center">
@@ -198,7 +198,7 @@ export default {
     },
     saveForm(){
       this.sendData({license_information:this.mylisences}, 'License Information')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
     resetSelected(index){

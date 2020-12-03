@@ -1,6 +1,6 @@
 <template>
+  <section class="mt-4 mb-4">
   <div class="container">
-
     <div class="row align-items-center">
       <div class="col-lg-12">
         <h4>Professional/Short Courses/Skill Development Certificates (SAP/OCP/MCP)
@@ -18,17 +18,48 @@
       </div>
     </div>
 
-    <div v-if="showEditForm" class="row">
+    <validation-observer v-if="showEditForm" tag="div" class="row" ref="observer" v-slot="{ handleSubmit }">
       <div class="col-lg-12 mb-5 mb-lg-0">
         <div v-for="(pro_certificate, index) in professional_certificate" :key="index" class="row jex-single">
           <div class="col-lg-3 mb-5 mb-lg-0">
-            <b-form-input v-model="pro_certificate.course" placeholder="Course Name" size="sm"></b-form-input>
+            <b-form-group label="Course">
+              <validation-provider
+                name="Course"
+                :rules="{ required: true }"
+                v-slot="validationContext"
+              >
+                <b-form-input v-model="pro_certificate.course" placeholder="Course Name" size="sm" :state="getValidationState(validationContext)"></b-form-input>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+              </validation-provider>
+            </b-form-group>
           </div>
           <div class="col-lg-3 mb-5 mb-lg-0">
-            <date-picker input-class="form-control form-control-sm c-dp" placeholder="Accomplished On" v-model="pro_certificate.accomplished_on" valueType="format"></date-picker>
+            <b-form-group label="Accomplished">
+              <date-picker input-class="form-control form-control-sm c-dp" placeholder="Accomplished On" v-model="pro_certificate.accomplished_on" valueType="format"></date-picker>
+              <validation-provider
+                name="Complete Date"
+                rules="required"
+                v-slot="validationContext"
+              >
+                <b-form-input v-show="false" v-model="pro_certificate.accomplished_on"
+                              :state="getValidationState(validationContext)"/>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+              </validation-provider>
+            </b-form-group>
           </div>
           <div class="col-lg-2 mb-5 mb-lg-0">
+            <b-form-group label="Certificate">
             <media-browser :size="index" v-model="pro_certificate.certificate_image"></media-browser>
+              <validation-provider
+                name="Certificate Image"
+                rules="required"
+                v-slot="validationContext"
+              >
+                <b-form-input v-show="false" v-model="pro_certificate.certificate_image"
+                              :state="getValidationState(validationContext)"/>
+                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+              </validation-provider>
+            </b-form-group>
           </div>
           <div class="col-lg-1 mb-5 mb-lg-0">
             <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
@@ -40,16 +71,18 @@
         <br>
         <div class="row">
           <div class="col-lg-2">
-            <button type="button" @click="addProCert()" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
+            <button type="button" @click="handleSubmit(addProCert)" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
           </div>
           <div class="offset-lg-6 col-lg-4">
             <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
-            <button type="button" v-if="professional_certificate.length" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
+            <button type="button" v-if="professional_certificate.length" v-on:click="handleSubmit(saveForm)" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
           </div>
         </div>
       </div>
-    </div>
+    </validation-observer>
+<!--    here-->
   </div>
+  </section>
 </template>
 
 <script>
