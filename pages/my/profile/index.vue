@@ -24,7 +24,7 @@
     <div style="max-width: 100%;">
       <b-card no-body>
         <b-tabs pills card small align="center">
-          <b-tab title="My Details" active>
+          <b-tab title="My Details">
             <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
             <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
           </b-tab>
@@ -46,11 +46,11 @@
             <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
           </b-tab>
           <b-tab title="My Availabilities">
-            <availability v-if="loaded" ref="available" :schedule="candidate.available_schedule"></availability>
+            <availability v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></availability>
           </b-tab>
-          <b-tab title="My Preferences">
-            <job-preference v-if="loaded" ref="jobPreference" :preferences="candidate.job_preference"></job-preference>
-            <transportation v-if="loaded" ref="transportInformation" :travel-preference="candidate.travel_preference"></transportation>
+          <b-tab title="My Preferences" active>
+            <job-preference v-if="loaded" ref="jobPreference" @saveData="saveData($event)" :preferences="candidate.job_preference"></job-preference>
+            <transportation v-if="loaded" ref="transportInformation" @saveData="saveData($event)" :travel-preference="candidate.travel_preference"></transportation>
           </b-tab>
           <b-tab title="My Health">
             <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>

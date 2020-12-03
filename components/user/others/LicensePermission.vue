@@ -198,7 +198,7 @@ export default {
     },
     saveForm(){
       this.sendData({license_information:this.mylisences}, 'License Information')
-      this.$emit('saveData')
+      // this.$emit('saveData')
       this.showEditForm = !this.showEditForm
     },
     resetSelected(index){
