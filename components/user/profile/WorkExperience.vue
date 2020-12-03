@@ -1,4 +1,5 @@
 <template>
+  <section class="mt-4">
   <div class="container">
 
     <div class="row align-items-center">
@@ -134,6 +135,7 @@
   </validation-observer>
 
   </div>
+  </section>
 </template>
 
 <script>

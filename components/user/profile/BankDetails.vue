@@ -1,7 +1,6 @@
-t
 <template>
 
-  <section class="pb-0">
+  <section class="mt-4">
     <div class="container">
 
       <div class="row align-items-center">
