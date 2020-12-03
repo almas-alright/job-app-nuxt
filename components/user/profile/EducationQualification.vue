@@ -19,40 +19,89 @@
         </div>
       </div>
 
-      <div v-if="showEditForm" class="row">
-
+      <validation-observer v-if="showEditForm" tag="div" class="row" ref="observer" v-slot="{ handleSubmit }">
         <div class="col-lg-12 mb-5 mb-lg-0">
 
           <div v-for="(certificate, index) in mycertificates" :key="index" class="form-group">
             <div class="row">
               <div class="col-sm-2">
-                <b-form-select
-                    id="nationality"
-                    name="nationality"
-                    v-model="certificate.course"
-                    :options="certificates"
-                    value-field="course"
-                    text-field="course"
-                    class="capitalize"
-                    size="sm"
-                    @change="checkIfReplicated(index)"
+                <b-form-group label="Course">
+                  <validation-provider
+                    name="Course"
+                    :rules="{ required: true }"
+                    v-slot="validationContext"
                   >
-                  <template v-slot:first>
-                    <b-form-select-option :value="'null'" disabled>select</b-form-select-option>
-                  </template>
+                  <b-form-select
+                      id="nationality"
+                      name="nationality"
+                      v-model="certificate.course"
+                      :options="certificates"
+                      :state="getValidationState(validationContext)"
+                      value-field="course"
+                      text-field="course"
+                      class="capitalize"
+                      size="sm"
+                      @change="checkIfReplicated(index)"
+                    >
+                    <template v-slot:first>
+                      <b-form-select-option :value="'null'" disabled>select</b-form-select-option>
+                    </template>
                   </b-form-select>
+                    <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  </validation-provider>
+                </b-form-group>
               </div>
               <div class="col-sm-3">
-                <b-form-input size="sm" placeholder="Institute" v-model="certificate.institute"></b-form-input>
+                <b-form-group label="Institute">
+                  <validation-provider
+                    name="Institute"
+                    rules="required"
+                    v-slot="validationContext"
+                  >
+                  <b-form-input size="sm" placeholder="Institute" v-model="certificate.institute" :state="getValidationState(validationContext)"></b-form-input>
+                    <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  </validation-provider>
+                </b-form-group>
               </div>
               <div class="col-sm-3">
-                <b-form-input size="sm" placeholder="Subject Name" v-model="certificate.subject"></b-form-input>
+                <b-form-group label="Subject">
+                  <validation-provider
+                    name="Subject Name"
+                    rules="required"
+                    v-slot="validationContext"
+                  >
+                  <b-form-input size="sm" placeholder="Subject Name" v-model="certificate.subject" :state="getValidationState(validationContext)"></b-form-input>
+                    <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  </validation-provider>
+                </b-form-group>
               </div>
                <div class="col-sm-2">
+                 <b-form-group label="Pass Year">
                  <date-picker input-class="form-control form-control-sm c-dp" v-model="certificate.passing_year" type="year" placeholder="passing year" valueType="format"></date-picker>
+                   <validation-provider
+                     name="Passing Year"
+                     rules="required"
+                     v-slot="validationContext"
+                   >
+                     <b-form-input v-show="false" v-model="certificate.passing_year"
+                                   :state="getValidationState(validationContext)"/>
+                     <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                   </validation-provider>
+                 </b-form-group>
               </div>
               <div class="col-sm-1">
+                <b-form-group label="Image">
                 <media-browser :size="index" v-model="certificate.certificate_image"></media-browser>
+                  <validation-provider
+                    name="Certificate Image"
+                    rules="required"
+                    v-slot="validationContext"
+                  >
+                    <b-form-input v-show="false" v-model="certificate.certificate_image"
+                                  :state="getValidationState(validationContext)"/>
+                    <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+                  </validation-provider>
+                </b-form-group>
               </div>
               <div class="col-sm-1">
                 <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
@@ -62,16 +111,17 @@
 
           <div class="row">
             <div class="col-sm-1">
-              <button type="button" @click="addCert()" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
+              <button type="button" @click="handleSubmit(addCert)" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
             </div>
             <div class="offset-sm-7 col-sm-4">
-              <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
-              <button type="button" v-if="mycertificates.length" v-on:click="saveForm()" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
+              <button type="button" v-on:click="editForm" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
+              <button type="button" v-if="mycertificates.length" v-on:click="handleSubmit(saveForm)" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
             </div>
           </div>
 
         </div>
-      </div>
+      </validation-observer>
+<!--      here-->
 
     </div>
     <br>

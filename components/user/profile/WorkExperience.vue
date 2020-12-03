@@ -126,7 +126,7 @@
           <button type="button" @click="handleSubmit(addJob)" class="btn btn-primary btn-sm"><fa :icon="['fas', 'plus-square']"/></button>
         </div>
         <div class="offset-lg-6 col-lg-4">
-          <button type="button" v-on:click="handleSubmit(editForm)" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
+          <button type="button" v-on:click="editForm" class="btn btn-dark btn-sm"><fa :icon="['fas', 'window-close']"/></button>
           <button type="button" v-if="experiences.length" v-on:click="handleSubmit(saveForm)" class="btn btn-success btn-sm"><fa :icon="['fas', 'save']"/> save</button>
         </div>
       </div>
