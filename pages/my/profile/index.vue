@@ -49,7 +49,15 @@
             <availability v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></availability>
           </b-tab>
           <b-tab title="My Preferences">
-            <job-preference v-if="loaded" ref="jobPreference" @saveData="saveData($event)" :preferences="candidate.job_preference"></job-preference>
+            <job-preference
+              v-if="loaded"
+              ref="jobPreference"
+              @saveData="saveData($event)"
+              :preferences="candidate.job_preference"
+              :location-preference="candidate.location_preference"
+              :preferred-location="candidate.preferred_location"
+              :preferred-country="candidate.preferred_country"
+            ></job-preference>
             <transportation v-if="loaded" ref="transportInformation" @saveData="saveData($event)" :travel-preference="candidate.travel_preference"></transportation>
           </b-tab>
           <b-tab title="My Health">
