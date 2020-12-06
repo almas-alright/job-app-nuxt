@@ -53,6 +53,22 @@
               <h4>Passport</h4>
             </div>
           </div>
+          <b-form-group label="Select Citizen Type">
+            <validation-provider
+              name="Citizen Type"
+              :rules="{ required: true }"
+              v-slot="validationContext"
+            >
+              <b-form-select
+                v-model="passport_info.citizen_type"
+                :options="options"
+                :state="getValidationState(validationContext)"
+                size="sm"
+                class="mt-3">
+              </b-form-select>
+              <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+            </validation-provider>
+          </b-form-group>
           <div id="conditional" v-if="!isCitizen">
             <b-form-group inline label="Passport Number:">
               <validation-provider
@@ -90,23 +106,6 @@
                 <h4>Visa Information</h4>
               </div>
             </div>
-
-            <b-form-group label="Select Citizen Type">
-              <validation-provider
-                name="Citizen Type"
-                :rules="{ required: true }"
-                v-slot="validationContext"
-              >
-                <b-form-select
-                  v-model="passport_info.citizen_type"
-                  :options="options"
-                  :state="getValidationState(validationContext)"
-                  size="sm"
-                  class="mt-3">
-                </b-form-select>
-                <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
-              </validation-provider>
-            </b-form-group>
 
             <b-form-group inline label="Select Visa Type:" label-for="input-visa-type">
               <b-input-group prepend="Visa" size="sm" class="mb-2">

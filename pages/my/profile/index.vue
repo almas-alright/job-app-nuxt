@@ -25,7 +25,7 @@
       <b-card no-body>
         <b-tabs pills card small align="center">
           <b-tab title="My Details" active>
-            <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
+            <general-info v-if="loaded" :personal-details="candidate.personal_details" :expected-salary="candidate.salary_preference" ref="gInfo" @saveData="saveData($event)" />
             <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
           </b-tab>
           <b-tab title="My Passport">
@@ -62,6 +62,7 @@
             <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :party-name="partyName" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
           </b-tab>
         </b-tabs>
+
       </b-card>
     </div>
     </section>

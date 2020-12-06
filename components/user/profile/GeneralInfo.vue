@@ -176,8 +176,11 @@
                   </b-input-group>
                 </validation-provider>
               </b-form-group>
-
             </fieldset>
+            <b-form-group label="Expected Salary">
+              <b-form-input size="sm" type="number" placeholder="Expected Salary"
+                           v-model="expected_salary" ></b-form-input>
+            </b-form-group>
 
           </div>
           <div class="col-lg-12"></div>
@@ -299,6 +302,13 @@ import _ from "lodash";
 export default {
   components: {DatePicker},
   props: {
+    expectedSalary:{
+      type: Number,
+      default: 0,
+      validator: function (value) {
+        return value >= 0
+      }
+    },
     personalDetails: {
       type: Object,
       default: function () {
@@ -325,6 +335,7 @@ export default {
 
     return {
       showEditForm: false,
+      expected_salary: this.expectedSalary,
       genInfo: this.personalDetails,
       nationalities: country_list,
       msoptions: [
@@ -353,6 +364,7 @@ export default {
     saveForm() {
       this.sendData({
         personal_details: this.genInfo,
+        salary_preference:this.expected_salary,
         age: this.genInfo.dateOfBirth,
         state_id: this.genInfo.state,
         suburb_id: this.genInfo.suburb,
