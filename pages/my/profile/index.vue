@@ -25,7 +25,7 @@
       <b-card no-body>
         <b-tabs pills card small align="center">
           <b-tab title="My Details" active>
-            <general-info v-if="loaded" :personal-details="candidate.personal_details" ref="gInfo" @saveData="saveData($event)" />
+            <general-info v-if="loaded" :personal-details="candidate.personal_details" :expected-salary="candidate.salary_preference" ref="gInfo" @saveData="saveData($event)" />
             <social-media v-if="loaded" ref="socialMedia" :social-medea-data="candidate.social_medias"  @saveData="saveData($event)" />
           </b-tab>
           <b-tab title="My Passport">
@@ -49,7 +49,15 @@
             <availability v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></availability>
           </b-tab>
           <b-tab title="My Preferences">
-            <job-preference v-if="loaded" ref="jobPreference" @saveData="saveData($event)" :preferences="candidate.job_preference"></job-preference>
+            <job-preference
+              v-if="loaded"
+              ref="jobPreference"
+              @saveData="saveData($event)"
+              :preferences="candidate.job_preference"
+              :location-preference="candidate.location_preference"
+              :preferred-location="candidate.preferred_location"
+              :preferred-country="candidate.preferred_country"
+            ></job-preference>
             <transportation v-if="loaded" ref="transportInformation" @saveData="saveData($event)" :travel-preference="candidate.travel_preference"></transportation>
           </b-tab>
           <b-tab title="My Health">
@@ -62,6 +70,7 @@
             <terms-conditions v-if="loaded" ref="tc" @tcUpdated="saveData($event)" :party-name="partyName" :sign-image="candidate.signature" :tc-accepted="candidate.accepted_tc"></terms-conditions>
           </b-tab>
         </b-tabs>
+
       </b-card>
     </div>
     </section>
