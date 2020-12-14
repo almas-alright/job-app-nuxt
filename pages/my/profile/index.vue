@@ -168,6 +168,9 @@ export default {
           name: 'description',
           content: 'stevejobs is a job searching and candidate hosting application'
         }
+      ],
+      link:[
+        { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css' }
       ]
     }
   }

@@ -22,10 +22,12 @@
         </div>
       </div>
 
-
+      <transition
+        enter-active-class="animated animate__fadeIn"
+        leave-active-class="animated animate__fadeOut"
+      >
       <validation-observer v-if="showEditForm" tag="div" class="row" ref="observer" v-slot="{ handleSubmit }">
         <div class="col-lg-6 mb-5 mb-lg-0">
-
           <div v-for="(mySocialLink, index) in mySocialLinks" :key="index" class="form-group">
             <div class="row">
               <div class="col-sm-12">
@@ -78,7 +80,6 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-sm-2">
               <button type="button" @click="handleSubmit(addLink)" class="btn btn-primary btn-sm">
@@ -100,7 +101,7 @@
         </div>
       </validation-observer>
       <!--      here-->
-
+      </transition>
     </div>
     <br>
   </section>

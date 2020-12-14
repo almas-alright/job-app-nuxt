@@ -10,6 +10,10 @@
           </h4>
         </div>
       </div>
+      <transition
+        enter-active-class="animated animate__fadeIn"
+        leave-active-class="animated animate__fadeOut"
+      >
       <div v-if="showEditForm">
         <validation-observer tag="div" class="row align-items-center" ref="observer" v-slot="{ handleSubmit }">
           <div class="col-lg-6 mb-5 mb-lg-0">
@@ -237,7 +241,11 @@
           </div>
         </validation-observer>
       </div>
-
+      </transition>
+      <transition
+        enter-active-class="animated animate__fadeIn"
+        leave-active-class="animated animate__fadeOut"
+      >
       <div v-if="!showEditForm" class="row align-items-center">
         <div class="col-lg-6 mb-5 mb-lg-0">
           <dl class="row">
@@ -286,6 +294,7 @@
           </dl>
         </div>
       </div>
+      </transition>
 
 
     </div>
