@@ -190,7 +190,7 @@
           <div class="col-lg-12"></div>
           <div class="col-lg-6">
             <div class="bg-light p-3 text-info">
-              <b-form-group label="currently i am ">
+              <b-form-group label="Currently i am ">
                 <validation-provider
                   name="Has Job"
                   rules="required"
@@ -210,7 +210,7 @@
           </div>
           <div class="col-lg-6">
             <div class="bg-light p-3 text-info">
-              <b-form-group label="currently i am looking for a job!">
+              <b-form-group label="Currently i am looking for a job!">
                 <validation-provider
                   name="Search Job"
                   rules="required"
