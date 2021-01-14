@@ -26,10 +26,17 @@
         </div>
       </div>
 
-      <div v-if="showEditForm" class="row">
+      <validation-observer v-if="showEditForm" tag="div" class="row" ref="observer" v-slot="{ handleSubmit }">
         <div class="col-lg-6 mb-5 mb-lg-0">
           <b-form-group label="BANK NAME">
-            <b-form-input size="sm" placeholder="BANK NAME" v-model="bankData.bank_name"></b-form-input>
+            <validation-provider
+              name="BANK NAME"
+              :rules="{ required: true, alpha_spaces:true }"
+              v-slot="validationContext"
+            >
+            <b-form-input size="sm" placeholder="BANK NAME" v-model="bankData.bank_name" :state="getValidationState(validationContext)"></b-form-input>
+            <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+            </validation-provider>
           </b-form-group>
           <b-form-group label="BBS NUMBER">
             <b-form-input size="sm" placeholder="BBS NUMBER" v-model="bankData.bbs_number"></b-form-input>
@@ -41,13 +48,13 @@
             <button type="button" v-on:click="editForm()" class="btn btn-dark btn-sm">
               <fa :icon="['fas', 'window-close']"/>
             </button>
-            <button type="button" v-on:click="saveForm()" class="btn btn-success btn-sm">
+            <button type="button" v-on:click="handleSubmit(saveForm)" class="btn btn-success btn-sm">
               <fa :icon="['fas', 'save']"/>
               save
             </button>
           </div>
         </div>
-      </div>
+      </validation-observer>
 
     </div>
     <br>

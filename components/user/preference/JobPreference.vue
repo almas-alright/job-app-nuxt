@@ -93,11 +93,11 @@ export default {
   props: {
     locationPreference: {
       type: Object,
-      validator: function(obj) {
-        if(typeof obj != 'object'){
-          return {}
-        }
-      },
+      // validator: function(obj) {
+      //   if(typeof obj != 'object'){
+      //     return {}
+      //   }
+      // },
       default: function () {
         return {
           local_choice:1,
@@ -107,22 +107,22 @@ export default {
     },
     preferredLocation: {
       type: Array,
-      validator: function(obj) {
-        if(typeof obj != 'object'){
-          return []
-        }
-      },
+      // validator: function(obj) {
+      //   if(typeof obj != 'object'){
+      //     return []
+      //   }
+      // },
       default: function (){
         return []
       }
     },
     preferredCountry: {
       type: Array,
-      validator: function(obj) {
-        if(typeof obj != 'object'){
-          return []
-        }
-      },
+      // validator: function(obj) {
+      //   if(typeof obj != 'object'){
+      //     return []
+      //   }
+      // },
       default: function (){
         return []
       }
