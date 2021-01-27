@@ -46,7 +46,8 @@
             <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
           </b-tab>
           <b-tab title="My Availabilities">
-            <availability v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></availability>
+<!--            <availability v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></availability>-->
+            <available-schedule></available-schedule>
           </b-tab>
           <b-tab title="My Preferences">
             <job-preference
@@ -90,7 +91,7 @@ import WorkExperience from '~/components/user/profile/WorkExperience';
 import EducationQualification from '~/components/user/profile/EducationQualification';
 import ProfessionalCertificate from '~/components/user/profile/ProfessionalCertificate';
 import LicensePermission from '~/components/user/others/LicensePermission';
-import Availability from '~/components/user/preference/Availability';
+import AvailableSchedule from '~/components/user/preference/AvailableSchedule';
 import JobPreference from '~/components/user/preference/JobPreference';
 import Transportation from '~/components/user/preference/Transportation';
 import HealthFitness from '~/components/user/others/HealthFitness';
@@ -113,7 +114,7 @@ export default {
     EducationQualification,
     ProfessionalCertificate,
     LicensePermission,
-    Availability,
+    AvailableSchedule,
     JobPreference,
     Transportation,
     HealthFitness,
