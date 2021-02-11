@@ -84,15 +84,14 @@
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+
 import _ from 'lodash'
 import license_list from 'static/license_list'
 import MediaBrowser from '~/components/media/MediaBrowser';
 import Commons from '~/mixins/common'
 export default {
   mixins:[Commons],
-  components:{ MediaBrowser, DatePicker},
+  components:{ MediaBrowser},
   props: {
     lisenceData: {
       type: Array,

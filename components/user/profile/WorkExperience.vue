@@ -139,13 +139,10 @@
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
 import _ from 'lodash'
 import commons from '~/mixins/common'
 export default {
   mixins:[commons],
-  components:{DatePicker},
   props: {
     experienceData: {
       type: Array,

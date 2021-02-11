@@ -221,8 +221,7 @@
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+
 import MediaBrowser from "@/components/media/MediaBrowser";
 import visa_list from "static/visa_list";
 import _ from "lodash";
@@ -230,7 +229,7 @@ import Commons from '~/mixins/common'
 
 export default {
   mixins: [Commons],
-  components: {MediaBrowser, DatePicker},
+  components: {MediaBrowser},
   name: "Accommodation",
   props: {
     passportInfo: {

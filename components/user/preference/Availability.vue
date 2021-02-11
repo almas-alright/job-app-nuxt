@@ -101,13 +101,11 @@
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
 import commons from '~/mixins/common'
 import _ from "lodash";
+
 export default {
   mixins:[commons],
-  components:{DatePicker},
   props: {
     schedule: {
       type: Object,

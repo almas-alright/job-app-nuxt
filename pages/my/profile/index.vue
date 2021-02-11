@@ -31,7 +31,7 @@
           <b-tab title="My Passport">
             <passport v-if="loaded" ref="acc" :passport-info="candidate.passport" @saveData="saveData($event)"></passport>
           </b-tab>
-          <b-tab title="My Financial">
+          <b-tab title="My Financial" disabled>
             <bank-details v-if="loaded" ref="bankDetails" :bank-info="candidate.bank_details" @saveData="saveData($event)"/>
             <tax-details v-if="loaded" ref="taxDetails" :tax-info="candidate.tax_details" @saveData="saveData($event)" />
           </b-tab>
@@ -42,12 +42,12 @@
           <b-tab title="My Experience">
             <work-experience v-if="loaded" ref="workExperience" :experience-data="candidate.work_experience" @saveData="saveData($event)" />
           </b-tab>
-          <b-tab title="My Licence">
+          <b-tab title="My Licence" disabled>
             <license-permission v-if="loaded" ref="lisence" :lisence-data="candidate.license_information" @saveData="saveData($event)" />
           </b-tab>
           <b-tab title="My Availabilities">
 <!--            <availability v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></availability>-->
-            <available-schedule></available-schedule>
+            <available-schedule-cal v-if="loaded" ref="available" @saveData="saveData($event)" :schedule="candidate.available_schedule"></available-schedule-cal>
           </b-tab>
           <b-tab title="My Preferences">
             <job-preference
@@ -61,10 +61,10 @@
             ></job-preference>
             <transportation v-if="loaded" ref="transportInformation" @saveData="saveData($event)" :travel-preference="candidate.travel_preference"></transportation>
           </b-tab>
-          <b-tab title="My Health">
+          <b-tab title="My Health" disabled>
             <health-fitness v-if="loaded" :health-data="candidate.health_fitness"></health-fitness>
           </b-tab>
-          <b-tab title="My Induction">
+          <b-tab title="My Induction" disabled>
               <induction-slide v-if="loaded"></induction-slide>
           </b-tab>
           <b-tab title="Terms & Conditions">
@@ -91,7 +91,7 @@ import WorkExperience from '~/components/user/profile/WorkExperience';
 import EducationQualification from '~/components/user/profile/EducationQualification';
 import ProfessionalCertificate from '~/components/user/profile/ProfessionalCertificate';
 import LicensePermission from '~/components/user/others/LicensePermission';
-import AvailableSchedule from '~/components/user/preference/AvailableSchedule';
+import AvailableScheduleCal from '~/components/user/preference/AvailableScheduleCal';
 import JobPreference from '~/components/user/preference/JobPreference';
 import Transportation from '~/components/user/preference/Transportation';
 import HealthFitness from '~/components/user/others/HealthFitness';
@@ -114,7 +114,7 @@ export default {
     EducationQualification,
     ProfessionalCertificate,
     LicensePermission,
-    AvailableSchedule,
+    AvailableScheduleCal,
     JobPreference,
     Transportation,
     HealthFitness,

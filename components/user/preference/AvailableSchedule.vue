@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <client-only>
-        <FullCalendar :options="calendarOptions"></FullCalendar>
+        <FullCalendar :options="calendarOptions" ></FullCalendar>
       </client-only>
     </div>
   </div>
@@ -29,9 +29,18 @@ export default {
         initialView: 'dayGridMonth',
         selectable: true,
         dateClick: this.handleDateClick,
+        select: this.handleSelect,
         events: [
-          { title: 'event 1', date: '2019-04-01' },
-          { title: 'event 2', date: '2021-01-22' }
+          {
+            title: 'Event Title1',
+            start: '2021-02-17T13:13:55.008',
+            end: '2021-02-19T13:13:55.008'
+          },
+          {
+            title: 'Event Title2',
+            start: '2021-02-17T13:13:55-0400',
+            end: '2021-02-18T13:13:55-0400'
+          }
         ]
       }
     }
@@ -42,6 +51,9 @@ export default {
     },
     selectFT: function(startDate, endDate) {
       console.log('selected ' + startDate + ' to ' + endDate);
+    },
+    handleSelect(e){
+      console.log(e);
     }
   }
 }
