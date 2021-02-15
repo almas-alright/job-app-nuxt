@@ -46,6 +46,10 @@ export default {
     {src: '~/plugins/signature.js',mode:'client'},
     {src: '~/plugins/validation.js',mode:'client'},
     {src: '~/plugins/select2.js',mode:'client'},
+    {src: '~/plugins/vue-dp.js',mode:'client'},
+    {src: '~/plugins/vue-tp.js',mode:'client'},
+    {src: '~/plugins/vue-cal.js',mode:'client'},
+    // {src: '~/plugins/full-calendar.js',mode:'client'},
     // {src: '~/plugins/i18n.js',mode:'client'}
   ],
   /*
@@ -94,6 +98,7 @@ export default {
   axios: {
     // baseURL: 'http://127.0.0.1:8000/api/v1'
     baseURL: 'http://api.stevejobs.com.au/api/v1', // Live
+
    // proxyHeaders: false,
   //  credentials: true
  },

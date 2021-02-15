@@ -304,12 +304,12 @@
 <script>
 import country_list from '~/static/country_list'
 import commons from '~/mixins/common'
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+// import DatePicker from 'vue2-datepicker';
+// import 'vue2-datepicker/index.css';
 import _ from "lodash";
 
 export default {
-  components: {DatePicker},
+  // components: {DatePicker},
   props: {
     expectedSalary:{
       type: Number,

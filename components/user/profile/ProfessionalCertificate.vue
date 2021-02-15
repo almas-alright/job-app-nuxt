@@ -89,11 +89,10 @@
 import MediaBrowser from '~/components/media/MediaBrowser';
 import Commons from '~/mixins/common'
 import _ from 'lodash'
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+
 export default {
   mixins: [Commons],
-  components: {MediaBrowser, DatePicker},
+  components: {MediaBrowser},
   props: {
     certificates: {
       type: Array,
