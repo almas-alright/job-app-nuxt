@@ -12,6 +12,9 @@
       <div v-if="!showEditForm" class="row">
         <div class="col-lg-12 mb-5 mb-lg-0">
           <b-table striped hover :items="mycertificates" :fields="fields">
+            <template v-slot:cell(course)="items">
+              {{ getQualificationName(items.value) }}
+            </template>
             <template v-slot:cell(certificate_image)="items">
               <b-img class="img-border img-table" :src="getImage(items.value, 'thumb')" fluid alt="Fluid image"></b-img>
             </template>
@@ -23,7 +26,7 @@
         <div class="col-lg-12 mb-5 mb-lg-0">
 
           <div v-for="(certificate, index) in mycertificates" :key="index" class="form-group">
-            <div class="row">
+            <b-card bg-variant="light">
               <div class="col-sm-2">
                 <b-form-group label="Course">
                   <validation-provider
@@ -31,22 +34,25 @@
                     :rules="{ required: true }"
                     v-slot="validationContext"
                   >
-                  <b-form-select
-                      id="nationality"
-                      name="nationality"
-                      v-model="certificate.course"
-                      :options="certificates"
-                      :state="getValidationState(validationContext)"
-                      value-field="course"
-                      text-field="course"
-                      class="capitalize"
-                      size="sm"
-                      @change="checkIfReplicated(index)"
-                    >
-                    <template v-slot:first>
-                      <b-form-select-option :value="'null'" disabled>select</b-form-select-option>
-                    </template>
-                  </b-form-select>
+                  <Select2 class="small" v-model="certificate.course" :options="qualifications" placeholder="select qualification" />
+<!--                  <b-form-select-->
+<!--                      id="nationality"-->
+<!--                      name="nationality"-->
+<!--                      v-model="certificate.course"-->
+<!--                      :options="certificates"-->
+<!--                      :state="getValidationState(validationContext)"-->
+<!--                      value-field="course"-->
+<!--                      text-field="course"-->
+<!--                      class="capitalize"-->
+<!--                      size="sm"-->
+<!--                      @change="checkIfReplicated(index)"-->
+<!--                    >-->
+<!--                    <template v-slot:first>-->
+<!--                      <b-form-select-option :value="'null'" disabled>select</b-form-select-option>-->
+<!--                    </template>-->
+<!--                  </b-form-select>-->
+                    <b-form-input v-show="false" v-model="certificate.course"
+                                  :state="getValidationState(validationContext)"/>
                     <b-form-invalid-feedback>{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                   </validation-provider>
                 </b-form-group>
@@ -106,7 +112,7 @@
               <div class="col-sm-1">
                 <button type="button" @click="doRemove(index)" class="btn btn-danger btn-sm"><fa :icon="['fas', 'trash-alt']"/></button>
               </div>
-            </div>
+            </b-card>
           </div>
 
           <div class="row">
@@ -147,6 +153,7 @@ export default {
   data(){
     return {
       showEditForm : false,
+      qualifications:[],
       certificates:[
         {course: 'masters', disabled: false},
         {course: 'masters (dependent)', disabled: false},
@@ -223,6 +230,22 @@ export default {
         }
       })
     },
+    async getQualifications() {
+      let that = this
+      this.$axios.get('edu-attr/qualifications').then(response => {
+        let data = response.data.data
+        let result = data.map(({ title:text , id:id }) => ( {text, id}));
+        that.qualifications = result
+      })
+    },
+    getQualificationName(id){
+      let name = ''
+      let squal = JSON.parse(JSON.stringify(this.qualifications))
+      name =_.result(_.find(squal, function(eq) {
+        return parseInt(eq.id) === parseInt(id);
+      }), 'text');
+      return name
+    },
     saveForm(){
       this.sendData({education_qualification: this.mycertificates}, 'Educational Qualifications')
       // this.$emit('saveData')
@@ -230,7 +253,8 @@ export default {
     }
   },
   created:function(){
-    this.disableUsed()
+    // this.disableUsed()
+    this.getQualifications()
     //console.log('mounted')
   },
   watch:{
